@@ -9,7 +9,7 @@ close all
 % - Y Coordinate frame (e.g Body-Fixed (B), NED (O) etc)
 
 
-%% 
+%% Dynamics
 
 % Crazyflie
 g = 9.81;           % gravitational acceleration in [m/s^2]
@@ -39,6 +39,23 @@ kz = 7.553e-4;      % drag constant in z-direction [kg/s]
 
 % Actuator dynamics 
 T = 1/15;           % Actuator time constant [s]
+
+
+%% Controller 
+
+% Filter parameters 
+omega_n = 50;       % in [rad/s]
+zeta = 0.55;        % 
+
+% PD gains (inner loop)
+K_omega = 28.0; 
+K_eta = 10.7;
+
+
+
+
+
+
 
 
 
