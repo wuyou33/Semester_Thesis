@@ -19,7 +19,7 @@ g = 9.81;           % gravitational acceleration in [m/s^2]
 m_CF = 0.028;       % mass of the Crazyflie quadrotor in [kg]
 l = 0.033;          % lever arm to the rotor in x-direction [m]
 b = 0.033;          % lever arm to the rotor in y-direction [m]
-I_rzz = 9.3e-6;     % Component of moment of inertia of the rotor [kg*m^2]
+I_rzz = 9.3e-9;     % Component of moment of inertia of the rotor [kg*m^2]
 
 
 I_CF_1 = [16.823890  -1.224320  -0.716891    % Moment of inertia of the 
@@ -33,7 +33,7 @@ I_CF_1_inv = inv(I_CF_1);                 % Inverted I_CF_1
 
 % Propulsive force
 k_f = 1.6e-4;       % motor constant for F_P and M_P[N/(rad/s)]
-k_m = 1e-8;         % motor constant for M_P [N*m/(rad/s)]
+k_m = 1e-6;         % motor constant for M_P [N*m/(rad/s)]
 
 % Aerodynanic force
 kx = 10.25e-4;      % drag constant in x-direction [kg/s]
@@ -59,11 +59,13 @@ D_0 = 4/(Ts^2) + 4*zeta*omega_n/Ts + omega_n^2;
 D_1 = -8/(Ts^2) + 2*omega_n^2; 
 D_2 = 4/(Ts^2) - 4*zeta*omega_n/Ts + omega_n^2; 
 
-% PD gains (inner loop)
+% PD gains (inner loop) 
+% TODO: recompute 
 K_omega = 28.0; 
 K_eta = 10.7;
 
 % PD gains (outer loop)
+% TODO: recompute 
 K_d_xi = 1.5;
 K_xi = 0.7;
 
