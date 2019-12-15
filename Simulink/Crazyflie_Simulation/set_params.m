@@ -8,8 +8,9 @@ close all
 % - X: Force nature (e.g gravitational (G), aerodynamical (A), propulsive (P) etc)
 % - Y Coordinate frame (e.g Body-Fixed (B), NED (O) etc)
 % 
-% Notation of other values: 
+% Notation of other values: (TODO)
 % - omegaR_X: vector of rotor angular velocities
+% - ...
 
 
 %% Dynamics
@@ -43,13 +44,26 @@ kz = 7.553e-4;      % drag constant in z-direction [kg/s]
 % Actuator dynamics 
 T = 1/15;           % Actuator time constant [s]
 
+% Matrices used for computation of the propulsive moment, G1 and G2
+M11 = [-b*k_f  b*k_f  b*k_f  -b*k_f
+        l*k_f  l*k_f -l*k_f  -l*k_f
+        k_m   -k_m    k_m    -k_m];
+    
+M12 = [I_rzz  -I_rzz  I_rzz  -I_rzz 
+      -I_rzz   I_rzz -I_rzz   I_rzz 
+         0       0      0       0 ];
+     
+M2 =  [  0       0      0       0 
+         0       0      0       0 
+       I_rzz  -I_rzz  I_rzz  -I_rzz];
+
 
 %% Controller 
 
 % Filter parameters and coefficients
 omega_n = 50;       % in [rad/s]
-zeta = 0.55;        % 
-Ts = 0.001;          % sample time in [s]
+zeta = 0.55;        
+Ts = 0.01;          % sample time in [s]
 
 N_0 = omega_n^2;
 N_1 = 2*omega_n^2;
@@ -60,30 +74,11 @@ D_1 = -8/(Ts^2) + 2*omega_n^2;
 D_2 = 4/(Ts^2) - 4*zeta*omega_n/Ts + omega_n^2; 
 
 % PD gains (inner loop) 
-% TODO: recompute 
-K_omega = 28.0; 
-K_eta = 10.7;
+K_omega = 10; 
+K_eta = 4;
 
 % PD gains (outer loop)
-% TODO: recompute 
 K_d_xi = 1.5;
 K_xi = 0.7;
-
-
-%% Test
-
-%Check if manually transformed H(s) corresponds to the one computed with
-%matlab
-
-% s = tf('s');
-% z = tf('z', Ts);
-% 
-% H = omega_n^2/(s^2 + 2*zeta*omega_n*s + omega_n^2);
-% Hz = tf( (N_0/D_0*z^2 + N_1/D_0*z + N_2/D_0)/((z^2 + D_1/D_0*z + D_2/D_0)));
-% Hzm = c2d(H, Ts, 'tustin')
-% 
-% step(H, Hz, Hzm)
-% legend('H', 'Hz', 'Hzm')
-
 
 
