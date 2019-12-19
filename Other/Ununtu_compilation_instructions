@@ -1,0 +1,21 @@
+Compilation in Terminal:
+
+- Install following C compiler in preffered directory: gnu-rm/8-2019q3/RC1.1/gcc-arm-none-eabi-8-2019-q3-update-linux.tar.bz2:
+	- wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/8-2019q3/RC1.1/gcc-arm-none-eabi-8-2019-q3-update-linux.tar.bz2?revision=c34d758a-be0c-476e-a2de-af8c6e16a8a2?product=GNU%20Arm%20Embedded%20Toolchain,64-bit,,Linux,8-2019-q3-update -O gcc-arm-none-eabi-8-2019-q3-update-linux.tar.bz2
+	- sudo tar --strip-components=1 -xf gcc-arm-none-eabi-8-2019-q3-update-linux.tar.bz2
+
+- Add this directorys path to the system variables (https://www.youtube.com/watch?v=JLjF75b-vMI&t=1s)
+	- Add path to /etc/environment file
+	- Add following to .bashrc file:
+		export GCC_ARM_PATH=/home/evgheniivolodscoi/gcc_arm_embedded/bin
+		export PATH=$PATH:$GCC_ARM_PATH
+- Navigate to crazyflie-firmware project and compile:
+	- make clean 
+	- make
+- Flash cf2.bin file to the copter
+
+Compilation in Eclipse:
+
+- Install Eclipse with Eclipse installer
+- Install C/C++ Package for exlipse through eclipse 
+- Create "Makefile project with source file" in Eclipse

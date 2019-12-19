@@ -42,7 +42,8 @@ ky = 10.25e-4;      % drag constant in y-direction [kg/s]
 kz = 7.553e-4;      % drag constant in z-direction [kg/s]
 
 % Actuator dynamics 
-T = 1/15;           % Actuator time constant [s]
+T = 1/15;                          % Actuator time constant [s]
+omegaR_init = [1; 1; 1; 1]*200;    % Initial rotor angular velocity [rad/s]
 
 % Matrices used for computation of the propulsive moment, G1 and G2
 M11 = [-b*k_f  b*k_f  b*k_f  -b*k_f
@@ -72,6 +73,9 @@ N_2 = omega_n^2;
 D_0 = 4/(Ts^2) + 4*zeta*omega_n/Ts + omega_n^2; 
 D_1 = -8/(Ts^2) + 2*omega_n^2; 
 D_2 = 4/(Ts^2) - 4*zeta*omega_n/Ts + omega_n^2; 
+
+% Outer INDI
+T_init = m_CF*0,1;      % T(t=0)!=0, prevents landing in singularity
 
 % PD gains (inner loop) 
 K_omega = 10; 
