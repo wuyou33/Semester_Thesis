@@ -64,7 +64,7 @@ M2 =  [  0       0      0       0
 % Filter parameters and coefficients
 omega_n = 50;       % in [rad/s]
 zeta = 0.55;        
-Ts = 0.01;          % sample time in [s]
+Ts = 1/500;          % sample time in [s]
 
 N_0 = omega_n^2;
 N_1 = 2*omega_n^2;
@@ -75,7 +75,7 @@ D_1 = -8/(Ts^2) + 2*omega_n^2;
 D_2 = 4/(Ts^2) - 4*zeta*omega_n/Ts + omega_n^2; 
 
 % Outer INDI
-T_init = m_CF*0,1;      % T(t=0)!=0, prevents landing in singularity
+T_init = m_CF*0.1;      % T(t=0)!=0, prevents landing in singularity
 
 % PD gains (inner loop) 
 K_omega = 10; 

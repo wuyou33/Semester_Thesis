@@ -1,0 +1,418 @@
+% This is one possible realization of the official FSD Microsoft Word template. The title page has to be filled in in Microsoft Word environment and saved as a PDF file. Note, that in the header and footer the name of the author and the thesis topic have to be provided. 
+%
+% Compile Template in following order:
+%
+% pdflatex Paper_EV
+% makeindex Paper_EV.nlo -s nomencl.ist -o Paper_EV.nls (Table of Symbols)
+% makeindex Paper_EV.acn -s Paper_EV.ist -t Paper_EV.alg -o Paper_EV.acr (Table of Acronyms)
+% makeindex Paper_EV.glo -s Paper_EV.ist -t Paper_EV.glg -o Paper_EV.gls
+% pdflatex Paper_EV
+% pdflatex Paper_EV
+%
+%
+%#################################################################################
+%#################################################################################
+%#################################################################################
+
+% Preamble
+\documentclass[11pt, a4paper, twoside]{report}
+
+% Define page layout
+\usepackage[
+ left=2.5cm,
+ right=2.5cm,
+ top=2.5cm,
+ bottom=3cm]
+{geometry}
+
+% Package for defining the default font size
+% We use Helvetica as an alternative to Arial
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+%alternatively one can use Arial package and compile with XeLaTEX
+%\usepackage{fontspec}
+%\setmainfont{Arial}
+
+% Set line spacing to 1.15pt
+\renewcommand{\baselinestretch}{1.15}
+
+% Set spacing between paragraphs to be 10pt
+\setlength{\parskip}{10pt}
+
+% Set paragraph intendation (here 0pt, no intendation)
+\setlength{\parindent}{0pt}
+
+% Package for estimating the last page
+\usepackage{pageslts}
+
+% Package and settings for adding header/footer
+\usepackage{fancyhdr}
+
+% Set style for pages with arabic numbering 
+% This block prints only the chapter number and the chapter name, not the word "Chapter"
+%\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\ \thechapter. \ #1}}{}}
+% Clear current page style 
+\fancyhf{}
+% Head (11 pt font size and 12 pt line spacing)
+\fancyhf[HRE,HLO]{\includegraphics[width=2.5cm]{figs/fsd}}
+\fancyhf[HRO,HLE]{\fontsize{11}{12}\selectfont \leftmark}
+% Foot (11 pt font size and 12 pt line spacing)
+\fancyhf[FRE,FLO]{\fontsize{11}{12}\selectfont Design, Implem. and Eval. of an INDI Controller for a Nano-Quadrotor\\\vspace*{0.1cm}Evghenii Volodscoi}
+\fancyhf[FLE,FRO]{\fontsize{11}{12}\selectfont Page \thepage \thinspace / \lastpageref{LastPages}}
+% Line settings
+\renewcommand{\headrulewidth}{0.1pt}	%upper line
+\renewcommand{\footrulewidth}{0.1pt}	%lower line
+
+% Set style for pages with roman numbering 
+\fancypagestyle{fancy_beginning}{%
+%\pagestyle{fancy}
+% Clear current page style 
+\fancyhf{}%
+% Head
+\fancyhf[HRE,HLO]{\includegraphics[width=2.5cm]{figs/fsd}}%
+\fancyhf[HRO,HLE]{\fontsize{11}{12}\selectfont \leftmark}%
+% Foot
+\fancyhf[FRE,FLO]{\fontsize{11}{12}\selectfont Design, Implem. and Eval. of an INDI Controller for a Nano-Quadrotor\\\vspace*{0.1cm}Evghenii Volodscoi}%
+\fancyhf[FLE,FRO]{\fontsize{11}{12}\selectfont Page \thepage}%
+% Line settings
+\renewcommand{\headrulewidth}{0.1pt}%	%upper line
+\renewcommand{\footrulewidth}{0.1pt}%	%lower line
+}
+
+% Package for inserting titel page
+\usepackage{pdfpages}
+
+% Package for changing distance between sections
+\usepackage{titlesec} 
+
+% Package for setting up the caption options of figures
+\usepackage{subcaption}
+
+% Package prevents placing floats before a section (for not mooving figures)
+\usepackage{float}
+
+% TODO
+% Package for using acronyms 
+%\usepackage[printonlyused]{acronym}
+%\renewcommand\acsfont{\textnormal}	% Set non-bold font of the acronym units
+
+% This patch removes the insertion of \addvspace to both the LoF and the LoT; the cause of the additional gap between entries on a per-chapter basis
+\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
+\makeatletter
+% \patchcmd{<cmd>}{<search>}{<replace>}{<succes>}{<failure>}
+\patchcmd{\@chapter}{\addtocontents{lof}{\protect\addvspace{10\p@}}}{}{}{}% LoF
+\patchcmd{\@chapter}{\addtocontents{lot}{\protect\addvspace{10\p@}}}{}{}{}% LoT
+\makeatother
+
+% Set chapter font size and spacing
+\newcommand{\chapfnt}{\fontsize{14}{19}}
+\titleformat{\chapter}
+{\normalfont\chapfnt\bfseries}{\thechapter}{1em}{\chapfnt} 	% set font size
+\titlespacing{\chapter}{0cm}{-1.2cm}{0cm}					% set spacing
+
+% Set section font size (13pt) and spacing
+\newcommand{\secfnt}{\fontsize{13}{19}}
+\titleformat{\section}
+{\normalfont\secfnt\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0cm}{0.3cm}{0cm}					% set spacing
+
+% Package for edditing TOC, LOF and LOT
+\usepackage[titles]{tocloft}
+
+% Package for setting itemization/description parameters like indentation of items
+\usepackage{enumitem}
+
+% Package for acronyms
+\usepackage[acronym, automake, nopostdot, nogroupskip]{glossaries}
+\setlength{\LTleft}{-0.15cm}			% left justified
+\renewcommand*{\arraystretch}{1.4}		% vertical distance between entries, default is 1
+% List
+\newacronym{ADF}{ADF}{Automatic Direction Finder}
+\newacronym{ADI}{ADI}{Automatic Direction Indicator}
+% Make gls
+\renewcommand*\entryname{Acronym}
+\makeglossaries
+
+% Package for setting up the list of symbols
+%https://tex.stackexchange.com/questions/112884/how-to-achieve-nomenclature-entries-like-symbol-description-dimension-and-uni
+\usepackage{nomencl,etoolbox,ragged2e,siunitx}
+%
+\newcommand{\DimensUnits}[2]{\makebox[1em]{#1}\makebox[4em]{#2\hfill}\ignorespaces}
+\newcommand{\insertnomheaders}{\item[\bfseries Symbol]\DimensUnits{}{\textbf{Unit}}\textbf{Description}}
+%
+\renewcommand\nomgroup[1]{%
+  \item[\large\bfseries
+  \ifstrequal{#1}{A}{Acronyms}{%
+  \ifstrequal{#1}{B}{Latin Letters}{%
+  \ifstrequal{#1}{G}{Greek Letters}{%
+  \ifstrequal{#1}{S}{Indices}{% 
+  \ifstrequal{#1}{U}{Subscripts}{%   
+  \ifstrequal{#1}{X}{Other Symbols}{}}}}}}]
+  \insertnomheaders
+  }
+%
+\renewcommand*{\nompreamble}{\markboth{\nomname}{\nomname}}
+% parbox - Description
+\newcommand{\nomdescr}[1]{\parbox[t]{10cm}{\RaggedRight #1}}
+\newcommand{\nomwithdim}[5]{\nomenclature[#1]{#2}{\DimensUnits{}{#5}\nomdescr{#3}}}
+%
+\makenomenclature
+
+
+%#################################################################################%#################################################################################%#################################################################################
+
+\begin{document}
+
+% Activate roman page numbering
+\pagenumbering{roman}
+
+% Insert title page
+\includepdf[pages={1}]{figs/Title_page.pdf}
+
+%Insert empty page after title page
+\newpage\null\thispagestyle{empty}\newpage
+
+
+% For some reason fisrt chapter has a different vert. spacing from the top, so we add additional 0.8cm, starred command makes sure it will not be suppressed at the beginning or at the end of the page
+\vspace*{-0.8cm}
+\section*{Statutory Declaration}
+I, Evghenii Volodscoi, declare on oath towards the Institute of Flight System Dynamics of Technische Universität München, that I have prepared the present Semester Thesis independently and with the aid of nothing but the resources listed in the bibliography.
+\\
+\\
+This thesis has neither as-is nor similarly been submitted to any other university.
+\bigskip
+\\
+\\
+Garching, 
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Statutory Declaration}
+
+%Insert empty page after statutory declaration section
+\newpage\null\thispagestyle{empty}\newpage
+
+\section*{Kurzfassung} \label{sec:kurzfassung}
+% Start cursive block
+\begin{itshape}
+Deutsche Kurzfassung der Arbeit.
+\end{itshape}
+
+
+% Add Abstract chapter to the same page as Kurzfassung
+{\let\clearpage\relax\section*{Abstract}}
+% Start cursive block
+\begin{itshape}
+English abstract of the thesis.
+\end{itshape}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Abstract}
+
+%Insert empty page after abstract page
+\newpage\null\thispagestyle{empty}\newpage
+
+
+
+% Add Table of Contents 
+\setlength{\cftbeforechapskip}{0.2cm}			% space before chapters
+\renewcommand\cftchapafterpnum{\vskip-0.4cm}	% space after chapters
+\renewcommand\cftsecafterpnum{\vskip-0.4cm}		% space after sections
+\renewcommand\cftsubsecafterpnum{\vskip-0.4cm}	% space after subsections	
+\renewcommand{\cftchapfont}{\normalfont}		% set normal font, not bold
+%\titleformat{\section}{\fontsize{14}{19}}	 	% ?
+ 
+\renewcommand*\contentsname{Table of Contents}  % Change the defaulf name "Contents" to "Table of Contents"  
+\tableofcontents								% Generate Table of Contents
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Contents}
+
+%Insert empty page after table of contents
+\newpage\null\thispagestyle{empty}\newpage
+
+% Add List of Figures  
+\renewcommand{\cftfigfont}{Figure }				% Add "Figure" to the LOF
+\renewcommand\cftfigaftersnum{:} 				% Put ":" after the figure num 
+\setlength{\cftfigindent}{0pt}					% Remove left indent 
+\setlength\cftbeforefigskip{-0.2cm}				% Space between figures 
+\addtocontents{lof}{\vspace*{10pt}}			    % Set distance between LOF title and list
+\listoffigures
+%\setlength{\cftbeforeloftitleskip}{0cm}		% ? 
+%\setlength\cftafterloftitleskip{-2cm}
+
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{List of Figures}
+
+%Insert empty page after table the list of figures
+\newpage\null\thispagestyle{empty}\newpage
+
+% Add List of Tables
+\renewcommand{\cfttabfont}{Table }				% Add "Figure" to the LOF
+\renewcommand\cfttabaftersnum{:} 				% Put ":" after the figure num 
+\setlength{\cfttabindent}{0pt}					% Remove left indent
+\setlength\cftbeforetabskip{-0.2cm}				% Space between tables
+\addtocontents{lot}{\vspace*{10pt}}			    % Set distance between LOT title and list
+\listoftables{}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{List of Tables}
+
+%Insert empty page after the list of tables 
+\newpage\null\thispagestyle{empty}\newpage
+
+% Print table of acronyms
+\printglossary[type=\acronymtype, title={Table of Acronyms}, nonumberlist, style=longheader]
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Acronyms}
+
+%Insert empty page after table of acronyms
+\newpage\null\thispagestyle{empty}
+
+% Add Table of Symbols
+%\chapter*{Table of Symbols} \label{sec:symbols}
+\mbox{}
+\nomwithdim{B}{\( F \)}{Force}{L}{$N$}
+\nomwithdim{B}{\( g \)}{Gravitational acceleration}{}{$m/s^2$}
+\nomwithdim{G}{\( \alpha \)}{Angle of attack}{}{$rad$}
+\nomwithdim{G}{\( \zeta \)}{Damping of a linear second order system}{}{--}
+\nomwithdim{S}{\( m \)}{Variable related to pitch moment}{}{}
+\nomwithdim{S}{\( W \)}{Wind}{}{}
+\renewcommand{\nomname}{Table of Symbols}
+\printnomenclature[6em]
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Symbols}
+
+%Insert empty page after table of symbols
+\newpage\null\thispagestyle{empty}\newpage
+
+% Beginning of the core text 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Activate arabic page numbering from here on
+\pagenumbering{arabic}
+
+% Delete the word "Chapter" leaving only the number of the chapter
+\titleformat{\chapter}
+{\normalfont\chapfnt\bfseries}{\thechapter}{1em}{\chapfnt} 	% set font size
+\titlespacing*{\chapter}{0cm}{-1.2cm}{0cm}					% set spacing
+
+% Set subsection font size (11pt) and spacing
+\newcommand{\ssecfnt}{\fontsize{11}{14}}
+\titleformat{\subsection}
+{\normalfont\ssecfnt\bfseries}{\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0cm}{-0cm}{0cm}					% set spacing
+
+% Activate default fancy design (chapter number, chapter)
+\pagestyle{fancy} 
+\renewcommand{\chaptermark}[1]{\markboth{\ \thechapter \ #1}{}}
+
+% Change separator in the figure and table captures from "." to "-"
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+\renewcommand{\thetable}{\thechapter-\arabic{table}}
+
+
+
+\chapter{Introduction} \label{cha:introduction}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Introduction}
+
+\section{Motivation} \label{sec:motivation}
+
+\section{Contribution of the Thesis} \label{sec:contribution_ofthe_thesis}
+
+\section{Structure of the Thesis} \label{sec:structure_ofthe_thesis} 
+
+
+
+\chapter{Theoretical Background} \label{cha:theoretical_background}
+
+\section{Nonlinear Dynamic Inversion} \label{sec:ndi}
+
+\section{Incremental Nonlinear Dynamic Inversion} \label{sec:indi}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Theoretical Background}
+
+
+
+\chapter{Implementation} \label{cha:implementation}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Implementation}
+
+\section{Research Quadrotor} \label{sec:research_quadrotor}
+
+\section{Simulink Model} \label{sec:simulink_model}
+
+\subsection{Purpose} \label{subsec:purpose}
+
+\subsection{Structure} \label{subsec:Structure}
+
+\subsection{Simulation Results} \label{subsec:simulation_results}
+
+\section{Implementation on Hardware} \label{sec:implementation_on_hardware}
+
+\subsection{Testing with contact Forces and Moments} \label{subsec:testing_with_fandm}
+
+\chapter{Results} \label{cha:results}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Results}
+
+
+
+\chapter{Discussion} \label{cha:discussion}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Discussion}
+
+\newpage
+
+% Activate and reset roman page numbering
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% Add references
+\renewcommand\bibname{References}		% Rename Bibliography to References
+\bibliographystyle{plain}
+\bibliography{Literature}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{References}
+
+\chapter*{Appendix} \label{sec:appendix}
+% Add Appendix chapter manually to the Table of Contents because Latex doesn't automatically include nonnumerated (...*) chapters/sections to the TOC
+\addcontentsline{toc}{chapter}{Appendix}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Appendix}
+
+% End of the document
+\end{document}
