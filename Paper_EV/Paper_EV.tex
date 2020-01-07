@@ -9,6 +9,8 @@
 % pdflatex Paper_EV
 % pdflatex Paper_EV
 %
+% TODO:
+% - Title page: Dr. -> Dr. ir.
 %
 %#################################################################################
 %#################################################################################
@@ -345,9 +347,31 @@ English abstract of the thesis.
 
 \chapter{Theoretical Background} \label{cha:theoretical_background}
 
+\section{General Equations of Motion} \label{sec:eqs_motion}
+General: \\
+- Linear Momentum\\
+- Angular Momentum\\
+- Attitude differential equations\\
+- Position differential equations\\
+- External forces and moments
+
+with some of the used assumptions
+
 \section{Nonlinear Dynamic Inversion} \label{sec:ndi}
 
+- Theory from Sieberling paper.
+
 \section{Incremental Nonlinear Dynamic Inversion} \label{sec:indi}
+
+- Here only the general principle is provided, next subsections show the full derivation of the two controller loops.
+
+\subsection{INDI inner loop} \label{subsec: indi_inner}
+
+- Derivation of the inner INDI loop (detailed equations).
+
+\subsection{INDI outer loop} \label{subsec: indi_outer}
+
+- Derivation of the outer INDI loop (detailed equations).
 
 % Manually add Chapter names to the header (per default not included by Latex)
 \thispagestyle{fancy}
@@ -363,15 +387,27 @@ English abstract of the thesis.
 
 \section{Research Quadrotor} \label{sec:research_quadrotor}
 
+- Some facts about Crazyflie hardware (foto, uC frequency, weight, length)
+
 \section{Simulink Model} \label{sec:simulink_model}
 
 \subsection{Purpose} \label{subsec:purpose}
 
+- Estimation of relevant components (Matrices...)\\
+- Testing of the PD-gains\\
+- Testing the filter
+
 \subsection{Structure} \label{subsec:Structure}
+- Parameters\\
+- Actuator dynamics\\
+- Filter\\
+- Images of the Simulink model
 
 \subsection{Simulation Results} \label{subsec:simulation_results}
 
 \section{Implementation on Hardware} \label{sec:implementation_on_hardware}
+
+\subsection{Structure of the Code} \label{subsec:structure_ofthe_code}
 
 \subsection{Testing with contact Forces and Moments} \label{subsec:testing_with_fandm}
 
