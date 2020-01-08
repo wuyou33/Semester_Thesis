@@ -1,22 +1,22 @@
-\contentsline {chapter}{\numberline {1}Introduction}{1}%
-\contentsline {section}{\numberline {1.1}Motivation}{1}%
-\contentsline {section}{\numberline {1.2}Contribution of the Thesis}{1}%
-\contentsline {section}{\numberline {1.3}Structure of the Thesis}{1}%
-\contentsline {chapter}{\numberline {2}Theoretical Background}{2}%
-\contentsline {section}{\numberline {2.1}General Equations of Motion}{2}%
-\contentsline {section}{\numberline {2.2}Nonlinear Dynamic Inversion}{2}%
-\contentsline {section}{\numberline {2.3}Incremental Nonlinear Dynamic Inversion}{2}%
-\contentsline {subsection}{\numberline {2.3.1}INDI inner loop}{2}%
-\contentsline {subsection}{\numberline {2.3.2}INDI outer loop}{2}%
-\contentsline {chapter}{\numberline {3}Implementation}{3}%
-\contentsline {section}{\numberline {3.1}Research Quadrotor}{3}%
-\contentsline {section}{\numberline {3.2}Simulink Model}{3}%
-\contentsline {subsection}{\numberline {3.2.1}Purpose}{3}%
-\contentsline {subsection}{\numberline {3.2.2}Structure}{3}%
-\contentsline {subsection}{\numberline {3.2.3}Simulation Results}{3}%
-\contentsline {section}{\numberline {3.3}Implementation on Hardware}{3}%
-\contentsline {subsection}{\numberline {3.3.1}Structure of the Code}{3}%
-\contentsline {subsection}{\numberline {3.3.2}Testing with contact Forces and Moments}{3}%
-\contentsline {chapter}{\numberline {4}Results}{4}%
-\contentsline {chapter}{\numberline {5}Discussion}{5}%
-\contentsline {chapter}{Appendix}{i}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {1.1}Motivation}{1}
+\contentsline {section}{\numberline {1.2}Contribution of the Thesis}{1}
+\contentsline {section}{\numberline {1.3}Structure of the Thesis}{1}
+\contentsline {chapter}{\numberline {2}Theoretical Background}{2}
+\contentsline {section}{\numberline {2.1}General Equations of Motion}{2}
+\contentsline {section}{\numberline {2.2}Nonlinear Dynamic Inversion}{2}
+\contentsline {section}{\numberline {2.3}Incremental Nonlinear Dynamic Inversion}{3}
+\contentsline {subsection}{\numberline {2.3.1}INDI inner loop}{3}
+\contentsline {subsection}{\numberline {2.3.2}INDI outer loop}{3}
+\contentsline {chapter}{\numberline {3}Implementation}{4}
+\contentsline {section}{\numberline {3.1}Research Quadrotor}{4}
+\contentsline {section}{\numberline {3.2}Simulink Model}{4}
+\contentsline {subsection}{\numberline {3.2.1}Purpose}{4}
+\contentsline {subsection}{\numberline {3.2.2}Structure}{4}
+\contentsline {subsection}{\numberline {3.2.3}Simulation Results}{4}
+\contentsline {section}{\numberline {3.3}Implementation on Hardware}{4}
+\contentsline {subsection}{\numberline {3.3.1}Structure of the Code}{4}
+\contentsline {subsection}{\numberline {3.3.2}Testing with contact Forces and Moments}{4}
+\contentsline {chapter}{\numberline {4}Results}{5}
+\contentsline {chapter}{\numberline {5}Discussion}{6}
+\contentsline {chapter}{Appendix}{i}
