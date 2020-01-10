@@ -1,0 +1,24 @@
+\begin{thebibliography}{1}
+
+\bibitem{Slotine}
+J.J.E. Slotine and Weiping Li.
+\newblock {\em Applied Nonlinear Control}.
+\newblock Prentice-Hall, Inc, Upper Saddle River, New Jersey 07458, 1991.
+
+\bibitem{Horn}
+J.F. Horn.
+\newblock Non-linear dynamic inversion control design for rotorcraft.
+\newblock {\em https://www.mdpi.com/journal/aerospace}, 2019.
+
+\bibitem{Sieberling}
+S.~Sieberling, J.A. Mulder, and Q.P. Chu.
+\newblock Robust flight control using incremental nonlinear dynamic inversion
+  and angular acceleration prediction.
+\newblock {\em Journal of Guidance Control and Dynamics, 33.2010 no.6}, 2010.
+
+\bibitem{Silva}
+Eduardo~Sim{\~o}es Silva.
+\newblock Incremental nonlinear dynamic inversion for quadrotor control.
+\newblock 2015.
+
+\end{thebibliography}

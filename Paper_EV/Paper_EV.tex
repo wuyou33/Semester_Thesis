@@ -116,7 +116,7 @@
 \newcommand{\chapfnt}{\fontsize{14}{19}}
 \titleformat{\chapter}
 {\normalfont\chapfnt\bfseries}{\thechapter}{1em}{\chapfnt} 	% set font size
-\titlespacing{\chapter}{0cm}{-1.2cm}{0cm}					% set spacing
+\titlespacing{\chapter}{0cm}{-7mm}{0cm}					% set spacing
 
 % Set section font size (13pt) and spacing
 \newcommand{\secfnt}{\fontsize{13}{19}}
@@ -319,7 +319,7 @@ English abstract of the thesis.
 % Delete the word "Chapter" leaving only the number of the chapter
 \titleformat{\chapter}
 {\normalfont\chapfnt\bfseries}{\thechapter}{1em}{\chapfnt} 	% set font size
-\titlespacing*{\chapter}{0cm}{-1.2cm}{0cm}					% set spacing
+\titlespacing*{\chapter}{0cm}{-7mm}{0cm}					% set spacing
 
 % Set subsection font size (11pt) and spacing
 \newcommand{\ssecfnt}{\fontsize{11}{14}}
@@ -353,6 +353,10 @@ English abstract of the thesis.
 
 \chapter{Theoretical Background} \label{cha:theoretical_background}
 
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Theoretical Background}
+
 \section{General Equations of Motion} \label{sec:eqs_motion}
 General: \\
 - Linear Momentum\\
@@ -365,17 +369,17 @@ with some of the used assumptions
 
 \section{Nonlinear Dynamic Inversion} \label{sec:ndi}
 
-In this subsection, the \acrfull{NDI} method is explained. \acrshort{NDI} is based on feedback linearization and is also called \textit{Input-Output Linearization}. This method is often involved in tracking control tasks, where objective is to track some desired trajectory. (cite-tag Slotine) To show it in practice, consider following nonlinear system
+In this subsection, the \acrfull{NDI} method is explained. The \acrshort{NDI} approach is based on feedback linearization and is also called \textit{Input-Output Linearization}. Often, such type of controllers is involved in tracking control tasks, where objective is to track some desired trajectory \cite{Slotine}. To derive it, consider the following nonlinear system
 \begin{subequations}
 	\begin{align}
-		&\bm{\dot{x}} = \bm{f(x)} + \bm{G(x)}\bm{u} \\
-		&\bm{y} = \bm{h(x)}
-		\label{eq:nonlin_sys}
+		&\bm{\dot{x}} = \bm{f(x)} + \bm{G(x)}\bm{u} \label{eq:nonlin_sys1} \\
+		&\bm{y} = \bm{h(x)} \label{eq:nonlin_sys2}
 	\end{align}
+	\label{eq:nonlin_sys}
 \end{subequations}
-where $\bm{x}$ is the $n\times1$ state vector, $\bm{u}$ the $m\times1$ input vector, $\bm{y}$ the $m\times1$ system output vector, $\bm{f(x)}$ and $\bm{h(x)}$ nonlinear vector fields and $\bm{G}$ an $m\times n$ matrix. Note that the system presented in Equation (\ref{eq:nonlin_sys}) is affine in the input, which is not allways the case. To deal with this problem the system can be transformed into nonlinear normal (canonical) form through the state transformation.
+where $\bm{x}$ is the $n\times1$ state vector, $\bm{u}$ the $m\times1$ input vector, $\bm{y}$ the $m\times1$ system vector, $\bm{f(x)}$ and $\bm{h(x)}$ nonlinear vector fields and $\bm{G}$ an $m\times n$ input matrix. Note that the system presented in Equations (\ref{eq:nonlin_sys}) is affine in the input, which is not allways fulfilled. Using a state transformation $\bm{z = \phi(x)}$, the affine system from Equation \ref{eq:nonlin_sys1} can be transformed into normal (canonical) representation. 
 
-The idea behind the input-output linearization method is to find a direct relationship between the desired system output and the control input and then invert it. To generate this relationship the output $\bm{y}$ is differentiated until the input $\bm{u}$ appears
+The core idea behind the input-output linearization method is to find a direct relationship between the desired system output and the control input. After the relationship is found it is inverted to generate the control law. To derive this relationship the output $\bm{y}$ is differentiated until the input $\bm{u}$ appears
 \begin{equation}
 	\begin{split}
 		\dot{\bm{y}} &=  \frac{\partial\bm{y}}{\partial t} = \frac{\partial\bm{h(x)}}{\partial t} \frac{\partial\bm{x}}{\partial t} = \frac{\partial\bm{h(x)}}{\partial t} \dot{\bm{x}} = \nabla\bm{h(x)} [\bm{f(x)} + \bm{G(x)}\bm{u}] \\
@@ -383,7 +387,8 @@ The idea behind the input-output linearization method is to find a direct relati
 		\label{eq:dy}
 	\end{split}
 \end{equation}
-In Equation (\ref{eq:dy}) $L_{\bm{f}} \bm{h(x)}$ is called Lie derivative of $\bm{h(x)}$ with respect to $\bm{f(x)}$. The Lie derivative is defined as $L_{\bm{f}} \bm{h(x)} = \nabla\bm{h(x)} \bm{f(x)}$ with $\nabla$ being the Nabla operator. Thus, it represents a directional derivative of $\bm{h(x)}$ along the direction of the vector field $\bm{f(x)}$. If the term $L_{\bm{G}} \bm{h(x) u}$ is not zero, the relationship between input and output is
+
+In Equation (\ref{eq:dy}) $L_{\bm{f}} \bm{h(x)}$ is called Lie derivative of $\bm{h(x)}$ with respect to $\bm{f(x)}$. The Lie derivative is defined as $L_{\bm{f}} \bm{h(x)} = \nabla\bm{h(x)} \bm{f(x)}$ with $\nabla$ being the Nabla operator. Thus, it represents a directional derivative of $\bm{h(x)}$ along the direction of the vector field $\bm{f(x)}$. If the term $L_{\bm{G}} \bm{h(x)}$ is nonzero, the relationship between input and output is
 \begin{equation}
 	\begin{split}
 		\dot{\bm{y}} = L_{\bm{f}} \bm{h(x)} + L_{\bm{G}} \bm{h(x) u} 
@@ -398,35 +403,70 @@ Now Equation (\ref{eq:dy_u_rel}) can be used to formulate the control law by sol
 		\label{eq:u_control_law}
 	\end{split}
 \end{equation}
-The variable $\bm{\nu}$ is called an \textit{equivalent input}. It represents the desired output of the system. 
+The variable $\bm{\nu}$ is called an \textit{equivalent input} and represents the desired output of the system. 
 
-In the example provided above the input-output relationsip was found after the first differentiation of the output. If this is not the case and the term $L_{\bm{G}}\bm{h(x)}$ is zero, output $\bm{y}$ has to be differentiated until the Lie derivative with respect to $\bm{G}$ is nonzero
+In the example provided above the input-output relationsip was found after the first differentiation of the output $\bm{y}$. But if after the first differentiation the term $L_{\bm{G}}\bm{h(x)}$ is zero, output $\bm{y}$ has to be differentiated until the Lie derivative with respect to $\bm{G}$ is nonzero. The $i$-th derivative of the output is then
 \begin{equation}
 	\begin{split}
 		\frac{\partial^i\bm{y}}{\partial t} = \frac{\partial^i\bm{h(x)}}{\partial t} = L_{\bm{f}}^i \bm{h(x)} + L_{\bm{G}} L_{\bm{f}}^{i-1} \bm{h(x) u}
 		\label{eq:dy_i}
 	\end{split}
 \end{equation}
-with $i$ being the \textit{relative degree} of the system. Using Equation (\ref{eq:dy_i}) to formulate the control law, leads to the following expression for $\bm{u}$
+with $i$ being the \textit{relative degree} of the system. Using Equation (\ref{eq:dy_i}) to formulate the control law, leads to the following expression for the control input $\bm{u}$
 \begin{equation}
 	\begin{split}
 		\bm{u} = L_{\bm{G}} L_{\bm{f}}^{i-1} \bm{h(x)}^{-1} (\bm{\nu} - L_{\bm{f}}^i\bm{h(x)}) 
 		\label{eq:u_control_law_i}
 	\end{split}
 \end{equation}
-Equation (\ref{eq:u_control_law_i}) applied to Equation (\ref{eq:dy_i}) yields the simple linear relation
+Thus, Equation (\ref{eq:u_control_law_i}) applied to Equation (\ref{eq:dy_i}) yields the simple linear relation
 \begin{equation}
 	\begin{split}
 		\bm{y}^i = \bm{\nu}
 		\label{eq:u_control_law_i}
 	\end{split}
 \end{equation}
-Despite wide usage (especially in the past of the flight control design) of the \acrshort{NDI} method and its numerrous extensions (cite-tag Horn), it also has drawbacks. The major one is that the control law derived with \acrshort{NDI} is dependend on the dynamics model and its uncertainties. As shown in the previous chapter (cite-tag prev-chapter), the equations of motion of an aircraft usually have a complicated nonlinear character. Thus, creating a perfectly aqurate model of the aircraft is not an easy task. To overcome this obstacle an extension of the \acrshort{NDI} method called \acrshort{INDI} can be incorporated. 
+Despite wide usage (especially in the past of the flight control) of the \acrshort{NDI} method and its numerrous extensions (cite-tag Horn), it also has drawbacks. 
 
+The \acrshort{NDI} method was widely adopted for civil and military aircrafts and has numerous of extensions \cite{Horn}. Nevertheless, it has some drawbacks. The major one is that the control law derived using the \acrshort{NDI} approach is dependent on the full system dynamics model \cite{Sieberling}. As shown in the previous chapter (cite-tag prev-chapter), the equations of motion of an aircraft usually have a complicated nonlinear character. Thus, describing complex physical phenomena often leads to the inconsistency between the real aircraft and its mathematical representation used in the model. As some of those inconsistencies are inevitable there is a need to build a control law which performance is less dependent on the uncertainties of the model. This method is called \acrfull{INDI} and will be discussed in the next subsection.
 
 \section{Incremental Nonlinear Dynamic Inversion} \label{sec:indi}
 
-- Here only the general principle is provided, next subsections show the full derivation of the two controller loops.
+The \acrshort{INDI} is an incremental form of the \acrshort{NDI} for which the lack of the accurate system dynamics model does not critically affect the performance of the control algorithm \cite{Silva}. The incremental form of the system can be obtained by taking a Taylor series expansion of the Equation \ref{eq:nonlin_sys1}
+\begin{equation}
+	\begin{split}
+		\bm{\dot{x}} &= \bm{f(x_0)} + \bm{G(x_0)}\bm{u_0} \\
+		&+ \frac{\partial}{\partial \bm{x}} [\bm{f(x)} + \bm{G(x)}\bm{u}] \bigg|_{\bm{x=x_0,u=u_0}} (\bm{x-x_0}) \\
+		&+ \frac{\partial}{\partial \bm{u}} [\bm{f(x)} + \bm{G(x)}\bm{u}] \bigg|_{\bm{x=x_0,u=u_0}} (\bm{u-u_0}) 
+		\label{eq:nonlin_sys_taylor}
+	\end{split}
+\end{equation}
+The first term on the right side of the Equation \ref{eq:nonlin_sys_taylor} is $\bm{\dot{x}_0}$. Also, evaluating the differentiation of the third term leads to 
+\begin{equation}
+	\begin{split}
+		\bm{\dot{x}} &= \bm{\dot{x}_0} \\ 
+		&+ \frac{\partial}{\partial \bm{x}} [\bm{f(x)} + \bm{G(x)}\bm{u}] \bigg|_{\bm{x=x_0,u=u_0}} (\bm{x-x_0}) \\
+		&+ \bm{G(x_0)} (\bm{u-u_0}) 
+		\label{eq:nonlin_sys_taylor2}
+	\end{split}
+\end{equation}
+The second term of the Equation \ref{eq:nonlin_sys_taylor2} contains partial derivative with respect to the state vector. Considering very small time increments of the controller loop and applying the \textit{principle of time scale separation} the second term vanishes. This is a valid assumption if the dynamics of the actuators is fast compared with the dynamics of the system. Thus, the Equation \ref{eq:nonlin_sys_taylor2} is further simplified to 
+\begin{equation}
+	\begin{split}
+		\bm{\dot{x}} = \bm{\dot{x}_0} + \bm{G(x_0)} (\bm{u-u_0}) 
+		\label{eq:nonlin_sys_indi}
+	\end{split}
+\end{equation}
+Solving Equation \ref{eq:nonlin_sys_indi} for $\bm{u}$ and substituting $\dot{\bm{y}}$ with $\bm{\nu}$, the \acrshort{INDI} control law can be obtained
+\begin{equation}
+	\begin{split}
+		\bm{u} = \bm{u_0} + \bm{G(x_0)^{-1}} (\bm{\nu} - \bm{\dot{x}_0})
+		\label{eq:u_control_law_indi}
+	\end{split}
+\end{equation}
+where $\bm{\dot{x}_0}$ is a measurable value from the previous step, $\bm{u_0}$ the control input from the previous step, $\bm{\nu}$ the reference value and $\bm{G(x_0)}$ the control effectiveness matrix. With $\bm{\Delta u=u-u_0}$ the control law from Equation \ref{eq:u_control_law_indi} represents an incremental version of the Equation \ref{eq:u_control_law}. This control law results in computing the increment $\bm{\Delta u}$ of the control input and adding it to the previous value $\bm{u_0}$, instead if computing complete control input command $\bm{u}$. As it is less dependent on the model of the system dynamics, it increases the robustness of the system \cite{Sieberling}.
+
+\subsection{General INDI} \label{subsec: indi_general}
 
 \subsection{INDI inner loop} \label{subsec: indi_inner}
 
@@ -435,10 +475,6 @@ Despite wide usage (especially in the past of the flight control design) of the 
 \subsection{INDI outer loop} \label{subsec: indi_outer}
 
 - Derivation of the outer INDI loop (detailed equations).
-
-% Manually add Chapter names to the header (per default not included by Latex)
-\thispagestyle{fancy}
-\chaptermark{Theoretical Background}
 
 
 
@@ -496,8 +532,8 @@ Despite wide usage (especially in the past of the flight control design) of the 
 
 % Add references
 \renewcommand\bibname{References}		% Rename Bibliography to References
-\bibliographystyle{plain}
-\bibliography{Literature}
+\bibliographystyle{unsrt}
+\bibliography{Lit/Literature}
 
 % Manually add Chapter names to the header (per default not included by Latex)
 \thispagestyle{fancy_beginning}

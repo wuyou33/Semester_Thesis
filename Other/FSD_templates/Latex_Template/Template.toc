@@ -1,10 +1,10 @@
-\contentsline {chapter}{\numberline {1}Introduction}{1}%
-\contentsline {section}{\numberline {1.1}General}{1}%
-\contentsline {section}{\numberline {1.2}Figures, tables and equations}{2}%
-\contentsline {chapter}{\numberline {2}Section 2}{4}%
-\contentsline {section}{\numberline {2.1}Subsection 2.1}{4}%
-\contentsline {subsection}{\numberline {2.1.1}Subsection 2.1.1}{4}%
-\contentsline {subsection}{\numberline {2.1.2}Subsection 2.1.2}{5}%
-\contentsline {section}{\numberline {2.2}Subsection 2.2}{6}%
-\contentsline {chapter}{\numberline {3}Conclusions and perspective}{8}%
-\contentsline {chapter}{Appendix}{i}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {1.1}General}{1}
+\contentsline {section}{\numberline {1.2}Figures, tables and equations}{2}
+\contentsline {chapter}{\numberline {2}Section 2}{4}
+\contentsline {section}{\numberline {2.1}Subsection 2.1}{4}
+\contentsline {subsection}{\numberline {2.1.1}Subsection 2.1.1}{4}
+\contentsline {subsection}{\numberline {2.1.2}Subsection 2.1.2}{5}
+\contentsline {section}{\numberline {2.2}Subsection 2.2}{6}
+\contentsline {chapter}{\numberline {3}Conclusions and perspective}{8}
+\contentsline {chapter}{Appendix}{i}

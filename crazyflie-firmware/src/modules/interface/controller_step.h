@@ -7,7 +7,7 @@
  *
  * Crazyflie control firmware
  *
- * Copyright (C) 2012-2019 BitCraze AB
+ * Copyright (C) 2011-2016 Bitcraze AB
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,16 +21,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * mem.h - Memory sub system
+ * controller_indi.h - INDI Controller Interface
  */
+#ifndef __CONTROLLER_STEP_H__
+#define __CONTROLLER_STEP_H__
 
-#ifndef __MEM_H__
-#define __MEM_H__
+#include "stabilizer_types.h"
+#include "filter.h"
+#include "math3d.h"
+#include "log.h"
+#include "param.h"
+#include "position_controller.h"
+#include "attitude_controller.h"
+#include "controller_indi.h"
 
-#include <stdbool.h>
+#define ATTITUDE_UPDATE_DT    (float)(1.0f/ATTITUDE_RATE)
 
-/* Public functions */
-void memInit(void);
-bool memTest(void);
+void controllerSTEPInit(void);
+bool controllerSTEPTest(void);
+void controllerSTEP(control_t *control, setpoint_t *setpoint,
+                                         const sensorData_t *sensors,
+                                         const state_t *state,
+                                         const uint32_t tick);
 
-#endif /* __MEM_H__ */
+#endif //__CONTROLLER_STEP_H__

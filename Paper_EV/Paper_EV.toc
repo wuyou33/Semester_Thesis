@@ -6,17 +6,18 @@
 \contentsline {section}{\numberline {2.1}General Equations of Motion}{2}
 \contentsline {section}{\numberline {2.2}Nonlinear Dynamic Inversion}{2}
 \contentsline {section}{\numberline {2.3}Incremental Nonlinear Dynamic Inversion}{3}
-\contentsline {subsection}{\numberline {2.3.1}INDI inner loop}{3}
-\contentsline {subsection}{\numberline {2.3.2}INDI outer loop}{3}
-\contentsline {chapter}{\numberline {3}Implementation}{4}
-\contentsline {section}{\numberline {3.1}Research Quadrotor}{4}
-\contentsline {section}{\numberline {3.2}Simulink Model}{4}
-\contentsline {subsection}{\numberline {3.2.1}Purpose}{4}
-\contentsline {subsection}{\numberline {3.2.2}Structure}{4}
-\contentsline {subsection}{\numberline {3.2.3}Simulation Results}{4}
-\contentsline {section}{\numberline {3.3}Implementation on Hardware}{4}
-\contentsline {subsection}{\numberline {3.3.1}Structure of the Code}{4}
-\contentsline {subsection}{\numberline {3.3.2}Testing with contact Forces and Moments}{4}
-\contentsline {chapter}{\numberline {4}Results}{5}
-\contentsline {chapter}{\numberline {5}Discussion}{6}
-\contentsline {chapter}{Appendix}{i}
+\contentsline {subsection}{\numberline {2.3.1}General INDI}{4}
+\contentsline {subsection}{\numberline {2.3.2}INDI inner loop}{4}
+\contentsline {subsection}{\numberline {2.3.3}INDI outer loop}{4}
+\contentsline {chapter}{\numberline {3}Implementation}{5}
+\contentsline {section}{\numberline {3.1}Research Quadrotor}{5}
+\contentsline {section}{\numberline {3.2}Simulink Model}{5}
+\contentsline {subsection}{\numberline {3.2.1}Purpose}{5}
+\contentsline {subsection}{\numberline {3.2.2}Structure}{5}
+\contentsline {subsection}{\numberline {3.2.3}Simulation Results}{5}
+\contentsline {section}{\numberline {3.3}Implementation on Hardware}{5}
+\contentsline {subsection}{\numberline {3.3.1}Structure of the Code}{5}
+\contentsline {subsection}{\numberline {3.3.2}Testing with contact Forces and Moments}{5}
+\contentsline {chapter}{\numberline {4}Results}{6}
+\contentsline {chapter}{\numberline {5}Discussion}{7}
+\contentsline {chapter}{Appendix}{ii}
