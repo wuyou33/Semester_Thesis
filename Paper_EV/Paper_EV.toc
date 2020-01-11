@@ -5,19 +5,19 @@
 \contentsline {chapter}{\numberline {2}Theoretical Background}{2}
 \contentsline {section}{\numberline {2.1}Dynamic Equations of Motion of an Aircraft}{2}
 \contentsline {section}{\numberline {2.2}Nonlinear Dynamic Inversion}{3}
-\contentsline {section}{\numberline {2.3}Incremental Nonlinear Dynamic Inversion}{4}
+\contentsline {section}{\numberline {2.3}Incremental Nonlinear Dynamic Inversion}{5}
 \contentsline {subsection}{\numberline {2.3.1}General INDI}{5}
 \contentsline {subsection}{\numberline {2.3.2}Inner INDI loop for Quadrotor}{5}
-\contentsline {subsection}{\numberline {2.3.3}Outer INDI loop for Quadrotor}{5}
-\contentsline {chapter}{\numberline {3}Implementation}{6}
-\contentsline {section}{\numberline {3.1}Research Quadrotor}{6}
-\contentsline {section}{\numberline {3.2}Implementation in Simulink (Simulink Model)}{6}
-\contentsline {subsection}{\numberline {3.2.1}Purpose}{6}
-\contentsline {subsection}{\numberline {3.2.2}Structure}{6}
-\contentsline {subsection}{\numberline {3.2.3}Simulation Results}{6}
-\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{6}
-\contentsline {subsection}{\numberline {3.3.1}Structure of the Code}{6}
-\contentsline {subsection}{\numberline {3.3.2}Testing with contact Forces and Moments}{6}
-\contentsline {chapter}{\numberline {4}Results}{7}
-\contentsline {chapter}{\numberline {5}Discussion}{8}
+\contentsline {subsection}{\numberline {2.3.3}Outer INDI loop for Quadrotor}{6}
+\contentsline {chapter}{\numberline {3}Implementation}{7}
+\contentsline {section}{\numberline {3.1}Research Quadrotor}{7}
+\contentsline {section}{\numberline {3.2}Implementation in Simulink (Simulink Model)}{7}
+\contentsline {subsection}{\numberline {3.2.1}Purpose}{7}
+\contentsline {subsection}{\numberline {3.2.2}Structure}{7}
+\contentsline {subsection}{\numberline {3.2.3}Simulation Results}{7}
+\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{7}
+\contentsline {subsection}{\numberline {3.3.1}Structure of the Code}{7}
+\contentsline {subsection}{\numberline {3.3.2}Testing with contact Forces and Moments}{7}
+\contentsline {chapter}{\numberline {4}Results}{8}
+\contentsline {chapter}{\numberline {5}Discussion}{9}
 \contentsline {chapter}{Appendix}{ii}

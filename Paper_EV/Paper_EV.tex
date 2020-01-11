@@ -11,6 +11,8 @@
 %
 % TODO:
 % - Title page: Dr. -> Dr. ir.
+% - Acronyms, right order of full and short appearences
+% - Create List of Symbols
 %
 %#################################################################################
 %#################################################################################
@@ -136,6 +138,7 @@
 \setlength{\LTleft}{-0.15cm}			% left justified
 \renewcommand*{\arraystretch}{1.4}		% vertical distance between entries, default is 1
 % List
+\newacronym{EOM}{EOM}{Equations of Motion}
 \newacronym{INDI}{INDI}{Incremental Nonlinear Dynamic Inversion}
 \newacronym{NED}{NED}{North East Down}
 \newacronym{NDI}{NDI}{Nonlinear Dynamic Inversion}
@@ -355,7 +358,7 @@ English abstract of the thesis.
 
 \chapter{Theoretical Background} \label{cha:theoretical_background}
 
-...
+The aim of this chapter is to provide the theoretical background which serves as a basis for some of the methods which are presented and applied in the course of this thesis. At the beginning, in section \ref{sec:eqs_motion} general \acrfull{EOM} of an aircraft are presented. These are later used to derive the control algorithm and build the Matlab/Simulink model of the Crazyflie quadrotor. Sections \ref{sec:ndi} and \ref{sec:indi} describe the \acrfull{NDI} and \acrfull{INDI} methods in general. Later in this chapter (subsections \ref{subsec: indi_inner} and \ref{subsec: indi_outer}) these methods are used to derive the inner and the outer loop of the \acrshort{INDI} flight controller for the Crazyflie quadrotor.
 
 % Manually add Chapter names to the header (per default not included by Latex)
 \thispagestyle{fancy}
@@ -363,11 +366,11 @@ English abstract of the thesis.
 
 \section{Dynamic Equations of Motion of an Aircraft} \label{sec:eqs_motion}
 
-In this section general equations of motion of an aircraft are presented.  
+The dynamic equations which describe the general motion of an aircraft are usually coupled first order implicit nonlinear differential equations. However, in many cases it is sufficient to use their simplified versions (Source needed!). This section presents simplified general \acrshort{EOM} and describes the assumptions which were considered to derive them.
 
-For the derivation of the equation of motion the aircraft system will be assumed to be a rigid body. Such a rigid body system can be described uniquely by 12 states. Note that by taking in account additional effects, such propulsion system dynamics, multi-body dynamics etc., the number of required state variables will increase. 
+For the derivation of the equation of motion the aircraft system will be assumed to be a rigid body. Such a rigid body system can be described uniquely by 12 states. Note that by taking in account additional effects, such as propulsion system dynamics, multi-body dynamics etc., the number of required state variables will increase. 
 
-Additionally to the rigid body assumption, it is also assumed that the earth is flat and non-rotating and the reference point of the force vector corresponds to the center of gravity of the body. Thus, the linear momentum equation is written as
+Additionally to the rigid body assumption, it is also assumed that the earth is flat and non-rotating and the reference point of the sum of all external forces acting on the body corresponds to the center of gravity of the body. Thus, the linear momentum equation is written as
 \begin{equation}
 	\begin{split}
 		\sum (\bm{F}^G)_B = m \cdot \Big[ (\bm{\dot{v}}^G)_{B} + (\bm{\omega}^{OB})\times(\bm{v}^R)_{B} \Big]
@@ -376,16 +379,16 @@ Additionally to the rigid body assumption, it is also assumed that the earth is 
 \end{equation}
 where $\sum(\bm{F}^G)_B \in \mathbb{R}^{3 \times 1}$ is the sum of the external forces acting on the system and applied to the center of gravity $G$, $m$ the mass of the body, $(\bm{\dot{v}}^G)_{B} \in \mathbb{R}^{3 \times 1}$ the linear acceleration of the point $G$, $(\bm{\omega}^{OB}) \in \mathbb{R}^{3 \times 1}$ the angular velocity of the body-fixed frame ($B$) with respect to the \acrfull{NED} ($O$) coordinate frame. Subscript $B$ denotes that all variables are specified in the body-fixed coordinate frame.
 
-The rotational motion of a body is described with the angular momentum. To derive it, additionally to the assumptions made above it is also considered that the mass and the mass distribution are quasistationary, meaning $\frac{d}{dt}m=0$ and $\frac{d}{dt}(I)_B=0$ respectively?. $(I)_B$ is the inertia tensor of the body defined in the body-fixed frame. Thus, the angular momentum is
+The rotational motion of a body is described with the angular momentum equation. To derive it, additionally to the assumptions made above it is also considered that the mass and the mass distribution are quasistationary, meaning $\frac{d}{dt}m=0$ and $\frac{d}{dt}(I)_B=0$ respectively?. $(I)_B$ is the inertia tensor of the body defined in the body-fixed frame. Thus, the angular momentum is
 \begin{equation}
 	\begin{split}
 		\sum (\bm{M}^G)_B = (\bm{I}^G)_B \cdot (\bm{\dot{\omega}}^{OB}) + (\bm{\omega}^{OB}) \times \Big[(\bm{I}^G)_B \cdot (\bm{\omega}^{OB})\Big]
 		\label{eq:ang_momentum}
 	\end{split}
 \end{equation}
-where $\sum (\bm{M}^G)_B \in \mathbb{R}^{3 \times 1}$ is the sum of the external moments acting on the system around the center of gravity $G$, 
+where $\sum (\bm{M}^G)_B \in \mathbb{R}^{3 \times 1}$ is the sum of the external moments acting on the system around the center of gravity $G$.
 
-The remaining two equations, that are necessary to fully describe the rigid body are the attitude differential equation and the position differential equation. The attitude differential equation describes the relationship between angular rates $p, q, r$ and derivatives of the Euler angles $\dot{\Phi}, \dot{\Theta}, \dot{\Psi}$ leading to
+The remaining two equations, that are necessary to fully describe the motion of a rigid body in space are the attitude differential equation and the position differential equation. The attitude differential equation describes the relationship between angular rates $p, q, r$ and derivatives of the Euler angles $\dot{\Phi}, \dot{\Theta}, \dot{\Psi}$ leading to
 \begin{equation}
 	\begin{bmatrix}
 		\dot{\Phi}\\
@@ -404,6 +407,7 @@ The remaining two equations, that are necessary to fully describe the rigid body
 	\end{bmatrix}_B
 	\label{eq:attitude_diff_eq}
 \end{equation}
+where the angular rates are related to the derivatives of the Euler angles through the \textit{strapdown matrix}.
 
 There are different options to represent the position differential equation. Here, for completeness only, it is written as a simple relationship between the change of the position coordinates in the local \acrshort{NED} frame and the velocity coordinates of the same frame
 \begin{equation}
@@ -420,7 +424,7 @@ There are different options to represent the position differential equation. Her
 	\label{eq:position_diff_eq}
 \end{equation}
 
-The above presented Equations (\ref{eq:lin_momentum})-(\ref{eq:position_diff_eq}) can be used to represent a motion of a general aircraft. $\sum(\bm{F}^G)_B$ and $\sum (\bm{M}^G)_B$ are sums of the external forces and moments acting on the aircraft. These could be the aerodynamic forces and moments caused by the air flow, propulsion forces and moments, forces caused by the gravitation etc.. The detailed modelling of external forces and moments is presented in chapter (...Simulink).
+The Equations (\ref{eq:lin_momentum})-(\ref{eq:position_diff_eq}) presented above can be used to represent a motion of a general aircraft. Note that terms $\sum(\bm{F}^G)_B$ and $\sum (\bm{M}^G)_B$ contain all external forces and moments acting on the rigid body. Considering an aircraft system these could be the aerodynamic forces and moments caused by the air flow, propulsion forces and moments, forces caused by the gravitation etc.. The detailed modelling of external forces and moments is presented in chapter (...Simulink).
 
 \section{Nonlinear Dynamic Inversion} \label{sec:ndi}
 
@@ -432,7 +436,7 @@ In this subsection, the \acrfull{NDI} method is explained. The \acrshort{NDI} ap
 	\end{align}
 	\label{eq:nonlin_sys}
 \end{subequations}
-where $\bm{x} \in \mathbb{R}^{n \times 1}$ is the state vector, $\bm{u} \in \mathbb{R}^{m \times 1}$ the input vector, $\bm{y} \in \mathbb{R}^{m \times 1}$ the system vector, $\bm{f(x)} \in \mathbb{R}^{n \times 1}$ and $\bm{h(x) \in \mathbb{R}^{m \times 1}}$ nonlinear vector fields and $\bm{G} \in \mathbb{R}^{m \times n}$ an input matrix. Note that the system presented in Equations (\ref{eq:nonlin_sys}) is affine in the input, which is not allways fulfilled. Using a state transformation $\bm{z = \phi(x)}$, the affine system from Equation \ref{eq:nonlin_sys1} can be transformed into normal (canonical) representation. 
+\hspace{-5pt}where $\bm{x} \in \mathbb{R}^{n \times 1}$ is the state vector, $\bm{u} \in \mathbb{R}^{m \times 1}$ the input vector, $\bm{y} \in \mathbb{R}^{m \times 1}$ the output vector, $\bm{f(x)} \in \mathbb{R}^{n \times 1}$ and $\bm{h(x) \in \mathbb{R}^{m \times 1}}$ nonlinear vector fields and $\bm{G} \in \mathbb{R}^{m \times n}$ an input matrix. Note that the system presented in Equations (\ref{eq:nonlin_sys}) is affine in the input, which is not allways fulfilled. Using a state transformation $\bm{z = \phi(x)}$, the affine system from Equation \ref{eq:nonlin_sys1} can be transformed into a \textit{normal} (\textit{canonical}) representation. 
 
 The core idea behind the input-output linearization method is to find a direct relationship between the desired system output and the control input. After the relationship is found it is inverted to generate the control law. To derive this relationship the output $\bm{y}$ is differentiated until the input $\bm{u}$ appears
 \begin{equation}
@@ -467,7 +471,7 @@ In the example provided above the input-output relationsip was found after the f
 		\label{eq:dy_i}
 	\end{split}
 \end{equation}
-with $i$ being the \textit{relative degree} of the system. Using Equation (\ref{eq:dy_i}) to formulate the control law, leads to the following expression for the control input $\bm{u}$
+with $i$ being the \textit{relative degree} of the system. Using Equation (\ref{eq:dy_i}) to formulate the control law leads to the following expression for the control input $\bm{u}$
 \begin{equation}
 	\begin{split}
 		\bm{u} = L_{\bm{G}} L_{\bm{f}}^{i-1} \bm{h(x)}^{-1} (\bm{\nu} - L_{\bm{f}}^i\bm{h(x)}) 
@@ -478,12 +482,10 @@ Thus, Equation (\ref{eq:u_control_law_i}) applied to Equation (\ref{eq:dy_i}) yi
 \begin{equation}
 	\begin{split}
 		\bm{y}^i = \bm{\nu}
-		\label{eq:u_control_law_i}
+		\label{eq:lin_relation}
 	\end{split}
 \end{equation}
-Despite wide usage (especially in the past of the flight control) of the \acrshort{NDI} method and its numerrous extensions (cite-tag Horn), it also has drawbacks. 
-
-The \acrshort{NDI} method was widely adopted for civil and military aircrafts and has numerous of extensions \cite{Horn}. Nevertheless, it has some drawbacks. The major one is that the control law derived using the \acrshort{NDI} approach is dependent on the full system dynamics model \cite{Sieberling}. As shown in the previous chapter (cite-tag prev-chapter), the equations of motion of an aircraft usually have a complicated nonlinear character. Thus, describing complex physical phenomena often leads to the inconsistency between the real aircraft and its mathematical representation used in the model. As some of those inconsistencies are inevitable there is a need to build a control law which performance is less dependent on the uncertainties of the model. This method is called \acrfull{INDI} and will be discussed in the next section.
+The \acrshort{NDI} method was widely adopted for civil and military aircrafts and has numerous of extensions \cite{Horn}. Nevertheless, it has some drawbacks. The major one is that the control law derived using the \acrshort{NDI} approach is dependent on the full system dynamics model \cite{Sieberling}. The equations of motion of an aircraft usually have a complicated nonlinear character. Thus, describing complex physical phenomena often leads to the inconsistency between the real aircraft and its mathematical representation used in the model. As some of those inconsistencies are inevitable there is a need to build a control law which performance is less dependent on the uncertainties of the model. A method called \acrfull{INDI} can be used to achieve this, it is discussed in the next section.
 
 \section{Incremental Nonlinear Dynamic Inversion} \label{sec:indi}
 
@@ -516,14 +518,14 @@ The second term of the Equation \ref{eq:nonlin_sys_taylor2} contains partial der
 		\label{eq:nonlin_sys_indi}
 	\end{split}
 \end{equation}
-Solving Equation \ref{eq:nonlin_sys_indi} for $\bm{u}$ and substituting $\dot{\bm{y}}$ with $\bm{\nu}$, the \acrshort{INDI} control law can be obtained
+Solving Equation \ref{eq:nonlin_sys_indi} for $\bm{u}$ and substituting $\dot{\bm{y}}$ with $\bm{\nu}$, the \acrshort{INDI} control law is obtained
 \begin{equation}
 	\begin{split}
 		\bm{u} = \bm{u_0} + \bm{G(x_0)^{-1}} (\bm{\nu} - \bm{\dot{x}_0})
 		\label{eq:u_control_law_indi}
 	\end{split}
 \end{equation}
-where $\bm{\dot{x}_0}$ is a measurable value from the previous step, $\bm{u_0}$ the control input from the previous step, $\bm{\nu}$ the reference value and $\bm{G(x_0)}$ the control effectiveness matrix. With $\bm{\Delta u=u-u_0}$ the control law from Equation \ref{eq:u_control_law_indi} represents an incremental version of the Equation \ref{eq:u_control_law}. This control law results in computing the increment $\bm{\Delta u}$ of the control input and adding it to the previous value $\bm{u_0}$, instead if computing complete control input command $\bm{u}$. As it is less dependent on the model of the system dynamics, it increases the robustness of the system \cite{Sieberling}.
+where $\bm{\dot{x}_0}$ is a measurable value from the previous step, $\bm{u_0}$ the control input from the previous step, $\bm{\nu}$ the reference value and $\bm{G(x_0)}$ the control effectiveness matrix. With $\bm{\Delta u=u-u_0}$ the control law from Equation \ref{eq:u_control_law_indi} represents an incremental version of the Equation \ref{eq:u_control_law}. Instead of computing the complete control input command $\bm{u}$, this control law results in computing the increment of the control input $\bm{\Delta u}$ and adding it to the previous value $\bm{u_0}$. As it is less dependent on the model of the system dynamics, it is able to increase the robustness of the system \cite{Sieberling}.
 
 \subsection{Inner INDI loop for Quadrotor} \label{subsec: indi_inner}
 
