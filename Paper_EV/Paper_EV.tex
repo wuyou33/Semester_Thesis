@@ -50,8 +50,9 @@
 % Package for bold symbols and letters
 \usepackage{bm}
 
-% Package for equations
+% Package for equations and math. symbols
 \usepackage{amsmath}
+\usepackage{amssymb}
 
 % Package and settings for adding header/footer
 \usepackage{fancyhdr}
@@ -135,8 +136,9 @@
 \setlength{\LTleft}{-0.15cm}			% left justified
 \renewcommand*{\arraystretch}{1.4}		% vertical distance between entries, default is 1
 % List
-\newacronym{NDI}{NDI}{Nonlinear Dynamic Inversion}
 \newacronym{INDI}{INDI}{Incremental Nonlinear Dynamic Inversion}
+\newacronym{NED}{NED}{North East Down}
+\newacronym{NDI}{NDI}{Nonlinear Dynamic Inversion}
 % Make gls
 \renewcommand*\entryname{Acronym}
 \makeglossaries
@@ -353,19 +355,72 @@ English abstract of the thesis.
 
 \chapter{Theoretical Background} \label{cha:theoretical_background}
 
+...
+
 % Manually add Chapter names to the header (per default not included by Latex)
 \thispagestyle{fancy}
 \chaptermark{Theoretical Background}
 
-\section{General Equations of Motion} \label{sec:eqs_motion}
-General: \\
-- Linear Momentum\\
-- Angular Momentum\\
-- Attitude differential equations\\
-- Position differential equations\\
-- External forces and moments
+\section{Dynamic Equations of Motion of an Aircraft} \label{sec:eqs_motion}
 
-with some of the used assumptions
+In this section general equations of motion of an aircraft are presented.  
+
+For the derivation of the equation of motion the aircraft system will be assumed to be a rigid body. Such a rigid body system can be described uniquely by 12 states. Note that by taking in account additional effects, such propulsion system dynamics, multi-body dynamics etc., the number of required state variables will increase. 
+
+Additionally to the rigid body assumption, it is also assumed that the earth is flat and non-rotating and the reference point of the force vector corresponds to the center of gravity of the body. Thus, the linear momentum equation is written as
+\begin{equation}
+	\begin{split}
+		\sum (\bm{F}^G)_B = m \cdot \Big[ (\bm{\dot{v}}^G)_{B} + (\bm{\omega}^{OB})\times(\bm{v}^R)_{B} \Big]
+		\label{eq:lin_momentum}
+	\end{split}
+\end{equation}
+where $\sum(\bm{F}^G)_B \in \mathbb{R}^{3 \times 1}$ is the sum of the external forces acting on the system and applied to the center of gravity $G$, $m$ the mass of the body, $(\bm{\dot{v}}^G)_{B} \in \mathbb{R}^{3 \times 1}$ the linear acceleration of the point $G$, $(\bm{\omega}^{OB}) \in \mathbb{R}^{3 \times 1}$ the angular velocity of the body-fixed frame ($B$) with respect to the \acrfull{NED} ($O$) coordinate frame. Subscript $B$ denotes that all variables are specified in the body-fixed coordinate frame.
+
+The rotational motion of a body is described with the angular momentum. To derive it, additionally to the assumptions made above it is also considered that the mass and the mass distribution are quasistationary, meaning $\frac{d}{dt}m=0$ and $\frac{d}{dt}(I)_B=0$ respectively?. $(I)_B$ is the inertia tensor of the body defined in the body-fixed frame. Thus, the angular momentum is
+\begin{equation}
+	\begin{split}
+		\sum (\bm{M}^G)_B = (\bm{I}^G)_B \cdot (\bm{\dot{\omega}}^{OB}) + (\bm{\omega}^{OB}) \times \Big[(\bm{I}^G)_B \cdot (\bm{\omega}^{OB})\Big]
+		\label{eq:ang_momentum}
+	\end{split}
+\end{equation}
+where $\sum (\bm{M}^G)_B \in \mathbb{R}^{3 \times 1}$ is the sum of the external moments acting on the system around the center of gravity $G$, 
+
+The remaining two equations, that are necessary to fully describe the rigid body are the attitude differential equation and the position differential equation. The attitude differential equation describes the relationship between angular rates $p, q, r$ and derivatives of the Euler angles $\dot{\Phi}, \dot{\Theta}, \dot{\Psi}$ leading to
+\begin{equation}
+	\begin{bmatrix}
+		\dot{\Phi}\\
+		\dot{\Theta}\\
+		\dot{\Psi}
+	\end{bmatrix} =
+	\begin{bmatrix}
+    	1 & \sin\Phi\tan\Theta & \cos\Phi\tan\Theta \\
+    	0 & \cos\Phi & -\sin\Phi \\
+    	0 & \frac{\sin\Phi}{\cos\Theta} & \frac{\cos\Phi}{\cos\Theta}
+    \end{bmatrix}_B
+    \begin{bmatrix}
+		p\\
+		q\\
+		r
+	\end{bmatrix}_B
+	\label{eq:attitude_diff_eq}
+\end{equation}
+
+There are different options to represent the position differential equation. Here, for completeness only, it is written as a simple relationship between the change of the position coordinates in the local \acrshort{NED} frame and the velocity coordinates of the same frame
+\begin{equation}
+	\begin{bmatrix}
+		\dot{x}\\
+		\dot{y}\\
+		\dot{z}
+	\end{bmatrix}_O =
+	\begin{bmatrix}
+		\dot{V_N}\\
+		\dot{V_E}\\
+		\dot{V_D}
+	\end{bmatrix}_O
+	\label{eq:position_diff_eq}
+\end{equation}
+
+The above presented Equations (\ref{eq:lin_momentum})-(\ref{eq:position_diff_eq}) can be used to represent a motion of a general aircraft. $\sum(\bm{F}^G)_B$ and $\sum (\bm{M}^G)_B$ are sums of the external forces and moments acting on the aircraft. These could be the aerodynamic forces and moments caused by the air flow, propulsion forces and moments, forces caused by the gravitation etc.. The detailed modelling of external forces and moments is presented in chapter (...Simulink).
 
 \section{Nonlinear Dynamic Inversion} \label{sec:ndi}
 
@@ -377,7 +432,7 @@ In this subsection, the \acrfull{NDI} method is explained. The \acrshort{NDI} ap
 	\end{align}
 	\label{eq:nonlin_sys}
 \end{subequations}
-where $\bm{x}$ is the $n\times1$ state vector, $\bm{u}$ the $m\times1$ input vector, $\bm{y}$ the $m\times1$ system vector, $\bm{f(x)}$ and $\bm{h(x)}$ nonlinear vector fields and $\bm{G}$ an $m\times n$ input matrix. Note that the system presented in Equations (\ref{eq:nonlin_sys}) is affine in the input, which is not allways fulfilled. Using a state transformation $\bm{z = \phi(x)}$, the affine system from Equation \ref{eq:nonlin_sys1} can be transformed into normal (canonical) representation. 
+where $\bm{x} \in \mathbb{R}^{n \times 1}$ is the state vector, $\bm{u} \in \mathbb{R}^{m \times 1}$ the input vector, $\bm{y} \in \mathbb{R}^{m \times 1}$ the system vector, $\bm{f(x)} \in \mathbb{R}^{n \times 1}$ and $\bm{h(x) \in \mathbb{R}^{m \times 1}}$ nonlinear vector fields and $\bm{G} \in \mathbb{R}^{m \times n}$ an input matrix. Note that the system presented in Equations (\ref{eq:nonlin_sys}) is affine in the input, which is not allways fulfilled. Using a state transformation $\bm{z = \phi(x)}$, the affine system from Equation \ref{eq:nonlin_sys1} can be transformed into normal (canonical) representation. 
 
 The core idea behind the input-output linearization method is to find a direct relationship between the desired system output and the control input. After the relationship is found it is inverted to generate the control law. To derive this relationship the output $\bm{y}$ is differentiated until the input $\bm{u}$ appears
 \begin{equation}
@@ -428,11 +483,15 @@ Thus, Equation (\ref{eq:u_control_law_i}) applied to Equation (\ref{eq:dy_i}) yi
 \end{equation}
 Despite wide usage (especially in the past of the flight control) of the \acrshort{NDI} method and its numerrous extensions (cite-tag Horn), it also has drawbacks. 
 
-The \acrshort{NDI} method was widely adopted for civil and military aircrafts and has numerous of extensions \cite{Horn}. Nevertheless, it has some drawbacks. The major one is that the control law derived using the \acrshort{NDI} approach is dependent on the full system dynamics model \cite{Sieberling}. As shown in the previous chapter (cite-tag prev-chapter), the equations of motion of an aircraft usually have a complicated nonlinear character. Thus, describing complex physical phenomena often leads to the inconsistency between the real aircraft and its mathematical representation used in the model. As some of those inconsistencies are inevitable there is a need to build a control law which performance is less dependent on the uncertainties of the model. This method is called \acrfull{INDI} and will be discussed in the next subsection.
+The \acrshort{NDI} method was widely adopted for civil and military aircrafts and has numerous of extensions \cite{Horn}. Nevertheless, it has some drawbacks. The major one is that the control law derived using the \acrshort{NDI} approach is dependent on the full system dynamics model \cite{Sieberling}. As shown in the previous chapter (cite-tag prev-chapter), the equations of motion of an aircraft usually have a complicated nonlinear character. Thus, describing complex physical phenomena often leads to the inconsistency between the real aircraft and its mathematical representation used in the model. As some of those inconsistencies are inevitable there is a need to build a control law which performance is less dependent on the uncertainties of the model. This method is called \acrfull{INDI} and will be discussed in the next section.
 
 \section{Incremental Nonlinear Dynamic Inversion} \label{sec:indi}
 
-The \acrshort{INDI} is an incremental form of the \acrshort{NDI} for which the lack of the accurate system dynamics model does not critically affect the performance of the control algorithm \cite{Silva}. The incremental form of the system can be obtained by taking a Taylor series expansion of the Equation \ref{eq:nonlin_sys1}
+The \acrshort{INDI} is an incremental form of the \acrshort{NDI} for which the lack of the accurate system dynamics model does not critically affect the performance of the control algorithm \cite{Silva}. At first the general form of the \acrshort{INDI} is presented in \ref{subsec:indi_general}, then the inner and outer control loops for the Crazyflie quadrotor are derived in \ref{subsec: indi_inner} and \ref{subsec: indi_outer}.
+
+\subsection{General INDI} \label{subsec:indi_general}
+
+The incremental form of the system can be obtained by taking a Taylor series expansion of the Equation \ref{eq:nonlin_sys1}
 \begin{equation}
 	\begin{split}
 		\bm{\dot{x}} &= \bm{f(x_0)} + \bm{G(x_0)}\bm{u_0} \\
@@ -466,16 +525,13 @@ Solving Equation \ref{eq:nonlin_sys_indi} for $\bm{u}$ and substituting $\dot{\b
 \end{equation}
 where $\bm{\dot{x}_0}$ is a measurable value from the previous step, $\bm{u_0}$ the control input from the previous step, $\bm{\nu}$ the reference value and $\bm{G(x_0)}$ the control effectiveness matrix. With $\bm{\Delta u=u-u_0}$ the control law from Equation \ref{eq:u_control_law_indi} represents an incremental version of the Equation \ref{eq:u_control_law}. This control law results in computing the increment $\bm{\Delta u}$ of the control input and adding it to the previous value $\bm{u_0}$, instead if computing complete control input command $\bm{u}$. As it is less dependent on the model of the system dynamics, it increases the robustness of the system \cite{Sieberling}.
 
-\subsection{General INDI} \label{subsec: indi_general}
+\subsection{Inner INDI loop for Quadrotor} \label{subsec: indi_inner}
 
-\subsection{INDI inner loop} \label{subsec: indi_inner}
+- Derivation of the inner INDI loop (what we want to control, detailed equations).
 
-- Derivation of the inner INDI loop (detailed equations).
+\subsection{Outer INDI loop for Quadrotor} \label{subsec: indi_outer}
 
-\subsection{INDI outer loop} \label{subsec: indi_outer}
-
-- Derivation of the outer INDI loop (detailed equations).
-
+- Derivation of the outer INDI loop (what we want to control, detailed equations).
 
 
 \chapter{Implementation} \label{cha:implementation}
@@ -488,7 +544,7 @@ where $\bm{\dot{x}_0}$ is a measurable value from the previous step, $\bm{u_0}$ 
 
 - Some facts about Crazyflie hardware (foto, uC frequency, weight, length)
 
-\section{Simulink Model} \label{sec:simulink_model}
+\section{Implementation in Simulink (Simulink Model)} \label{sec:simulink_model}
 
 \subsection{Purpose} \label{subsec:purpose}
 
@@ -497,6 +553,8 @@ where $\bm{\dot{x}_0}$ is a measurable value from the previous step, $\bm{u_0}$ 
 - Testing the filter
 
 \subsection{Structure} \label{subsec:Structure}
+- Force frame from B to O for an easy representation\\
+- Show each equation of forces with explaining the made assumptions\\
 - Parameters\\
 - Actuator dynamics\\
 - Filter\\
@@ -504,7 +562,7 @@ where $\bm{\dot{x}_0}$ is a measurable value from the previous step, $\bm{u_0}$ 
 
 \subsection{Simulation Results} \label{subsec:simulation_results}
 
-\section{Implementation on Hardware} \label{sec:implementation_on_hardware}
+\section{Implementation on the Hardware} \label{sec:implementation_on_hardware}
 
 \subsection{Structure of the Code} \label{subsec:structure_ofthe_code}
 
