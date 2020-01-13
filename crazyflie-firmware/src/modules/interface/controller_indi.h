@@ -33,6 +33,7 @@
 #include "param.h"
 #include "position_controller.h"
 #include "attitude_controller.h"
+#include "math.h"  //ev_tag
 
 #define ATTITUDE_UPDATE_DT    (float)(1.0f/ATTITUDE_RATE)
 
@@ -57,6 +58,9 @@
 #define STABILIZATION_INDI_ACT_DYN_Q 0.03149f
 #define STABILIZATION_INDI_ACT_DYN_R 0.03149f
 
+// Crazyflie mass [kg]
+#define CF_MASS 0.028f
+
 /**
  * @brief angular rates
  * @details Units: rad/s */
@@ -73,6 +77,19 @@ struct ReferenceSystem {
   float rate_p;
   float rate_q;
   float rate_r;
+};
+
+// ev_tag
+struct Vectr {
+  float x; 
+  float y; 
+  float z;
+};
+// ev_tag
+struct Angles {
+  float phi; 
+  float theta;
+  float psi;
 };
 
 struct IndiVariables {
@@ -92,6 +109,16 @@ struct IndiVariables {
   struct FloatRates act_dyn;
   float filt_cutoff;
   float filt_cutoff_r;
+
+  // INDI outer loop (ev_tag)
+  struct Vectr linear_accel_ref;  
+  struct Vectr linear_accel_err;
+  struct Vectr linear_accel_s;    // acceleration sensed
+  struct Vectr linear_accel_f;    // acceleration filtered 
+  struct Vectr attitude_s;        // attitude senssed (here estimated)
+  struct Vectr attitude_f;        // attitude filtered
+  struct Vectr attitude_c;        // attitude commanded to the inner loop
+  float T_tilde;                  // thrust increment
 };
 
 void controllerINDIInit(void);
