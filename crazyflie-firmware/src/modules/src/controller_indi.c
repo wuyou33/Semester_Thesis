@@ -30,16 +30,6 @@ static float bound_control_input = 32000.0f;
 
 static attitude_t attitudeDesired;
 static attitude_t rateDesired;
-// ev_tag
-static vector_t positionDesired; 
-static vector_t velocityDesired;
-float K_xi_x = 0.7;
-float K_xi_y = 0.7;
-float K_xi_z = 0.7;
-float K_dxi_x = 0.8;
-float K_dxi_y = 0.8;
-float K_dxi_z = 0.8; 
-// ev_tag
 static float actuatorThrust;
 static float roll_kp = 6.0f;
 static float pitch_kp = 6.0f;
@@ -99,14 +89,6 @@ static inline void filter_pqr(Butterworth2LowPass *filter, struct FloatRates *ne
 	update_butterworth_2_low_pass(&filter[2], new_values->r);
 }
 
-// ev_tag
-static inline void filter_ddxi(Butterworth2LowPass *filter, struct Vectr *old_values, struct Vectr *new_values)
-{
-	new_values->x = update_butterworth_2_low_pass(&filter[0], old_values->x);
-	new_values->y = update_butterworth_2_low_pass(&filter[1], old_values->y);
-	new_values->z = update_butterworth_2_low_pass(&filter[2], old_values->z);
-}
-
 /**
  * @brief Caclulate finite difference form a filter array
  * The filter already contains the previous values
@@ -119,12 +101,6 @@ static inline void finite_difference_from_filter(float *output, Butterworth2LowP
 	for (int8_t i = 0; i < 3; i++) {
 		output[i] = (filter[i].o[0] - filter[i].o[1]) * ATTITUDE_RATE;
 	}
-}
-
-// Compute minor of the specific element of a function
-static inline void minor() 
-{
-
 }
 
 void controllerINDIInit(void)
@@ -174,107 +150,7 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 	}
 
 	if (RATE_DO_EXECUTE(POSITION_RATE, tick)) {
-		//positionController(&actuatorThrust, &attitudeDesired, setpoint, state);
-
-
-		// INDI lin. accel. controller (outer loop) ev_tag
-		
-		// TODO
-		float T = 0;
-
-		// Get reference position
-		positionDesired.x = setpoint->position.x;
-		positionDesired.y = setpoint->position.y;
-		positionDesired.z = setpoint->position.z;
-
-		// Position controller (K_xi?)
-		velocityDesired.x = K_xi_x*(positionDesired.x - state->position.x);
-		velocityDesired.y = K_xi_x*(positionDesired.y - state->position.y);
-		velocityDesired.z = K_xi_x*(positionDesired.z - state->position.z);
-
-		// Velocity controller (K_dxi?)
-		indi.linear_accel_ref.x = K_dxi_x*(velocityDesired.x - state->velocity.x);
-		indi.linear_accel_ref.y = K_dxi_x*(velocityDesired.y - state->velocity.y);
-		indi.linear_accel_ref.z = K_dxi_z*(velocityDesired.z - state->velocity.z);
-
-		
-		// Read lin. acceleration (Body-fixed) obtained from sensors (Filter parameters?)
-		indi.linear_accel_s.x = sensors->acc.x;
-		indi.linear_accel_s.y = sensors->acc.y;
-		indi.linear_accel_s.z = sensors->acc.z;
-		
-		// Read attitude 
-		struct Angles att = {
-			.phi = state->attitude.roll,
-			.theta = state->attitude.pitch,
-			.psi = state->attitude.yaw,
-		};
-
-		// Compute transformation matrix from body frame (index B) into NED frame (index O)
-		float M_OB_11 = cosf(att.theta)*cosf(att.psi);
-		float M_OB_12 = sinf(att.phi)*sinf(att.theta)*cosf(att.psi) - cosf(att.phi)*sinf(att.psi); 
-		float M_OB_13 = cosf(att.phi)*sinf(att.theta)*cosf(att.psi) + sinf(att.phi)*sinf(att.psi);
-		float M_OB_21 = cosf(att.theta)*sinf(att.psi);
-		float M_OB_22 = sinf(att.phi)*sinf(att.theta)*sinf(att.psi) - cosf(att.phi)*cosf(att.psi);
-		float M_OB_23 = cosf(att.phi)*sinf(att.theta)*sinf(att.psi) - sinf(att.phi)*cosf(att.psi);
-		float M_OB_31 = -sinf(att.theta);
-		float M_OB_32 = sinf(att.phi)*cosf(att.theta);
-		float M_OB_33 = cosf(att.phi)*cosf(att.theta);
-
-		// Transform lin. acceleration in NED (add gravity to the z-component)
-		indi.linear_accel_s.x = M_OB_11*indi.linear_accel_s.x + M_OB_12*indi.linear_accel_s.y + M_OB_13*indi.linear_accel_s.z;
-		indi.linear_accel_s.y = M_OB_21*indi.linear_accel_s.x + M_OB_22*indi.linear_accel_s.y + M_OB_23*indi.linear_accel_s.z;
-		indi.linear_accel_s.z = M_OB_31*indi.linear_accel_s.x + M_OB_32*indi.linear_accel_s.y + M_OB_33*indi.linear_accel_s.z + 1.0f;
-
-		// Filter lin. acceleration 
-		filter_ddxi(indi.rate, &indi.linear_accel_s, &indi.linear_accel_f);
-
-		// Compute lin. acceleration error
-		indi.linear_accel_err.x = indi.linear_accel_ref.x - indi.linear_accel_f.x;
-		indi.linear_accel_err.y = indi.linear_accel_ref.y - indi.linear_accel_f.x;
-		indi.linear_accel_err.z = indi.linear_accel_ref.z - indi.linear_accel_f.x;
-
-		// Elements of G 
-		float a11 = (cosf(att.phi)*sinf(att.psi) - sinf(att.phi)*sinf(att.theta)*cosf(att.psi)) * T;
-		float a12 = (cosf(att.phi)*cosf(att.theta)*cosf(att.psi)) * T;
-		float a13 = (sinf(att.phi)*sinf(att.psi) + cosf(att.phi)*sinf(att.theta)*cosf(att.psi));
-		float a21 = (-cosf(att.phi)*cosf(att.psi) - sinf(att.phi)*sinf(att.theta)*sinf(att.psi)) * T;
-		float a22 = (cosf(att.phi)*cosf(att.theta)*sinf(att.psi)) * T;
-		float a23 = (-sinf(att.phi)*cosf(att.psi) + cosf(att.phi)*sinf(att.theta)*sinf(att.psi));
-		float a31 = (-sinf(att.phi)*cosf(att.theta)) * T;
-		float a32 = (-cosf(att.phi)*sinf(att.theta)) * T;
-		float a33 = (cosf(att.phi)*cosf(att.theta));
-		
-		// Determinant of G
-		float detG = (a11*a22*a33 + a12*a23*a31 + a21*a32*a13) - (a13*a22*a31 + a11*a32*a23 + a12*a21*a33); 
-		
-		// Inverse of G 
-		float a11_inv = (a22*a33 - a23*a32)/detG;
-		float a12_inv = (a13*a32 - a12*a33)/detG;
-		float a13_inv = (a12*a23 - a13*a22)/detG;
-		float a21_inv = (a23*a31 - a21*a33)/detG;
-		float a22_inv = (a11*a33 - a13*a31)/detG;
-		float a23_inv = (a13*a21 - a11*a23)/detG;
-		float a31_inv = (a21*a32 - a22*a31)/detG;
-		float a32_inv = (a12*a31 - a11*a32)/detG;
-		float a33_inv = (a11*a22 - a12*a21)/detG; 
-		
-		// Lin. accel. error multiplied CF mass and G^(-1) matrix
-		float phi_tilde   = (a11_inv*indi.linear_accel_err.x + a12_inv*indi.linear_accel_err.y + a13_inv*indi.linear_accel_err.z)*CF_MASS;
-		float theta_tilde = (a21_inv*indi.linear_accel_err.x + a22_inv*indi.linear_accel_err.y + a23_inv*indi.linear_accel_err.z)*CF_MASS;
-		indi.T_tilde      = (a31_inv*indi.linear_accel_err.x + a32_inv*indi.linear_accel_err.y + a33_inv*indi.linear_accel_err.z)*CF_MASS; 	
-
-		// Filter attitude obtained from state estimator (Filter parameters?)
-		indi.attitude_s.x = state->attitude.roll; 
-		indi.attitude_s.y = state->attitude.pitch;
-		indi.attitude_s.z = state->attitude.yaw;
-		filter_ddxi(indi.rate, &indi.attitude_s, &indi.attitude_f);
-
-		// Compute commanded attitude to the inner INDI
-		indi.attitude_c.x = indi.attitude_f.x + phi_tilde;
-		indi.attitude_c.y = indi.attitude_f.y + theta_tilde;		
-
-
+		positionController(&actuatorThrust, &attitudeDesired, setpoint, state);
 	}
 
 	/*
@@ -287,16 +163,16 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 			actuatorThrust = setpoint->thrust;
 		}
 		if (setpoint->mode.x == modeDisable || setpoint->mode.y == modeDisable) {
-			attitudeDesired.roll = setpoint->attitude.roll;	
-			attitudeDesired.pitch = setpoint->attitude.pitch;						
+			attitudeDesired.roll = setpoint->attitude.roll;
+			attitudeDesired.pitch = setpoint->attitude.pitch;
 		}
 
 //	    attitudeControllerCorrectAttitudePID(state->attitude.roll, state->attitude.pitch, state->attitude.yaw,
 //	                                attitudeDesired.roll, attitudeDesired.pitch, attitudeDesired.yaw,
 //	                                &rateDesired.roll, &rateDesired.pitch, &rateDesired.yaw);
 
-		rateDesired.roll = roll_kp*(attitudeDesired.roll - indi.attitude_c.x);			// ev_tag: changed from state->attitude.roll
-		rateDesired.pitch = pitch_kp*(attitudeDesired.pitch - indi.attitude_c.y);		// ev_tag: changed from state->attitude.pitch
+		rateDesired.roll = roll_kp*(attitudeDesired.roll - state->attitude.roll);
+		rateDesired.pitch = pitch_kp*(attitudeDesired.pitch - state->attitude.pitch);
 		rateDesired.yaw = yaw_kp*(attitudeDesired.yaw - state->attitude.yaw);
 
 		// For roll and pitch, if velocity mode, overwrite rateDesired with the setpoint
