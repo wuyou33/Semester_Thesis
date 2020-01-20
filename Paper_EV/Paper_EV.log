@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.20)  11 JAN 2020 16:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.20)  19 JAN 2020 17:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -960,6 +960,19 @@ Package: translator 2018/01/04 v1.12 Easy translation of strings in LaTeX
 Writing nomenclature file Paper_EV.nlo
 (./Paper_EV.aux
 \c@pagesLTS.roman.1.local.cnt=\count318
+
+
+LaTeX Warning: Label `eq:TODO' multiply defined.
+
+
+LaTeX Warning: Label `eq:TODO' multiply defined.
+
+
+LaTeX Warning: Label `eq:TODO' multiply defined.
+
+
+LaTeX Warning: Label `eq:TODO' multiply defined.
+
 \c@pagesLTS.arabic.1.local.cnt=\count319
 \c@pagesLTS.roman.2.local.cnt=\count320
 )
@@ -1344,7 +1357,7 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <11> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 494.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 539.
+Package pdftex.def Info: figs/fsd.png  used on input line 534.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1356,7 +1369,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [5]
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 539.
+Package pdftex.def Info: figs/fsd.png  used on input line 609.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1366,10 +1379,18 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [6]
-Chapter 3.
+Overfull \hbox (13.99734pt too wide) detected at line 638
+\OML/cmm/b/it/10.95 G[] \OT1/cmr/m/n/10.95 = [] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 683--690
+
+ []
+
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 573.
+Package pdftex.def Info: figs/fsd.png  used on input line 696.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1377,13 +1398,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[7
-
-]
-Chapter 4.
+[7]
+Chapter 3.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 581.
+Package pdftex.def Info: figs/fsd.png  used on input line 735.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1394,10 +1413,10 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [8
 
 ]
-Chapter 5.
+Chapter 4.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 587.
+Package pdftex.def Info: figs/fsd.png  used on input line 743.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1406,6 +1425,20 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [9
+
+]
+Chapter 5.
+File: figs/fsd.png Graphic file (type png)
+<use figs/fsd.png>
+Package pdftex.def Info: figs/fsd.png  used on input line 749.
+(pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 29.72038pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[10
 
 ]
 \c@pagesLTS.arabic.1.local.count=\count336
@@ -1418,7 +1451,7 @@ gn for ro-tor-craft.
 )
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 603.
+Package pdftex.def Info: figs/fsd.png  used on input line 765.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1428,11 +1461,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 
-Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 603.
+Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 765.
 
 
 Package undolabl Warning: Label `pagesLTS.roman.local' overridden on input line
- 603.
+ 765.
 
 
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1445,7 +1478,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 AED: pageslts setting LastPage 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 613.
+Package pdftex.def Info: figs/fsd.png  used on input line 775.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1454,11 +1487,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 
-Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 613.
+Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 775.
 
 
 Package undolabl Warning: Label `pagesLTS.roman.local' overridden on input line
- 613.
+ 775.
 
 
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1468,8 +1501,8 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [2
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 613.
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 613.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 775.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 775.
 \c@pagesLTS.roman.2.local.count=\count337
  
 AED: pageslts setting VeryLastPage via AfterLastShipout 
@@ -1477,44 +1510,46 @@ AED: pageslts setting VeryLastPage via AfterLastShipout
 AED: pageslts setting LastPages via AfterLastShipout 
 
 
-Package pageslts Info: Total number of pages is odd.
+Package pageslts Info: Total number of pages is even.
 
 
 (./Paper_EV.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 613.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 613.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 613.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 775.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 775.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 775.
  ) 
 Here is how much of TeX's memory you used:
- 21853 strings out of 492982
- 407965 string characters out of 6134895
- 524342 words of memory out of 5000000
- 25073 multiletter control sequences out of 15000+600000
- 553276 words of font info for 72 fonts, out of 8000000 for 9000
+ 21880 strings out of 492982
+ 408348 string characters out of 6134895
+ 528342 words of memory out of 5000000
+ 25095 multiletter control sequences out of 15000+600000
+ 556517 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 45i,20n,49p,10442b,519s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 45i,22n,49p,10442b,519s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy8.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmbx6.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/c
-mmib8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-urw/helvetic/uhvro8a.pfb>
-Output written on Paper_EV.pdf (27 pages, 228638 bytes).
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cmextra/cmmib8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/urw/helvetic/uhvro8a.pfb>
+Output written on Paper_EV.pdf (28 pages, 231939 bytes).
 PDF statistics:
- 187 PDF objects out of 1000 (max. 8388607)
- 129 compressed objects within 2 object streams
+ 182 PDF objects out of 1000 (max. 8388607)
+ 125 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

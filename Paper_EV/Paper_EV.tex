@@ -431,50 +431,50 @@ The Equations (\ref{eq:lin_momentum})-(\ref{eq:position_diff_eq}) presented abov
 In this subsection, the \acrfull{NDI} method is explained. The \acrshort{NDI} approach is based on feedback linearization and is also called \textit{Input-Output Linearization}. Often, such type of controllers is involved in tracking control tasks, where objective is to track some desired trajectory \cite{Slotine}. To derive it, consider the following nonlinear system
 \begin{subequations}
 	\begin{align}
-		&\bm{\dot{x}} = \bm{f(x)} + \bm{G(x)}\bm{u} \label{eq:nonlin_sys1} \\
-		&\bm{y} = \bm{h(x)} \label{eq:nonlin_sys2}
+		&\bm{\dot{x}} = \bm{f}(\bm{x}) + \bm{G}(\bm{x})\bm{u} \label{eq:nonlin_sys1} \\
+		&\bm{y} = \bm{h}(\bm{x}) \label{eq:nonlin_sys2}
 	\end{align}
 	\label{eq:nonlin_sys}
 \end{subequations}
-\hspace{-5pt}where $\bm{x} \in \mathbb{R}^{n \times 1}$ is the state vector, $\bm{u} \in \mathbb{R}^{m \times 1}$ the input vector, $\bm{y} \in \mathbb{R}^{m \times 1}$ the output vector, $\bm{f(x)} \in \mathbb{R}^{n \times 1}$ and $\bm{h(x) \in \mathbb{R}^{m \times 1}}$ nonlinear vector fields and $\bm{G} \in \mathbb{R}^{m \times n}$ an input matrix. Note that the system presented in Equations (\ref{eq:nonlin_sys}) is affine in the input, which is not allways fulfilled. Using a state transformation $\bm{z = \phi(x)}$, the affine system from Equation \ref{eq:nonlin_sys1} can be transformed into a \textit{normal} (\textit{canonical}) representation. 
+\hspace{-5pt}where $\bm{x} \in \mathbb{R}^{n \times 1}$ is the state vector, $\bm{u} \in \mathbb{R}^{m \times 1}$ the input vector, $\bm{y} \in \mathbb{R}^{m \times 1}$ the output vector, $\bm{f}(\bm{x}) \in \mathbb{R}^{n \times 1}$ and $\bm{h}(\bm{x}) \in \mathbb{R}^{m \times 1}$ nonlinear vector fields and $\bm{G} \in \mathbb{R}^{m \times n}$ an input matrix. Note that the system presented in Equations (\ref{eq:nonlin_sys}) is affine in the input, which is not allways fulfilled. Using a state transformation $\bm{z} = \bm{\phi}(\bm{x})$, the affine system from Equation \ref{eq:nonlin_sys1} can be transformed into a \textit{normal} (\textit{canonical}) representation. 
 
 The core idea behind the input-output linearization method is to find a direct relationship between the desired system output and the control input. After the relationship is found it is inverted to generate the control law. To derive this relationship the output $\bm{y}$ is differentiated until the input $\bm{u}$ appears
 \begin{equation}
 	\begin{split}
-		\dot{\bm{y}} &=  \frac{\partial\bm{y}}{\partial t} = \frac{\partial\bm{h(x)}}{\partial t} \frac{\partial\bm{x}}{\partial t} = \frac{\partial\bm{h(x)}}{\partial t} \dot{\bm{x}} = \nabla\bm{h(x)} [\bm{f(x)} + \bm{G(x)}\bm{u}] \\
-		&= \nabla\bm{h(x)} \bm{f(x)} + \nabla\bm{h(x)} \bm{G(x)}\bm{u}] = L_{\bm{f}} \bm{h(x)} + L_{\bm{G}} \bm{h(x) u} 
+		\bm{\dot{y}} &=  \frac{\partial\bm{y}}{\partial t} = \frac{\partial\bm{h}(\bm{x})}{\partial t} \frac{\partial\bm{x}}{\partial t} = \frac{\partial\bm{h}(\bm{x})}{\partial t} \dot{\bm{x}} = \nabla\bm{h}(\bm{x}) [\bm{f}(\bm{x}) + \bm{G}(\bm{x})\bm{u}] \\
+		&= \nabla\bm{h}(\bm{x}) \bm{f}(\bm{x}) + \nabla\bm{h}(\bm{x}) \bm{G}(\bm{x})\bm{u}] = L_{\bm{f}} \bm{h}(\bm{x}) + L_{\bm{G}} \bm{h}(\bm{x}) \bm{u} 
 		\label{eq:dy}
 	\end{split}
 \end{equation}
 
-In Equation (\ref{eq:dy}) $L_{\bm{f}} \bm{h(x)}$ is called Lie derivative of $\bm{h(x)}$ with respect to $\bm{f(x)}$. The Lie derivative is defined as $L_{\bm{f}} \bm{h(x)} = \nabla\bm{h(x)} \bm{f(x)}$ with $\nabla$ being the Nabla operator. Thus, it represents a directional derivative of $\bm{h(x)}$ along the direction of the vector field $\bm{f(x)}$. If the term $L_{\bm{G}} \bm{h(x)}$ is nonzero, the relationship between input and output is
+In Equation (\ref{eq:dy}) $L_{\bm{f}} \bm{h}(\bm{x})$ is called Lie derivative of $\bm{h}(\bm{x})$ with respect to $\bm{f}(\bm{x})$. The Lie derivative is defined as $L_{\bm{f}} \bm{h}(\bm{x}) = \nabla\bm{h}(\bm{x}) \bm{f}(\bm{x})$ with $\nabla$ being the Nabla operator. Thus, it represents a directional derivative of $\bm{h}(\bm{x})$ along the direction of the vector field $\bm{f}(\bm{x})$. If the term $L_{\bm{G}} \bm{h}(\bm{x})$ is nonzero, the relationship between input and output is
 \begin{equation}
 	\begin{split}
-		\dot{\bm{y}} = L_{\bm{f}} \bm{h(x)} + L_{\bm{G}} \bm{h(x) u} 
+		\bm{\dot{y}} = L_{\bm{f}} \bm{h}(\bm{x}) + L_{\bm{G}} \bm{h}(\bm{x}) \bm{u} 
 		\label{eq:dy_u_rel}
 	\end{split}
 \end{equation}
 
-Now Equation (\ref{eq:dy_u_rel}) can be used to formulate the control law by solving it for $\bm{u}$ and substituting $\dot{\bm{y}}$ with $\bm{\nu}$
+Now Equation (\ref{eq:dy_u_rel}) can be used to formulate the control law by solving it for $\bm{u}$ and substituting $\bm{\dot{y}}$ with $\bm{\nu}$
 \begin{equation}
 	\begin{split}
-		\bm{u} = L_{\bm{G}}\bm{h(x)}^{-1} (\bm{\nu} - L_{\bm{f}}\bm{h(x)})
+		\bm{u} = L_{\bm{G}}\bm{h}(\bm{x})^{-1} (\bm{\nu} - L_{\bm{f}}\bm{h}(\bm{x}))
 		\label{eq:u_control_law}
 	\end{split}
 \end{equation}
 The variable $\bm{\nu}$ is called an \textit{equivalent input} and represents the desired output of the system. 
 
-In the example provided above the input-output relationsip was found after the first differentiation of the output $\bm{y}$. But if after the first differentiation the term $L_{\bm{G}}\bm{h(x)}$ is zero, output $\bm{y}$ has to be differentiated until the Lie derivative with respect to $\bm{G}$ is nonzero. The $i$-th derivative of the output is then
+In the example provided above the input-output relationsip was found after the first differentiation of the output $\bm{y}$. But if after the first differentiation the term $L_{\bm{G}}\bm{h}(\bm{x})$ is zero, output $\bm{y}$ has to be differentiated until the Lie derivative with respect to $\bm{G}$ is nonzero. The $i$-th derivative of the output is then
 \begin{equation}
 	\begin{split}
-		\frac{\partial^i\bm{y}}{\partial t} = \frac{\partial^i\bm{h(x)}}{\partial t} = L_{\bm{f}}^i \bm{h(x)} + L_{\bm{G}} L_{\bm{f}}^{i-1} \bm{h(x) u}
+		\frac{\partial^i\bm{y}}{\partial t} = \frac{\partial^i\bm{h}(\bm{x})}{\partial t} = L_{\bm{f}}^i \bm{h}(\bm{x}) + L_{\bm{G}} L_{\bm{f}}^{i-1} \bm{h}(\bm{x}) \bm{u}
 		\label{eq:dy_i}
 	\end{split}
 \end{equation}
 with $i$ being the \textit{relative degree} of the system. Using Equation (\ref{eq:dy_i}) to formulate the control law leads to the following expression for the control input $\bm{u}$
 \begin{equation}
 	\begin{split}
-		\bm{u} = L_{\bm{G}} L_{\bm{f}}^{i-1} \bm{h(x)}^{-1} (\bm{\nu} - L_{\bm{f}}^i\bm{h(x)}) 
+		\bm{u} = L_{\bm{G}} L_{\bm{f}}^{i-1} \bm{h}(\bm{x})^{-1} (\bm{\nu} - L_{\bm{f}}^i\bm{h}(\bm{x})) 
 		\label{eq:u_control_law_i}
 	\end{split}
 \end{equation}
@@ -496,40 +496,197 @@ The \acrshort{INDI} is an incremental form of the \acrshort{NDI} for which the l
 The incremental form of the system can be obtained by taking a Taylor series expansion of the Equation \ref{eq:nonlin_sys1}
 \begin{equation}
 	\begin{split}
-		\bm{\dot{x}} &= \bm{f(x_0)} + \bm{G(x_0)}\bm{u_0} \\
-		&+ \frac{\partial}{\partial \bm{x}} [\bm{f(x)} + \bm{G(x)}\bm{u}] \bigg|_{\bm{x=x_0,u=u_0}} (\bm{x-x_0}) \\
-		&+ \frac{\partial}{\partial \bm{u}} [\bm{f(x)} + \bm{G(x)}\bm{u}] \bigg|_{\bm{x=x_0,u=u_0}} (\bm{u-u_0}) 
+		\bm{\dot{x}} &= \bm{f}(\bm{x}_0) + \bm{G}(\bm{x}_0)\bm{u}_0 \\
+		&+ \frac{\partial}{\partial \bm{x}} [\bm{f}(\bm{x}) + \bm{G}(\bm{x})\bm{u}] \bigg|_{\bm{x}=\bm{x}_0,\bm{u}=\bm{u}_0} (\bm{x}-\bm{x}_0) \\
+		&+ \frac{\partial}{\partial \bm{u}} [\bm{f}(\bm{x}) + \bm{G}(\bm{x})\bm{u}] \bigg|_{\bm{x}=\bm{x}_0,\bm{u}=\bm{u}_0} (\bm{u}-\bm{u}_0) 
 		\label{eq:nonlin_sys_taylor}
 	\end{split}
 \end{equation}
 The first term on the right side of the Equation \ref{eq:nonlin_sys_taylor} is $\bm{\dot{x}_0}$. Also, evaluating the differentiation of the third term leads to 
 \begin{equation}
 	\begin{split}
-		\bm{\dot{x}} &= \bm{\dot{x}_0} \\ 
-		&+ \frac{\partial}{\partial \bm{x}} [\bm{f(x)} + \bm{G(x)}\bm{u}] \bigg|_{\bm{x=x_0,u=u_0}} (\bm{x-x_0}) \\
-		&+ \bm{G(x_0)} (\bm{u-u_0}) 
+		\bm{\dot{x}} &= \bm{\dot{x}}_0 \\ 
+		&+ \frac{\partial}{\partial \bm{x}} [\bm{f}(\bm{x}) + \bm{G}(\bm{x})\bm{u}] \bigg|_{\bm{x}=\bm{x}_0,\bm{u}=\bm{u}_0} (\bm{x}-\bm{x}_0) \\
+		&+ \bm{G}(\bm{x}_0) (\bm{u}-\bm{u}_0) 
 		\label{eq:nonlin_sys_taylor2}
 	\end{split}
 \end{equation}
 The second term of the Equation \ref{eq:nonlin_sys_taylor2} contains partial derivative with respect to the state vector. Considering very small time increments of the controller loop and applying the \textit{principle of time scale separation} the second term vanishes. This is a valid assumption if the dynamics of the actuators is fast compared with the dynamics of the system. Thus, the Equation \ref{eq:nonlin_sys_taylor2} is further simplified to 
 \begin{equation}
 	\begin{split}
-		\bm{\dot{x}} = \bm{\dot{x}_0} + \bm{G(x_0)} (\bm{u-u_0}) 
+		\bm{\dot{x}} = \bm{\dot{x}}_0 + \bm{G}(\bm{x}_0) (\bm{u}-\bm{u}_0) 
 		\label{eq:nonlin_sys_indi}
 	\end{split}
 \end{equation}
-Solving Equation \ref{eq:nonlin_sys_indi} for $\bm{u}$ and substituting $\dot{\bm{y}}$ with $\bm{\nu}$, the \acrshort{INDI} control law is obtained
+Solving Equation \ref{eq:nonlin_sys_indi} for $\bm{u}$ and substituting $\bm{\dot{y}}$ with $\bm{\nu}$, the \acrshort{INDI} control law is obtained
 \begin{equation}
 	\begin{split}
-		\bm{u} = \bm{u_0} + \bm{G(x_0)^{-1}} (\bm{\nu} - \bm{\dot{x}_0})
+		\bm{u} = \bm{u}_0 + \bm{G}(\bm{x}_0)^{-1} (\bm{\nu} - \bm{\dot{x}}_0)
 		\label{eq:u_control_law_indi}
 	\end{split}
 \end{equation}
-where $\bm{\dot{x}_0}$ is a measurable value from the previous step, $\bm{u_0}$ the control input from the previous step, $\bm{\nu}$ the reference value and $\bm{G(x_0)}$ the control effectiveness matrix. With $\bm{\Delta u=u-u_0}$ the control law from Equation \ref{eq:u_control_law_indi} represents an incremental version of the Equation \ref{eq:u_control_law}. Instead of computing the complete control input command $\bm{u}$, this control law results in computing the increment of the control input $\bm{\Delta u}$ and adding it to the previous value $\bm{u_0}$. As it is less dependent on the model of the system dynamics, it is able to increase the robustness of the system \cite{Sieberling}.
+where $\bm{\dot{x}}_0$ is a measurable value from the previous step, $\bm{u_0}$ the control input from the previous step, $\bm{\nu}$ the reference value and $\bm{G}(\bm{x}_0)$ the control effectiveness matrix. With $\bm{\Delta u}=\bm{u}-\bm{u}_0$ the control law from Equation \ref{eq:u_control_law_indi} represents an incremental version of the Equation \ref{eq:u_control_law}. Instead of computing the complete control input command $\bm{u}$, this control law results in computing the increment of the control input $\bm{\Delta u}$ and adding it to the previous value $\bm{u}_0$. As it is less dependent on the model of the system dynamics, it is able to increase the robustness of the system \cite{Sieberling}.
 
 \subsection{Inner INDI loop for Quadrotor} \label{subsec: indi_inner}
 
-- Derivation of the inner INDI loop (what we want to control, detailed equations).
+In this subsection, using theory from \ref{subsec:indi_general} the inner loop \acrshort{INDI} controller is derived to control angular acceleration of the Crazyflie quadrotor. Equation \ref{eq:ang_momentum} from section \ref{sec:eqs_motion} serves as a basis for this derivation. This equation is also augmented with a thrust $T$ of all four rotors. As only the body-fixed frame is used for this derivation the subscripts $B$ are not used in this subsection. Also all external forces and moments apply to the center of gravity of the quadrotor, thus the upperscripts $G$ are also omitted. 
+Solving equation \ref{eq:ang_momentum} for the angular acceleration $\dot{\bm{\omega}}$ results in
+\begin{equation}
+	\begin{bmatrix}
+		\dot{\bm{\omega}}\\
+		T
+	\end{bmatrix} = 
+	\underbrace{
+	\begin{bmatrix}
+		-\bm{I}^{-1} \big(\bm{\omega} \times \bm{I} \bm{\omega} \big)\\
+		0
+	\end{bmatrix}}_\text{$\bm{F}(\bm{\omega})$} +
+	\underbrace{	
+	\begin{bmatrix}
+		\bm{I}^{-1} \big( \bm{M}_G + \bm{M}_{A} +  \bm{M}_{P} \big)\\
+		T
+	\end{bmatrix}}_\text{$\bm{G}(\bm{\omega}, \bm{\Omega}, \bm{\dot{\Omega}})$}
+	\label{eq:main_eom_indi_inner}
+\end{equation}
+where $\bm{\omega}$ and $\dot{\bm{\omega}}$ are angular velocity and acceleration of the body-fixed frame ($B$) with respect to the \acrshort{NED} ($O$) coordinate frame, $\bm{M}_G$ the gravitational moment, $\bm{M}_A$ the aerodynamic moment and $\bm{M}_P$ propulsion moment. It is assumed that the gravitational force is applied to the center of gravity of the quadrotor and does not cause any moment around it. Due to the absence of the aerodynamic moment this term is omitted. It can also be seen as disturbance. The remaining propulsion moment is written as $\bm{M}_P=\bm{M}_C-\bm{M}_{gyro}$ where $\bm{M}_C$ is the control moment generated by the rotors and $\bm{M}_{gyro}$ the moment containing the gyroscopic effect of the rotors. This two moments can be explicitly written as
+\begin{equation}
+	\bm{M}_C = 	
+	\begin{bmatrix}
+		-bk_F & bk_F & bk_F & -bk_F \\
+		lk_F & lk_F & -lk_F & -lk_F \\
+		k_M & -k_M & k_M & -k_M 
+	\end{bmatrix} \bm{\Omega}
+	\label{eq:m_c}
+\end{equation}
+\begin{equation}
+	\begin{split}
+	\bm{M}_{gyro} = 
+	\begin{bmatrix}
+		0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 \\
+		I_{rzz} & -I_{rzz} & I_{rzz} & -I_{rzz}
+	\end{bmatrix} \bm{\dot{\Omega}}	+
+	\begin{bmatrix}
+		\bm{\omega}_y & 0 & 0 \\
+		0 & \bm{\omega}_x & 0 \\
+		0 & 0 & 0 
+	\end{bmatrix}	
+	\begin{bmatrix}
+		I_{rzz} & -I_{rzz} & I_{rzz} & -I_{rzz} \\
+		-I_{rzz} & I_{rzz} & -I_{rzz} & I_{rzz} \\
+		0 & 0 & 0 & 0 
+	\end{bmatrix} \bm{\omega}
+	\label{eq:m_gyro}
+	\end{split}
+\end{equation}
+where $I_{rzz}$ is the element of the inertia matrix $I_{r}$ of the rotor, $l$ and $b$ lever arms as denoted in the Figure (...), $k_F$ and $k_M$ force and moment constants of the rotors.
+
+As already explained in the previous section to derive the incremental control law the Taylor series expansion is perfromed on the Equation \ref{eq:main_eom_indi_inner}
+\begin{equation}
+	\begin{split}
+		\begin{bmatrix}
+			\bm{\dot{\omega}}\\
+			T
+		\end{bmatrix} &= \bm{F}(\bm{\omega}_0) + \bm{G}(\bm{\omega}_0, \bm{\Omega}_0, \bm{\dot{\Omega}}_0) \\
+		&+ \frac{\partial}{\partial \bm{\omega}} \big[\bm{F}(\bm{\omega}) + \bm{G}(\bm{\omega}_0, \bm{\Omega}_0, \bm{\dot{\Omega}}_0) \big] \bigg| _{\bm{\omega}=\bm{\omega}_0} (\bm{\omega}-\bm{\omega}_0) \\
+		&+ \frac{\partial}{\partial \bm{\Omega}} \big[\bm{G}(\bm{\omega}_0, \bm{\Omega}, \bm{\dot{\Omega}}_0) \big] \bigg| _{\bm{\Omega}=\bm{\Omega}_0} (\bm{\Omega}-\bm{\Omega}_0) \\
+		&+ \frac{\partial}{\partial \bm{\dot{\Omega}}} \big[\bm{G}(\bm{\omega}_0, \bm{\Omega}_0, \bm{\dot{\Omega}}) \big] \bigg| _{\bm{\dot{\Omega}}=\bm{\dot{\Omega}}_0} (\bm{\dot{\Omega}}-\bm{\dot{\Omega}}_0)
+		\label{eq:main_eom_indi_inner_taylor}
+	\end{split}
+\end{equation}
+The first term of this equation is the angular acceleration based on the current angular rates $\bm{\Omega}_0$ and inputs $\bm{\omega}_0$ and can be denoted as $\bm{\dot{\omega}}_0$.
+
+\begin{equation}
+	\begin{bmatrix}
+		\bm{\dot{\omega}}\\
+		T
+	\end{bmatrix} = 
+	\begin{bmatrix}
+		\bm{\dot{\omega}}_0\\
+		T_0
+	\end{bmatrix} + \bm{G}_1(\bm{\Omega} - \bm{\Omega}_0) + T_S \bm{G}_2(\bm{\dot{\Omega}} - \bm{\dot{\Omega}}_0)
+	\label{eq:TODO}
+\end{equation}
+
+\begin{equation}
+	\bm{G}_1 = 
+	\begin{bmatrix}
+		\bm{I}^{-1}\begin{bmatrix}
+			-bk_F & bk_F & bk_F & -bk_F \\
+			lk_F & lk_F & -lk_F & -lk_F \\
+			k_M & -k_M & k_M & -k_M 
+		\end{bmatrix} + 	
+		\begin{bmatrix}
+			\bm{\omega}_y & 0 & 0 \\
+			0 & \bm{\omega}_x & 0 \\
+			0 & 0 & 0 
+		\end{bmatrix}	
+		\begin{bmatrix}
+			I_{rzz} & -I_{rzz} & I_{rzz} & -I_{rzz} \\
+			-I_{rzz} & I_{rzz} & -I_{rzz} & I_{rzz} \\
+			0 & 0 & 0 & 0 
+		\end{bmatrix}\\
+			k_F \bm{1}_{1\times4}
+	\end{bmatrix}
+	\begin{bmatrix}
+		\Omega_1\\
+		\Omega_2\\
+		\Omega_3\\
+		\Omega_4
+	\end{bmatrix}
+	\label{eq:TODO}
+\end{equation}
+
+\begin{equation}
+	\bm{G}_2 = 
+	\begin{bmatrix}
+		\bm{I}^{-1} T_S^{-1}\begin{bmatrix}
+			0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 \\
+			I_{rzz} & -I_{rzz} & I_{rzz} & -I_{rzz}
+		\end{bmatrix} \\
+		\bm{0}_{1\times4}
+	\end{bmatrix}
+	\begin{bmatrix}
+		\dot{\Omega}_1\\
+		\dot{\Omega}_2\\
+		\dot{\Omega}_3\\
+		\dot{\Omega}_4
+	\end{bmatrix}
+	\label{eq:TODO}
+\end{equation}
+
+
+\begin{equation}
+	\begin{bmatrix}
+		\bm{\dot{\omega}}\\
+		T
+	\end{bmatrix} = 
+	\begin{bmatrix}
+		\bm{\dot{\omega}}_f\\
+		T_f
+	\end{bmatrix} + (\bm{G}_1+\bm{G}_2)(\bm{\Omega} - \bm{\Omega}_f) - \bm{G}_2z^{-1}(\bm{\Omega} - \bm{\Omega}_f)
+	\label{eq:TODO}
+\end{equation}
+
+\begin{equation}
+	\begin{split}
+		\bm{\dot{\Omega}}_c = \bm{\dot{\Omega}} = \bm{\dot{\Omega}}_f + (\bm{G}_1+\bm{G}_2)^{-1} \Bigg(
+		\begin{bmatrix}
+			\bm{\nu} - \bm{\dot{\Omega}}_f\\
+			\tilde{T}
+		\end{bmatrix} + \bm{G}_2z^{-1}(\bm{\Omega} - \bm{\Omega}_f) \Bigg)
+		\label{eq:TODO}	
+	\end{split}
+\end{equation}
+
+Note: \\
+- Name equations\\
+- Ts explain\\
+- remove brackets AND indices from bm\\
+- describe Attitude control with PD\\
+- derivation is based on the work of Smeur\\
+- Derivation of the inner INDI loop (what we want to control, detailed equations). \\
 
 \subsection{Outer INDI loop for Quadrotor} \label{subsec: indi_outer}
 
@@ -565,6 +722,11 @@ where $\bm{\dot{x}_0}$ is a measurable value from the previous step, $\bm{u_0}$ 
 \subsection{Simulation Results} \label{subsec:simulation_results}
 
 \section{Implementation on the Hardware} \label{sec:implementation_on_hardware}
+
+\subsection{Parameter Estimation} \label{subsec:parameter_estimation}
+
+- Actuator Dynamics (Estimation of the time constant) \\
+- Estimation of the control effectiveness parameters G1, G2
 
 \subsection{Structure of the Code} \label{subsec:structure_ofthe_code}
 
@@ -611,3 +773,12 @@ where $\bm{\dot{x}_0}$ is a measurable value from the previous step, $\bm{u_0}$ 
 
 % End of the document
 \end{document}
+
+
+%\begin{equation}
+%	\begin{bmatrix}
+%		\dot{\bm{\omega}}\\
+%		T
+%	\end{bmatrix} = \bm{F}(\bm{\omega}) + \bm{G}(\bm{\omega}, \bm{\Omega}, \bm{\dot{\Omega}})
+%	\label{eq:TODO}
+%\end{equation}
