@@ -54,7 +54,7 @@ accelz = dataArray{1, 9}(1:N); %accel body z
 %% Filter signals
 
 % The filter needed to get rid of the noise on the gyro
-[b, a] = butter(4,4/(512/2));
+[b, a] = butter(4,4/(500/2));
 first_order_dynamics_constant = 0.0319;
 
 % Filter the stabilization command with the actuator dynamics to get an
@@ -98,10 +98,11 @@ disp('G2_yaw is scaled by 1000, this is intended')
 % plot(cmd_filtd(:,3)*G_pitch)
 % title('\Delta angular acceleration pitch')
 % 
-% figure;
-% plot(angular_accel_filtd(:,3)); hold on
-% plot([cmd_filtd(:,4) cmd_filtdd(:,4)]*G_yaw)
-% title('\Delta angular acceleration yaw')
+figure;
+plot(angular_accel_filtd(:,3)); hold on
+plot([cmd_filtd(:,4) cmd_filtdd(:,4)]*G_yaw)
+plot([cmd_filtd(:,4) 0*cmd_filtdd(:,4)]*G_yaw)
+title('\Delta angular acceleration yaw')
 % 
 % figure;
 % plot(accelzd_filt); hold on

@@ -17,8 +17,8 @@
 \contentsline {subsection}{\numberline {3.2.3}Simulation Results}{8}
 \contentsline {section}{\numberline {3.3}Implementation on the Hardware}{8}
 \contentsline {subsection}{\numberline {3.3.1}Parameter Estimation}{8}
-\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{8}
-\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments}{8}
-\contentsline {chapter}{\numberline {4}Results}{9}
-\contentsline {chapter}{\numberline {5}Discussion}{10}
+\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{9}
+\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments?}{9}
+\contentsline {chapter}{\numberline {4}Results}{10}
+\contentsline {chapter}{\numberline {5}Discussion}{11}
 \contentsline {chapter}{Appendix}{ii}

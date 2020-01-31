@@ -9,9 +9,12 @@ Fs = 1/Ts;
 T = 0.0617;                      % Time constant T [s]
 alpha = 1 - exp(-Ts/T);   
 
+filename = "csv_data/data_1901.csv";
+
 %% Import data
 
-import_logdata;
+[tick, gyro_roll, gyro_pitch, gyro_yaw, cmd_thrust, cmd_roll,... 
+ cmd_pitch, cmd_yaw, accelz] = import_logdata(filename);
 
 
 %% Actuator dynamics
@@ -57,11 +60,24 @@ G_roll = cmd_roll_fd \ ang_accel_roll_d;
 G_pitch = cmd_pitch_fd \ ang_accel_pitch_d;
 G_yaw = [cmd_yaw_fd cmd_yaw_fdd] \ ang_accel_yaw_d;
 
-G_yaw(2) = G_yaw(2)*1000;
+%G_yaw(2) = G_yaw(2)*1000;
 
 %%  Plot results 
 display(['T = ' num2str(T) 's; Fs = ' num2str(Fs) 'Hz; alpha = ' num2str(alpha)])
 display(['G1_roll = ' num2str(G_roll) '; G1_pitch = ' num2str(G_pitch) ...
          '; G1_yaw = ' num2str(G_yaw(1)) '; G2_yaw = ' num2str(G_yaw(2))])
+
+% Plot contributions of G matrices
+figure('Name','G1_yaw contribution');
+plot(ang_accel_yaw_d); hold on
+plot([cmd_yaw_fd 0*cmd_yaw_fdd]*G_yaw)
+xlim([0 inf]); grid on;
+legend('ang\_accel\_yaw\_d', 'cmd*G1')
+
+figure('Name','G2_yaw contribution');
+plot(ang_accel_yaw_d); hold on
+plot([0*cmd_yaw_fd cmd_yaw_fdd]*G_yaw)
+xlim([0 inf]); grid on;
+legend('ang\_accel\_yaw\_d', 'cmdd*G2')
 
 

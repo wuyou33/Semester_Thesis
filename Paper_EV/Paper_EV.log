@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.20)  19 JAN 2020 17:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.20)  23 JAN 2020 16:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1400,10 +1400,19 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [7]
 Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 725--726
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 735.
+Package pdftex.def Info: figs/fsd.png  used on input line 740.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 29.72038pt.
@@ -1413,21 +1422,19 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [8
 
 ]
-Chapter 4.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 743.
+Package pdftex.def Info: figs/fsd.png  used on input line 740.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 29.72038pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[9
-
-]
-Chapter 5.
+[9]
+Chapter 4.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
 Package pdftex.def Info: figs/fsd.png  used on input line 749.
@@ -1441,6 +1448,20 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [10
 
 ]
+Chapter 5.
+File: figs/fsd.png Graphic file (type png)
+<use figs/fsd.png>
+Package pdftex.def Info: figs/fsd.png  used on input line 755.
+(pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 29.72038pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[11
+
+]
 \c@pagesLTS.arabic.1.local.count=\count336
  (./Paper_EV.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 9--12
@@ -1451,7 +1472,7 @@ gn for ro-tor-craft.
 )
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 765.
+Package pdftex.def Info: figs/fsd.png  used on input line 771.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1461,11 +1482,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 
-Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 765.
+Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 771.
 
 
 Package undolabl Warning: Label `pagesLTS.roman.local' overridden on input line
- 765.
+ 771.
 
 
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1478,7 +1499,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 AED: pageslts setting LastPage 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 775.
+Package pdftex.def Info: figs/fsd.png  used on input line 781.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1487,11 +1508,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 
-Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 775.
+Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 781.
 
 
 Package undolabl Warning: Label `pagesLTS.roman.local' overridden on input line
- 775.
+ 781.
 
 
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1501,8 +1522,8 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [2
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 775.
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 775.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 781.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 781.
 \c@pagesLTS.roman.2.local.count=\count337
  
 AED: pageslts setting VeryLastPage via AfterLastShipout 
@@ -1510,23 +1531,23 @@ AED: pageslts setting VeryLastPage via AfterLastShipout
 AED: pageslts setting LastPages via AfterLastShipout 
 
 
-Package pageslts Info: Total number of pages is even.
+Package pageslts Info: Total number of pages is odd.
 
 
 (./Paper_EV.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 775.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 775.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 781.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 781.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 775.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 781.
  ) 
 Here is how much of TeX's memory you used:
- 21880 strings out of 492982
- 408348 string characters out of 6134895
+ 21881 strings out of 492982
+ 408366 string characters out of 6134895
  528342 words of memory out of 5000000
- 25095 multiletter control sequences out of 15000+600000
+ 25096 multiletter control sequences out of 15000+600000
  556517 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  45i,22n,49p,10442b,519s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1546,10 +1567,10 @@ exlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/te
 xlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/urw/helvetic/uhvro8a.pfb>
-Output written on Paper_EV.pdf (28 pages, 231939 bytes).
+Output written on Paper_EV.pdf (29 pages, 233368 bytes).
 PDF statistics:
- 182 PDF objects out of 1000 (max. 8388607)
- 125 compressed objects within 2 object streams
+ 185 PDF objects out of 1000 (max. 8388607)
+ 127 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

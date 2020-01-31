@@ -33,6 +33,7 @@
 #include "param.h"
 #include "position_controller.h"
 #include "attitude_controller.h"
+#include "math.h"  //ev_tag
 
 #define ATTITUDE_UPDATE_DT    (float)(1.0f/ATTITUDE_RATE)
 
@@ -43,19 +44,22 @@
 #define STABILIZATION_INDI_FILT_CUTOFF_R STABILIZATION_INDI_FILT_CUTOFF
 
 // these parameters are used in the filtering of the angular acceleration
-#define STABILIZATION_INDI_G1_P 0.0034724f
-#define STABILIZATION_INDI_G1_Q 0.0052575f
-#define STABILIZATION_INDI_G1_R -0.0015942f
-#define STABILIZATION_INDI_G2_R -0.11281f
-#define STABILIZATION_INDI_REF_ERR_P 3.57f
-#define STABILIZATION_INDI_REF_ERR_Q 3.57f
-#define STABILIZATION_INDI_REF_ERR_R 3.57f
+#define STABILIZATION_INDI_G1_P 0.0066146f
+#define STABILIZATION_INDI_G1_Q 0.0052125f
+#define STABILIZATION_INDI_G1_R -0.001497f
+#define STABILIZATION_INDI_G2_R 0.000043475f
+#define STABILIZATION_INDI_REF_ERR_P 20.0f
+#define STABILIZATION_INDI_REF_ERR_Q 20.0f
+#define STABILIZATION_INDI_REF_ERR_R 20.0f
 #define STABILIZATION_INDI_REF_RATE_P 14.0f
 #define STABILIZATION_INDI_REF_RATE_Q 14.0f
 #define STABILIZATION_INDI_REF_RATE_R 14.0f
 #define STABILIZATION_INDI_ACT_DYN_P 0.03149f
 #define STABILIZATION_INDI_ACT_DYN_Q 0.03149f
 #define STABILIZATION_INDI_ACT_DYN_R 0.03149f
+
+// Crazyflie mass [kg]
+#define CF_MASS 0.028f
 
 /**
  * @brief angular rates
@@ -75,6 +79,19 @@ struct ReferenceSystem {
   float rate_r;
 };
 
+// ev_tag
+struct Vectr {
+  float x; 
+  float y; 
+  float z;
+};
+// ev_tag
+struct Angles {
+  float phi; 
+  float theta;
+  float psi;
+};
+
 struct IndiVariables {
   float thrust;
   struct FloatRates angular_accel_ref;
@@ -85,6 +102,9 @@ struct IndiVariables {
 
   Butterworth2LowPass u[3];
   Butterworth2LowPass rate[3];
+  Butterworth2LowPass ddxi[3];
+  Butterworth2LowPass ang[3];
+  Butterworth2LowPass thr[3];
   struct FloatRates g1;
   float g2;
 
@@ -92,6 +112,21 @@ struct IndiVariables {
   struct FloatRates act_dyn;
   float filt_cutoff;
   float filt_cutoff_r;
+
+  // INDI outer loop (ev_tag)
+  struct Vectr linear_accel_ref;  
+  struct Vectr linear_accel_err;
+  struct Vectr linear_accel_s;    // acceleration sensed
+  struct Vectr linear_accel_f;    // acceleration filtered
+  struct Vectr linear_accel_ft;   // acceleration filtered transformed to NED 
+  struct Angles attitude_s;       // attitude senssed (here estimated)
+  struct Angles attitude_f;       // attitude filtered
+  struct Angles attitude_c;       // attitude commanded to the inner loop
+  float phi_tilde;                // roll angle increment
+  float theta_tilde;              // pitch angle increment
+  float T_tilde;                  // thrust increment
+  float T_inner;                  // thrust to inner INDI
+  float T_inner_f;
 };
 
 void controllerINDIInit(void);

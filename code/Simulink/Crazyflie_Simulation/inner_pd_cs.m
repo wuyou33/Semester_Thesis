@@ -27,13 +27,17 @@ function inner_pd_cs(k_omega_in, k_eta_in)
                             ( (Ts^2*K_eta*K_omega*C1 + Ts*K_omega*C1 + 1)*z^3 + ... 
                               (C2-2)*z^2 + (-Ts*K_omega*C1 - 2*C2 + 1)*z + C2 );
 
+            figure(1);
+            step(TF_etaref_eta); hold on; grid on;
+                   
             % Compute poles of TF_etaref_eta
             display(['K_omega=', num2str(K_omega), ', K_eta=', num2str(K_eta)])
             p = pole(TF_etaref_eta)
 
+            %figure(2);
             % Plot poles
             name = ['KOmega= ', num2str(K_omega), ', KEta= ', num2str(K_eta)];
-            pzmap(TF_etaref_eta); hold on; axis equal;
+            %pzmap(TF_etaref_eta); hold on; axis equal;
 
             % Plot settings
             grid on; 

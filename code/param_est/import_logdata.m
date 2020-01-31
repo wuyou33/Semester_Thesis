@@ -1,3 +1,7 @@
+function [tick, gyro_roll, gyro_pitch, gyro_yaw, ...
+         cmd_thrust, cmd_roll, cmd_pitch, cmd_yaw,...
+         accelz] = import_logdata(filename)
+
 %% Import data from text file
 % Script for importing data from the following text file:
 %
@@ -19,7 +23,7 @@ opts.ExtraColumnsRule = "ignore";
 opts.EmptyLineRule = "read";
 
 % Import the data
-tbl = readtable("csv_data/data_1901.csv", opts);
+tbl = readtable(filename, opts);
 
 %% Convert to output type
 tick = tbl.tick;
@@ -34,3 +38,5 @@ accelz = tbl.controlleraccelz;
 
 %% Clear temporary variables
 clear opts tbl
+
+end

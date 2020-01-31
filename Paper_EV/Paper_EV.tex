@@ -701,36 +701,41 @@ Note: \\
 
 \section{Research Quadrotor} \label{sec:research_quadrotor}
 
-- Some facts about Crazyflie hardware (foto, uC frequency, weight, length)
+- Some facts about Crazyflie hardware (foto, uC frequency, weight, length (foto of lever arms), onboard sensors, additional sensors/HW (optoflow, sd-card))
 
 \section{Implementation in Simulink (Simulink Model)} \label{sec:simulink_model}
 
 \subsection{Purpose} \label{subsec:purpose}
 
-- Estimation of relevant components (Matrices...)\\
-- Testing of the PD-gains\\
-- Testing the filter
+- Estimation of the relevant for the HW implementation components (which terms make a huge impact on the controller performance: G1, G1 etc)\\
+- Estimate where value explosion can occur\\
+- Testing the behaviour of the filter\\
+- Testing of the PD-gains
 
 \subsection{Structure} \label{subsec:Structure}
-- Force frame from B to O for an easy representation\\
-- Show each equation of forces with explaining the made assumptions\\
-- Parameters\\
-- Actuator dynamics\\
-- Filter\\
+- Describe some assumptions: eg newton second law frame transformation from B to O for an easy representation\\
+- Present each equation of forces with explaining made assumptions\\
+- Parameter choice ($k_F$, $k_M$, ...)\\
+- Describe the actuator dynamics modelling\\
+- Describe the filter transfer function\\
 - Images of the Simulink model
 
 \subsection{Simulation Results} \label{subsec:simulation_results}
+
+- Plot differences with or without some terms (G1, G2\_yaw) \\
 
 \section{Implementation on the Hardware} \label{sec:implementation_on_hardware}
 
 \subsection{Parameter Estimation} \label{subsec:parameter_estimation}
 
-- Actuator Dynamics (Estimation of the time constant) \\
-- Estimation of the control effectiveness parameters G1, G2
+- Actuator Dynamics (Estimation of the time constant), plot response with estimated constant\\
+- Estimation of the control effectiveness parameters G1, G2 for inner INDI (describe performed flight to log data), plot the curve with contribution of G1, G2 to the fitting\\
+- PD gain tuning for inner INDI (using pd\_inner\_cs(), show plots with different D-gains (e.g 25, 10 and 3) to see different damping behaviour), Before explaining gain tuning present all relevant transfer functions of the closed and open loops\\
+- Outer loop (show new diagram of the controller)
 
 \subsection{Structure of the Code} \label{subsec:structure_ofthe_code}
 
-\subsection{Testing with contact Forces and Moments} \label{subsec:testing_with_fandm}
+\subsection{Testing with contact Forces and Moments?} \label{subsec:testing_with_fandm}
 
 \chapter{Results} \label{cha:results}
 
@@ -738,6 +743,7 @@ Note: \\
 \thispagestyle{fancy}
 \chaptermark{Results}
 
+- To make the controller work a minimal knowledge of the system dynymics is need. Nevertherless G1, G2 still have to estimated accuratly because this 2 parameters do have inpact on the controller performance. 
 
 
 \chapter{Discussion} \label{cha:discussion}
