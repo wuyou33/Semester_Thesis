@@ -1,8 +1,8 @@
 function inner_pd_cs(k_omega_in, k_eta_in)
 
     clc;
-    Ts = 0.01;                                      % Sample time
-    T = 1/15;                                       % Actuator time constant
+    Ts = 1/500;                                       % Sample time
+    T = 0.0617;                                       % Actuator time constant
 
     % Actuator dynamic koefficients
     C1 = Ts/(Ts+2*T);
@@ -29,6 +29,8 @@ function inner_pd_cs(k_omega_in, k_eta_in)
 
             figure(1);
             step(TF_etaref_eta); hold on; grid on;
+            figure(2);
+            bode(TF_etaref_eta);
                    
             % Compute poles of TF_etaref_eta
             display(['K_omega=', num2str(K_omega), ', K_eta=', num2str(K_eta)])

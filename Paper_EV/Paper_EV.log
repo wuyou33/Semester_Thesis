@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.20)  23 JAN 2020 16:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.20)  19 FEB 2020 02:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1410,7 +1410,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 740.
+Package pdftex.def Info: figs/fsd.png  used on input line 741.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1424,7 +1424,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 ]
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 740.
+Package pdftex.def Info: figs/fsd.png  used on input line 741.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1437,7 +1437,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 Chapter 4.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 749.
+Package pdftex.def Info: figs/fsd.png  used on input line 750.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1451,7 +1451,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 Chapter 5.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 755.
+Package pdftex.def Info: figs/fsd.png  used on input line 756.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1472,7 +1472,7 @@ gn for ro-tor-craft.
 )
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 771.
+Package pdftex.def Info: figs/fsd.png  used on input line 772.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1482,11 +1482,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 
-Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 771.
+Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 772.
 
 
 Package undolabl Warning: Label `pagesLTS.roman.local' overridden on input line
- 771.
+ 772.
 
 
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1499,7 +1499,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 AED: pageslts setting LastPage 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 781.
+Package pdftex.def Info: figs/fsd.png  used on input line 782.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1508,11 +1508,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 
-Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 781.
+Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 782.
 
 
 Package undolabl Warning: Label `pagesLTS.roman.local' overridden on input line
- 781.
+ 782.
 
 
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1522,8 +1522,8 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [2
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 781.
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 781.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 782.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 782.
 \c@pagesLTS.roman.2.local.count=\count337
  
 AED: pageslts setting VeryLastPage via AfterLastShipout 
@@ -1535,13 +1535,13 @@ Package pageslts Info: Total number of pages is odd.
 
 
 (./Paper_EV.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 781.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 781.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 782.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 782.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 781.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 782.
  ) 
 Here is how much of TeX's memory you used:
  21881 strings out of 492982
@@ -1567,7 +1567,7 @@ exlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/te
 xlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/urw/helvetic/uhvro8a.pfb>
-Output written on Paper_EV.pdf (29 pages, 233368 bytes).
+Output written on Paper_EV.pdf (29 pages, 233383 bytes).
 PDF statistics:
  185 PDF objects out of 1000 (max. 8388607)
  127 compressed objects within 2 object streams

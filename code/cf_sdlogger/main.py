@@ -3,8 +3,8 @@ import csv
 from matplotlib import pyplot as plt
 
 # Decode binary log file
-log = cff.decode('log_data/log_3001_1')
-csv_file = 'csv_data/data_3001_1.csv'
+log = cff.decode('log_data/log_thrust_est_4')
+csv_file = 'csv_data/log_thrust_est_4.csv'
 
 # Begin writing to csv
 with open(csv_file, mode='w') as file:
