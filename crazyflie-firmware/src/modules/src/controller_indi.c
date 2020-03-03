@@ -36,16 +36,16 @@ static float attYawError;
 static struct Vectr positionRef; 
 static struct Vectr velocityRef;
 
-float K_xi_x = 0.7f;
-float K_xi_y = 0.7f;
-float K_xi_z = 0.7f;
+float K_xi_x = 5.0f;
+float K_xi_y = 5.0f;
+float K_xi_z = 5.0f;
 float K_dxi_x = 5.0f;
 float K_dxi_y = 5.0f;
 float K_dxi_z = 5.0f;
 float K_thr = 0.00024730f;
 
 static float pos_set_x, pos_set_y, pos_set_z; 
-static float vel_set_x, vel_set_y, vel_set_z;
+//static float vel_set_x, vel_set_y, vel_set_z;
 static float posS_x, posS_y, posS_z;
 static float velS_x, velS_y, velS_z;
 static float gyr_p, gyr_q, gyr_r;
@@ -228,16 +228,25 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 
 		/********** INDI OUTER LOOP ****************/
 
- 		// Mapping of roll, pitch, thrust commands to reference velocity commands 
-		vel_set_z = setpoint->attitude.pitch;
-		vel_set_y = setpoint->attitude.roll;
-		vel_set_x = setpoint->thrust/60000.0f;
 		// Reading setpoints in Position Hold mode
 		//velocityRef.x = setpoint->velocity.x;
 		//velocityRef.y = -setpoint->velocity.y;
 		//velocityRef.z = -setpoint->velocity.z;
 
-		// State position, velocity for logging
+ 		// Mapping of roll, pitch, thrust commands to reference velocity/position commands 
+		/*
+		vel_set_z = setpoint->attitude.pitch;
+		vel_set_y = setpoint->attitude.roll;
+		vel_set_x = setpoint->thrust/60000.0f;
+		velocityRef.x = vel_set_x;
+		velocityRef.y = vel_set_y;
+		velocityRef.z = vel_set_z;
+		*/
+		pos_set_z = setpoint->attitude.pitch;
+		pos_set_y = setpoint->attitude.roll;
+		pos_set_x = setpoint->thrust/60000.0f;
+
+		// State position, velocity
 		posS_x = state->position.x;
 		posS_y = -state->position.y;
 		posS_z = -state->position.z;
@@ -249,12 +258,12 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 		gyr_r = sensors->gyro.z; 
 
 		// Position controller (K_xi?)
-		//velocityDesired.x = K_xi_x*(positionRef.x - state->position.x);
-		//velocityDesired.y = K_xi_x*(positionRef.y + state->position.y);
-		//velocityDesired.z = K_xi_x*(positionRef.z + state->position.z);
-		velocityRef.x = vel_set_x;
-		velocityRef.y = vel_set_y;
-		velocityRef.z = vel_set_z;
+		positionRef.x = posS_x;//pos_set_x;
+		positionRef.y = posS_y;//pos_set_y;
+		positionRef.z = pos_set_z;
+		velocityRef.x = K_xi_x*(positionRef.x - posS_x);
+		velocityRef.y = K_xi_x*(positionRef.y - posS_y);
+		velocityRef.z = K_xi_x*(positionRef.z - posS_z);
 
 		// Velocity controller (K_dxi?)
 		indi.linear_accel_ref.x = K_dxi_x*(velocityRef.x - velS_x);
@@ -574,13 +583,14 @@ LOG_GROUP_STOP(ctrlINDI)
 
 // INDI outer loop
 PARAM_GROUP_START(INDI_Outer)
+/*
 PARAM_ADD(PARAM_FLOAT, pos_set_x, &pos_set_x)
 PARAM_ADD(PARAM_FLOAT, pos_set_y, &pos_set_y)
 PARAM_ADD(PARAM_FLOAT, pos_set_z, &pos_set_z)
 PARAM_ADD(PARAM_FLOAT, vel_set_x, &vel_set_x)
 PARAM_ADD(PARAM_FLOAT, vel_set_y, &vel_set_y)
 PARAM_ADD(PARAM_FLOAT, vel_set_z, &vel_set_z)
-
+*/
 PARAM_ADD(PARAM_FLOAT, arm, &arm)
 
 PARAM_GROUP_STOP(INDI_Outer)
