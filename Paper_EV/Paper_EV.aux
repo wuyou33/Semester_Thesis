@@ -53,7 +53,11 @@
 \newlabel{eq:dy_i}{{2.9}{4}}
 \newlabel{eq:u_control_law_i}{{2.10}{4}}
 \newlabel{eq:lin_relation}{{2.11}{4}}
+\citation{Silva}
 \citation{Sieberling}
+\citation{Smeur1}
+\citation{Smeur2}
+\citation{Smeur2}
 \@writefile{toc}{\contentsline {section}{\numberline {2.3}Incremental Nonlinear Dynamic Inversion}{5}}
 \newlabel{sec:indi}{{2.3}{5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}General INDI}{5}}
@@ -64,53 +68,68 @@
 \newlabel{eq:u_control_law_indi}{{2.15}{5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Inner INDI loop for Quadrotor}{5}}
 \newlabel{subsec: indi_inner}{{2.3.2}{5}}
+\citation{Smeur1}
 \newlabel{eq:main_eom_indi_inner}{{2.16}{6}}
 \newlabel{eq:m_c}{{2.17}{6}}
 \newlabel{eq:m_gyro}{{2.18}{6}}
-\newlabel{eq:main_eom_indi_inner_taylor}{{2.19}{6}}
-\newlabel{eq:TODO}{{2.20}{7}}
-\newlabel{eq:TODO}{{2.21}{7}}
-\newlabel{eq:TODO}{{2.22}{7}}
-\newlabel{eq:TODO}{{2.23}{7}}
-\newlabel{eq:TODO}{{2.24}{7}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Outer INDI loop for Quadrotor}{7}}
-\newlabel{subsec: indi_outer}{{2.3.3}{7}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Implementation}{8}}
-\newlabel{cha:implementation}{{3}{8}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Research Quadrotor}{8}}
-\newlabel{sec:research_quadrotor}{{3.1}{8}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Implementation in Simulink (Simulink Model)}{8}}
-\newlabel{sec:simulink_model}{{3.2}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Purpose}{8}}
-\newlabel{subsec:purpose}{{3.2.1}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Structure}{8}}
-\newlabel{subsec:Structure}{{3.2.2}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Simulation Results}{8}}
-\newlabel{subsec:simulation_results}{{3.2.3}{8}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{8}}
-\newlabel{sec:implementation_on_hardware}{{3.3}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Parameter Estimation}{8}}
-\newlabel{subsec:parameter_estimation}{{3.3.1}{8}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{9}}
-\newlabel{subsec:structure_ofthe_code}{{3.3.2}{9}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments?}{9}}
-\newlabel{subsec:testing_with_fandm}{{3.3.3}{9}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Results}{10}}
-\newlabel{cha:results}{{4}{10}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Discussion}{11}}
-\newlabel{cha:discussion}{{5}{11}}
-\newlabel{pagesLTS.arabic.1}{{}{11}}
-\newlabel{pagesLTS.arabic.1.local}{{}{11}}
-\newlabel{pagesLTS.arabic}{{}{11}}
-\newlabel{pagesLTS.arabic.local}{{}{11}}
+\citation{Smeur1}
+\newlabel{eq:main_eom_indi_inner_taylor}{{2.19}{7}}
+\newlabel{eq:main_eom_indi_inner_lin}{{2.20}{7}}
+\newlabel{eq:G1}{{2.21}{7}}
+\newlabel{eq:G2}{{2.22}{7}}
+\newlabel{eq:main_eom_indi_inner_lin_final}{{2.23}{8}}
+\newlabel{eq:indi_inner_control_law}{{2.24}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Outer INDI loop for Quadrotor}{8}}
+\newlabel{subsec: indi_outer}{{2.3.3}{8}}
+\newlabel{eq:lin_momentum_indi_outer}{{2.25}{8}}
+\newlabel{eq:lin_momentum_indi_outer_simple}{{2.26}{8}}
+\newlabel{eq:Fa}{{2.27}{8}}
+\newlabel{eq:Fg}{{2.28}{8}}
+\newlabel{eq:Fp}{{2.29}{9}}
+\newlabel{eq:main_eom_indi_outer_taylor}{{2.30}{9}}
+\newlabel{eq:lin_momentum_indi_outer_lin}{{2.31}{9}}
+\newlabel{eq:G}{{2.32}{9}}
+\newlabel{eq:u_outer}{{2.33}{10}}
+\newlabel{eq:lin_momentum_indi_outer_lin_final}{{2.34}{10}}
+\newlabel{eq:indi_outer_control_law}{{2.35}{10}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Implementation}{11}}
+\newlabel{cha:implementation}{{3}{11}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Research Quadrotor}{11}}
+\newlabel{sec:research_quadrotor}{{3.1}{11}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Implementation in Simulink (Simulink Model)}{11}}
+\newlabel{sec:simulink_model}{{3.2}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Purpose}{11}}
+\newlabel{subsec:purpose}{{3.2.1}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Structure}{11}}
+\newlabel{subsec:Structure}{{3.2.2}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Simulation Results}{11}}
+\newlabel{subsec:simulation_results}{{3.2.3}{11}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{11}}
+\newlabel{sec:implementation_on_hardware}{{3.3}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Parameter Estimation}{11}}
+\newlabel{subsec:parameter_estimation}{{3.3.1}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{12}}
+\newlabel{subsec:structure_ofthe_code}{{3.3.2}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments?}{12}}
+\newlabel{subsec:testing_with_fandm}{{3.3.3}{12}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Results}{13}}
+\newlabel{cha:results}{{4}{13}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Discussion}{14}}
+\newlabel{cha:discussion}{{5}{14}}
+\newlabel{pagesLTS.arabic.1}{{}{14}}
+\newlabel{pagesLTS.arabic.1.local}{{}{14}}
+\newlabel{pagesLTS.arabic}{{}{14}}
+\newlabel{pagesLTS.arabic.local}{{}{14}}
 \pagesLTS@ifcounter{pagesLTS.arabic.1.local.cnt}
-\setcounter{pagesLTS.arabic.1.local.cnt}{11}
+\setcounter{pagesLTS.arabic.1.local.cnt}{14}
 \bibstyle{unsrt}
 \bibdata{Lit/Literature}
 \bibcite{Slotine}{1}
 \bibcite{Horn}{2}
 \bibcite{Sieberling}{3}
 \bibcite{Silva}{4}
+\bibcite{Smeur1}{5}
+\bibcite{Smeur2}{6}
 \undonewlabel{pagesLTS.roman.local}
 \newlabel{pagesLTS.roman.local}{{}{17}}
 \undonewlabel{pagesLTS.roman}
@@ -125,8 +144,8 @@
 \pagesLTS@ifcounter{pagesLTS.roman.2.local.cnt}
 \setcounter{pagesLTS.roman.2.local.cnt}{2}
 \gdef\pagesLTS.lastpage{ii}
-\setcounter{pagesLTS.pagenr}{29}
+\setcounter{pagesLTS.pagenr}{32}
 \newlabel{VeryLastPage}{{}{ii}}
 \newlabel{pagesLTS.roman.2}{{}{ii}}
 \newlabel{pagesLTS.roman.2.local}{{}{18}}
-\newlabel{LastPages}{{}{29}}
+\newlabel{LastPages}{{}{32}}

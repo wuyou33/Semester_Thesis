@@ -21,4 +21,16 @@ Eduardo~Sim{\~o}es Silva.
 \newblock Incremental nonlinear dynamic inversion for quadrotor control.
 \newblock 2015.
 
+\bibitem{Smeur1}
+E.J.J Smeur, Q.P. Chu, and G.C.H.E. de~Croon.
+\newblock Adaptive incremental nonlinear dynamic inversion for attitude control
+  of micro air vehicles.
+\newblock {\em Journal of Guidance Control and Dynamics, Vol. 39 no.3}, 2015.
+
+\bibitem{Smeur2}
+E.J.J Smeur, Q.P. Chu, and G.C.H.E. de~Croon.
+\newblock Cascaded incremental nonlinear dynamic inversion control for mav
+  disturbance rejection.
+\newblock {\em Control Engineering Practice, Vol. 73, p. 79-90}, 2018.
+
 \end{thebibliography}

@@ -242,9 +242,9 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 		velocityRef.y = vel_set_y;
 		velocityRef.z = vel_set_z;
 		*/
-		pos_set_z = setpoint->attitude.pitch;
-		pos_set_y = setpoint->attitude.roll;
-		pos_set_x = setpoint->thrust/60000.0f;
+		//pos_set_x = setpoint->attitude.pitch;
+		//pos_set_y = setpoint->attitude.roll;
+		//pos_set_z = -setpoint->thrust/60000.0f;
 
 		// State position, velocity
 		posS_x = state->position.x;
@@ -257,7 +257,7 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 		gyr_q = sensors->gyro.y;
 		gyr_r = sensors->gyro.z; 
 
-		// Position controller (K_xi?)
+		// Position controller
 		positionRef.x = posS_x;//pos_set_x;
 		positionRef.y = posS_y;//pos_set_y;
 		positionRef.z = pos_set_z;
@@ -265,7 +265,7 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 		velocityRef.y = K_xi_x*(positionRef.y - posS_y);
 		velocityRef.z = K_xi_x*(positionRef.z - posS_z);
 
-		// Velocity controller (K_dxi?)
+		// Velocity controller
 		indi.linear_accel_ref.x = K_dxi_x*(velocityRef.x - velS_x);
 		indi.linear_accel_ref.y = K_dxi_x*(velocityRef.y - velS_y);
 		indi.linear_accel_ref.z = K_dxi_z*(velocityRef.z - velS_z); 
@@ -583,10 +583,11 @@ LOG_GROUP_STOP(ctrlINDI)
 
 // INDI outer loop
 PARAM_GROUP_START(INDI_Outer)
-/*
+
 PARAM_ADD(PARAM_FLOAT, pos_set_x, &pos_set_x)
 PARAM_ADD(PARAM_FLOAT, pos_set_y, &pos_set_y)
 PARAM_ADD(PARAM_FLOAT, pos_set_z, &pos_set_z)
+/*
 PARAM_ADD(PARAM_FLOAT, vel_set_x, &vel_set_x)
 PARAM_ADD(PARAM_FLOAT, vel_set_y, &vel_set_y)
 PARAM_ADD(PARAM_FLOAT, vel_set_z, &vel_set_z)

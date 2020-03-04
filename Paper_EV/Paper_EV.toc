@@ -8,17 +8,17 @@
 \contentsline {section}{\numberline {2.3}Incremental Nonlinear Dynamic Inversion}{5}
 \contentsline {subsection}{\numberline {2.3.1}General INDI}{5}
 \contentsline {subsection}{\numberline {2.3.2}Inner INDI loop for Quadrotor}{5}
-\contentsline {subsection}{\numberline {2.3.3}Outer INDI loop for Quadrotor}{7}
-\contentsline {chapter}{\numberline {3}Implementation}{8}
-\contentsline {section}{\numberline {3.1}Research Quadrotor}{8}
-\contentsline {section}{\numberline {3.2}Implementation in Simulink (Simulink Model)}{8}
-\contentsline {subsection}{\numberline {3.2.1}Purpose}{8}
-\contentsline {subsection}{\numberline {3.2.2}Structure}{8}
-\contentsline {subsection}{\numberline {3.2.3}Simulation Results}{8}
-\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{8}
-\contentsline {subsection}{\numberline {3.3.1}Parameter Estimation}{8}
-\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{9}
-\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments?}{9}
-\contentsline {chapter}{\numberline {4}Results}{10}
-\contentsline {chapter}{\numberline {5}Discussion}{11}
+\contentsline {subsection}{\numberline {2.3.3}Outer INDI loop for Quadrotor}{8}
+\contentsline {chapter}{\numberline {3}Implementation}{11}
+\contentsline {section}{\numberline {3.1}Research Quadrotor}{11}
+\contentsline {section}{\numberline {3.2}Implementation in Simulink (Simulink Model)}{11}
+\contentsline {subsection}{\numberline {3.2.1}Purpose}{11}
+\contentsline {subsection}{\numberline {3.2.2}Structure}{11}
+\contentsline {subsection}{\numberline {3.2.3}Simulation Results}{11}
+\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{11}
+\contentsline {subsection}{\numberline {3.3.1}Parameter Estimation}{11}
+\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{12}
+\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments?}{12}
+\contentsline {chapter}{\numberline {4}Results}{13}
+\contentsline {chapter}{\numberline {5}Discussion}{14}
 \contentsline {chapter}{Appendix}{ii}

@@ -1,11 +1,16 @@
 \glossarysection[\glossarytoctitle]{\glossarytitle}\glossarypreamble
 \begin{theglossary}\glossaryheader
+\glsgroupheading{E}\relax \glsresetentrylist %
+\glossentry{EOM}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{2}}}\glsgroupskip
 \glsgroupheading{I}\relax \glsresetentrylist %
 \glossentry{INDI}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{4\delimN 5}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{1\delimN 2}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{4\delimR 6}}}\glsgroupskip
 \glsgroupheading{N}\relax \glsresetentrylist %
 \glossentry{NDI}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{3\delimN 4}}}%
+		\setentrycounter[]{page}\glsnumberformat{2\delimR 5}}}%
 \glossentry{NED}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{2\delimN 3}}}%
+		\setentrycounter[]{page}\glsnumberformat{2\delimN 3}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{6}}}%
 \end{theglossary}\glossarypostamble

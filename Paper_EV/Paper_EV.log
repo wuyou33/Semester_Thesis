@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.20)  19 FEB 2020 02:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.20)  4 MAR 2020 14:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -960,19 +960,6 @@ Package: translator 2018/01/04 v1.12 Easy translation of strings in LaTeX
 Writing nomenclature file Paper_EV.nlo
 (./Paper_EV.aux
 \c@pagesLTS.roman.1.local.cnt=\count318
-
-
-LaTeX Warning: Label `eq:TODO' multiply defined.
-
-
-LaTeX Warning: Label `eq:TODO' multiply defined.
-
-
-LaTeX Warning: Label `eq:TODO' multiply defined.
-
-
-LaTeX Warning: Label `eq:TODO' multiply defined.
-
 \c@pagesLTS.arabic.1.local.cnt=\count319
 \c@pagesLTS.roman.2.local.cnt=\count320
 )
@@ -1367,9 +1354,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [5]
+Underfull \vbox (badness 8189) has occurred while \output is active []
+
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 609.
+Package pdftex.def Info: figs/fsd.png  used on input line 596.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1379,19 +1368,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [6]
-Overfull \hbox (13.99734pt too wide) detected at line 638
-\OML/cmm/b/it/10.95 G[] \OT1/cmr/m/n/10.95 = [] []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 683--690
-
- []
-
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 696.
+Package pdftex.def Info: figs/fsd.png  used on input line 657.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 29.72038pt.
@@ -1399,18 +1380,9 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [7]
-Chapter 3.
-
-Underfull \hbox (badness 10000) in paragraph at lines 725--726
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 741.
+Package pdftex.def Info: figs/fsd.png  used on input line 731.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1419,12 +1391,10 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[8
-
-]
+[8]
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 741.
+Package pdftex.def Info: figs/fsd.png  used on input line 782.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1434,25 +1404,32 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [9]
-Chapter 4.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 750.
+Package pdftex.def Info: figs/fsd.png  used on input line 807.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 29.72038pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[10
+[10]
+Chapter 3.
 
-]
-Chapter 5.
+Underfull \hbox (badness 10000) in paragraph at lines 836--837
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 756.
+Package pdftex.def Info: figs/fsd.png  used on input line 852.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 29.72038pt.
@@ -1460,6 +1437,46 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [11
+
+]
+File: figs/fsd.png Graphic file (type png)
+<use figs/fsd.png>
+Package pdftex.def Info: figs/fsd.png  used on input line 852.
+(pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 29.72038pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[12]
+Chapter 4.
+File: figs/fsd.png Graphic file (type png)
+<use figs/fsd.png>
+Package pdftex.def Info: figs/fsd.png  used on input line 863.
+(pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 29.72038pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[13
+
+]
+Chapter 5.
+File: figs/fsd.png Graphic file (type png)
+<use figs/fsd.png>
+Package pdftex.def Info: figs/fsd.png  used on input line 869.
+(pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 29.72038pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[14
 
 ]
 \c@pagesLTS.arabic.1.local.count=\count336
@@ -1472,7 +1489,7 @@ gn for ro-tor-craft.
 )
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 772.
+Package pdftex.def Info: figs/fsd.png  used on input line 885.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1482,11 +1499,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 
-Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 772.
+Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 885.
 
 
 Package undolabl Warning: Label `pagesLTS.roman.local' overridden on input line
- 772.
+ 885.
 
 
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1499,7 +1516,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 AED: pageslts setting LastPage 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 782.
+Package pdftex.def Info: figs/fsd.png  used on input line 895.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1508,11 +1525,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 
-Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 782.
+Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 895.
 
 
 Package undolabl Warning: Label `pagesLTS.roman.local' overridden on input line
- 782.
+ 895.
 
 
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1522,8 +1539,8 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [2
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 782.
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 782.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 895.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 895.
 \c@pagesLTS.roman.2.local.count=\count337
  
 AED: pageslts setting VeryLastPage via AfterLastShipout 
@@ -1531,26 +1548,22 @@ AED: pageslts setting VeryLastPage via AfterLastShipout
 AED: pageslts setting LastPages via AfterLastShipout 
 
 
-Package pageslts Info: Total number of pages is odd.
+Package pageslts Info: Total number of pages is even.
 
 
 (./Paper_EV.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 782.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 782.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 782.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 895.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 895.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 895.
  ) 
 Here is how much of TeX's memory you used:
- 21881 strings out of 492982
- 408366 string characters out of 6134895
+ 21915 strings out of 492982
+ 409046 string characters out of 6134895
  528342 words of memory out of 5000000
- 25096 multiletter control sequences out of 15000+600000
+ 25130 multiletter control sequences out of 15000+600000
  556517 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 45i,22n,49p,10442b,519s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 45i,27n,49p,10442b,519s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/
@@ -1567,10 +1580,10 @@ exlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/te
 xlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/urw/helvetic/uhvro8a.pfb>
-Output written on Paper_EV.pdf (29 pages, 233383 bytes).
+Output written on Paper_EV.pdf (32 pages, 246259 bytes).
 PDF statistics:
- 185 PDF objects out of 1000 (max. 8388607)
- 127 compressed objects within 2 object streams
+ 195 PDF objects out of 1000 (max. 8388607)
+ 134 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

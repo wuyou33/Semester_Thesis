@@ -366,9 +366,9 @@ The aim of this chapter is to provide the theoretical background which serves as
 
 \section{Dynamic Equations of Motion of an Aircraft} \label{sec:eqs_motion}
 
-The dynamic equations which describe the general motion of an aircraft are usually coupled first order implicit nonlinear differential equations. However, in many cases it is sufficient to use their simplified versions (Source needed!). This section presents simplified general \acrshort{EOM} and describes the assumptions which were considered to derive them.
+The dynamic equations which describe the general motion of an aircraft are usually coupled first order implicit nonlinear differential equations. However, in many cases it is sufficient to use their simplified versions (TODO:Source needed!). This section presents simplified general \acrshort{EOM} and describes the assumptions which were considered to derive them.
 
-For the derivation of the equation of motion the aircraft system will be assumed to be a rigid body. Such a rigid body system can be described uniquely by 12 states. Note that by taking in account additional effects, such as propulsion system dynamics, multi-body dynamics etc., the number of required state variables will increase. 
+For the derivation of the equations of motion the aircraft system will be assumed to be a rigid body. Such a rigid body system can be described uniquely by 12 states. Note that by taking in account additional effects, such as propulsion system dynamics, multi-body dynamics etc., the number of required state variables will increase. 
 
 Additionally to the rigid body assumption, it is also assumed that the earth is flat and non-rotating and the reference point of the sum of all external forces acting on the body corresponds to the center of gravity of the body. Thus, the linear momentum equation is written as
 \begin{equation}
@@ -379,7 +379,7 @@ Additionally to the rigid body assumption, it is also assumed that the earth is 
 \end{equation}
 where $\sum(\bm{F}^G)_B \in \mathbb{R}^{3 \times 1}$ is the sum of the external forces acting on the system and applied to the center of gravity $G$, $m$ the mass of the body, $(\bm{\dot{v}}^G)_{B} \in \mathbb{R}^{3 \times 1}$ the linear acceleration of the point $G$, $(\bm{\omega}^{OB}) \in \mathbb{R}^{3 \times 1}$ the angular velocity of the body-fixed frame ($B$) with respect to the \acrfull{NED} ($O$) coordinate frame. Subscript $B$ denotes that all variables are specified in the body-fixed coordinate frame.
 
-The rotational motion of a body is described with the angular momentum equation. To derive it, additionally to the assumptions made above it is also considered that the mass and the mass distribution are quasistationary, meaning $\frac{d}{dt}m=0$ and $\frac{d}{dt}(I)_B=0$ respectively?. $(I)_B$ is the inertia tensor of the body defined in the body-fixed frame. Thus, the angular momentum is
+The rotational motion of a body is described with the angular momentum equation. To derive it, additionally to the assumptions made above it is also considered that the mass and the mass distribution are quasistationary, meaning $\frac{d}{dt}m=0$ and $\frac{d}{dt}(\bm{I})_B=0$ with $(\bm{I})_B$ being the inertia tensor of the body defined in the body-fixed frame. Thus, the angular momentum is
 \begin{equation}
 	\begin{split}
 		\sum (\bm{M}^G)_B = (\bm{I}^G)_B \cdot (\bm{\dot{\omega}}^{OB}) + (\bm{\omega}^{OB}) \times \Big[(\bm{I}^G)_B \cdot (\bm{\omega}^{OB})\Big]
@@ -424,7 +424,7 @@ There are different options to represent the position differential equation. Her
 	\label{eq:position_diff_eq}
 \end{equation}
 
-The Equations (\ref{eq:lin_momentum})-(\ref{eq:position_diff_eq}) presented above can be used to represent a motion of a general aircraft. Note that terms $\sum(\bm{F}^G)_B$ and $\sum (\bm{M}^G)_B$ contain all external forces and moments acting on the rigid body. Considering an aircraft system these could be the aerodynamic forces and moments caused by the air flow, propulsion forces and moments, forces caused by the gravitation etc.. The detailed modelling of external forces and moments is presented in chapter (...Simulink).
+The Equations (\ref{eq:lin_momentum})-(\ref{eq:position_diff_eq}) presented above can be used to represent a motion of a general aircraft in a three-dimensional space. Note that terms $\sum(\bm{F}^G)_B$ and $\sum (\bm{M}^G)_B$ contain all external forces and moments acting on the rigid body. Considering a general aircraft system, these could be the aerodynamic forces and moments caused by the air flow, propulsion forces and moments, forces caused by the gravitation etc.. The detailed modelling of external forces and moments is presented in chapter \ref{sec:simulink_model}.
 
 \section{Nonlinear Dynamic Inversion} \label{sec:ndi}
 
@@ -442,7 +442,7 @@ The core idea behind the input-output linearization method is to find a direct r
 \begin{equation}
 	\begin{split}
 		\bm{\dot{y}} &=  \frac{\partial\bm{y}}{\partial t} = \frac{\partial\bm{h}(\bm{x})}{\partial t} \frac{\partial\bm{x}}{\partial t} = \frac{\partial\bm{h}(\bm{x})}{\partial t} \dot{\bm{x}} = \nabla\bm{h}(\bm{x}) [\bm{f}(\bm{x}) + \bm{G}(\bm{x})\bm{u}] \\
-		&= \nabla\bm{h}(\bm{x}) \bm{f}(\bm{x}) + \nabla\bm{h}(\bm{x}) \bm{G}(\bm{x})\bm{u}] = L_{\bm{f}} \bm{h}(\bm{x}) + L_{\bm{G}} \bm{h}(\bm{x}) \bm{u} 
+		&= \nabla\bm{h}(\bm{x}) \bm{f}(\bm{x}) + \nabla\bm{h}(\bm{x}) \bm{G}(\bm{x})\bm{u} = L_{\bm{f}} \bm{h}(\bm{x}) + L_{\bm{G}} \bm{h}(\bm{x}) \bm{u} 
 		\label{eq:dy}
 	\end{split}
 \end{equation}
@@ -511,14 +511,14 @@ The first term on the right side of the Equation \ref{eq:nonlin_sys_taylor} is $
 		\label{eq:nonlin_sys_taylor2}
 	\end{split}
 \end{equation}
-The second term of the Equation \ref{eq:nonlin_sys_taylor2} contains partial derivative with respect to the state vector. Considering very small time increments of the controller loop and applying the \textit{principle of time scale separation} the second term vanishes. This is a valid assumption if the dynamics of the actuators is fast compared with the dynamics of the system. Thus, the Equation \ref{eq:nonlin_sys_taylor2} is further simplified to 
+The second term of the Equation \ref{eq:nonlin_sys_taylor2} contains partial derivative with respect to the state vector. Considering very small time increments of the controller loop and applying the \textit{principle of time scale separation} the second term vanishes. This is a valid assumption if the dynamics of the actuators is fast compared with the dynamics of the system \cite{Silva}. Thus, the Equation \ref{eq:nonlin_sys_taylor2} is further simplified to 
 \begin{equation}
 	\begin{split}
 		\bm{\dot{x}} = \bm{\dot{x}}_0 + \bm{G}(\bm{x}_0) (\bm{u}-\bm{u}_0) 
 		\label{eq:nonlin_sys_indi}
 	\end{split}
 \end{equation}
-Solving Equation \ref{eq:nonlin_sys_indi} for $\bm{u}$ and substituting $\bm{\dot{y}}$ with $\bm{\nu}$, the \acrshort{INDI} control law is obtained
+By solving Equation \ref{eq:nonlin_sys_indi} for $\bm{u}$ and substituting $\bm{\dot{y}}$ with $\bm{\nu}$, the \acrshort{INDI} control law is obtained
 \begin{equation}
 	\begin{split}
 		\bm{u} = \bm{u}_0 + \bm{G}(\bm{x}_0)^{-1} (\bm{\nu} - \bm{\dot{x}}_0)
@@ -529,8 +529,8 @@ where $\bm{\dot{x}}_0$ is a measurable value from the previous step, $\bm{u_0}$ 
 
 \subsection{Inner INDI loop for Quadrotor} \label{subsec: indi_inner}
 
-In this subsection, using theory from \ref{subsec:indi_general} the inner loop \acrshort{INDI} controller is derived to control angular acceleration of the Crazyflie quadrotor. Equation \ref{eq:ang_momentum} from section \ref{sec:eqs_motion} serves as a basis for this derivation. This equation is also augmented with a thrust $T$ of all four rotors. As only the body-fixed frame is used for this derivation the subscripts $B$ are not used in this subsection. Also all external forces and moments apply to the center of gravity of the quadrotor, thus the upperscripts $G$ are also omitted. 
-Solving equation \ref{eq:ang_momentum} for the angular acceleration $\dot{\bm{\omega}}$ results in
+In this subsection, using theory from \ref{subsec:indi_general} the inner loop \acrshort{INDI} controller is derived to control angular acceleration of the Crazyflie quadrotor. The derivation of the inner loop, as well as the outer loop controllers is based on the \acrshort{INDI} controller architecture introduced by Smeur \cite{Smeur1}, \cite{Smeur2}. Equation \ref{eq:ang_momentum} from section \ref{sec:eqs_motion} serves as a basis for this derivation. The desired variable to be controlled by the inner loop \acrshort{INDI} is the angular acceleration of the quadrotor in the body-fixed coordinate frame. As in the case of a real quadrotor control problem the value of the thrust can be seen as an output of the dynamic system, it makes sense to incorporate thrust as a control variable into the control law as well. Thus, the angular momentum Equation \ref{eq:ang_momentum} is augmented with the total thrust $T$ of all four rotors \cite{Smeur2}. As only the body-fixed frame is used in the following control law derivation, the subscripts $B$ are not used in this subsection. Also all external forces and moments apply to the center of gravity of the quadrotor, thus the superscripts $G$ are also omitted. 
+Solving Equation \ref{eq:ang_momentum} for the angular acceleration results in
 \begin{equation}
 	\begin{bmatrix}
 		\dot{\bm{\omega}}\\
@@ -548,7 +548,7 @@ Solving equation \ref{eq:ang_momentum} for the angular acceleration $\dot{\bm{\o
 	\end{bmatrix}}_\text{$\bm{G}(\bm{\omega}, \bm{\Omega}, \bm{\dot{\Omega}})$}
 	\label{eq:main_eom_indi_inner}
 \end{equation}
-where $\bm{\omega}$ and $\dot{\bm{\omega}}$ are angular velocity and acceleration of the body-fixed frame ($B$) with respect to the \acrshort{NED} ($O$) coordinate frame, $\bm{M}_G$ the gravitational moment, $\bm{M}_A$ the aerodynamic moment and $\bm{M}_P$ propulsion moment. It is assumed that the gravitational force is applied to the center of gravity of the quadrotor and does not cause any moment around it. Due to the absence of the aerodynamic moment this term is omitted. It can also be seen as disturbance. The remaining propulsion moment is written as $\bm{M}_P=\bm{M}_C-\bm{M}_{gyro}$ where $\bm{M}_C$ is the control moment generated by the rotors and $\bm{M}_{gyro}$ the moment containing the gyroscopic effect of the rotors. This two moments can be explicitly written as
+where $\bm{\omega}$ and $\dot{\bm{\omega}}$ are angular velocity and acceleration of the body-fixed frame ($B$) with respect to the \acrshort{NED} ($O$) coordinate frame, $\bm{M}_G$ the gravitational moment, $\bm{M}_A$ the aerodynamic moment and $\bm{M}_P$ the propulsion moment. The vector $\bm{\Omega}$ contains angular velocities of all four rotors and serves as an input variable of the system. It is assumed that the gravitational force is applied to the center of gravity of the quadrotor and does not cause any moment around it. Due to the absence of the aerodynamic moment this term is also omitted and can be seen as a disturbance \cite{Smeur1}. The remaining propulsion moment is written as $\bm{M}_P=\bm{M}_C-\bm{M}_{gyro}$ where $\bm{M}_C$ is the control moment generated by the rotors and $\bm{M}_{gyro}$ the moment containing the gyroscopic effect of the rotors. This two moments can be explicitly written as
 \begin{equation}
 	\bm{M}_C = 	
 	\begin{bmatrix}
@@ -579,7 +579,7 @@ where $\bm{\omega}$ and $\dot{\bm{\omega}}$ are angular velocity and acceleratio
 	\label{eq:m_gyro}
 	\end{split}
 \end{equation}
-where $I_{rzz}$ is the element of the inertia matrix $I_{r}$ of the rotor, $l$ and $b$ lever arms as denoted in the Figure (...), $k_F$ and $k_M$ force and moment constants of the rotors.
+where $I_{rzz}$ is the element of the inertia matrix $I_{r}$ of the rotor, $l$ and $b$ lever arms as denoted in the Figure (TODO:Figure), $k_F$ and $k_M$ force and moment constants of the rotors.
 
 As already explained in the previous section to derive the incremental control law the Taylor series expansion is perfromed on the Equation \ref{eq:main_eom_indi_inner}
 \begin{equation}
@@ -594,8 +594,7 @@ As already explained in the previous section to derive the incremental control l
 		\label{eq:main_eom_indi_inner_taylor}
 	\end{split}
 \end{equation}
-The first term of this equation is the angular acceleration based on the current angular rates $\bm{\Omega}_0$ and inputs $\bm{\omega}_0$ and can be denoted as $\bm{\dot{\omega}}_0$.
-
+By applying differentiation and rewriting some of the terms, following equation is obtained
 \begin{equation}
 	\begin{bmatrix}
 		\bm{\dot{\omega}}\\
@@ -605,9 +604,9 @@ The first term of this equation is the angular acceleration based on the current
 		\bm{\dot{\omega}}_0\\
 		T_0
 	\end{bmatrix} + \bm{G}_1(\bm{\Omega} - \bm{\Omega}_0) + T_S \bm{G}_2(\bm{\dot{\Omega}} - \bm{\dot{\Omega}}_0)
-	\label{eq:TODO}
+	\label{eq:main_eom_indi_inner_lin}
 \end{equation}
-
+The first term of the Equation \ref{eq:main_eom_indi_inner_lin} is the angular acceleration based on the current angular rates $\bm{\omega}_0$ and inputs $\bm{\Omega}_0$ and can be denoted as $\bm{\dot{\omega}}_0$. $T_0$ is the current thrust value. The last term on the right side of the Equation \ref{eq:main_eom_indi_inner_lin} is scaled with the sample time $T_s$ which is introduced only to simplify further mathematical transformations. The expressions of the control moment $\bm{M}_C$ and the gyroscopic moment of the rotors $\bm{M}_{gyro}$ have been summarized to control effectiveness matrices $\bm{G}_1$ and $\bm{G}_2$
 \begin{equation}
 	\bm{G}_1 = 
 	\begin{bmatrix}
@@ -615,7 +614,7 @@ The first term of this equation is the angular acceleration based on the current
 			-bk_F & bk_F & bk_F & -bk_F \\
 			lk_F & lk_F & -lk_F & -lk_F \\
 			k_M & -k_M & k_M & -k_M 
-		\end{bmatrix} + 	
+		\end{bmatrix} - 	
 		\begin{bmatrix}
 			\bm{\omega}_y & 0 & 0 \\
 			0 & \bm{\omega}_x & 0 \\
@@ -626,37 +625,25 @@ The first term of this equation is the angular acceleration based on the current
 			-I_{rzz} & I_{rzz} & -I_{rzz} & I_{rzz} \\
 			0 & 0 & 0 & 0 
 		\end{bmatrix}\\
-			k_F \bm{1}_{1\times4}
+			k_F \cdot \bm{1}_{1\times4}
 	\end{bmatrix}
-	\begin{bmatrix}
-		\Omega_1\\
-		\Omega_2\\
-		\Omega_3\\
-		\Omega_4
-	\end{bmatrix}
-	\label{eq:TODO}
+	\label{eq:G1}
 \end{equation}
-
 \begin{equation}
 	\bm{G}_2 = 
 	\begin{bmatrix}
-		\bm{I}^{-1} T_S^{-1}\begin{bmatrix}
+		-\bm{I}^{-1} T_S^{-1}\begin{bmatrix}
 			0 & 0 & 0 & 0 \\
 			0 & 0 & 0 & 0 \\
 			I_{rzz} & -I_{rzz} & I_{rzz} & -I_{rzz}
 		\end{bmatrix} \\
 		\bm{0}_{1\times4}
 	\end{bmatrix}
-	\begin{bmatrix}
-		\dot{\Omega}_1\\
-		\dot{\Omega}_2\\
-		\dot{\Omega}_3\\
-		\dot{\Omega}_4
-	\end{bmatrix}
-	\label{eq:TODO}
+	\label{eq:G2}
 \end{equation}
+with the terms $\bm{1}_{1\times4}$ and $\bm{0}_{1\times4}$ being $1\times4$ vectors of ones and zeros, respectively.
 
-
+To prepare the linearized dynamic Equation \ref{eq:main_eom_indi_inner_lin} for discrete implementation on a computing system, the discrete approximation ($z$ domain) of the derivative is used: $\bm{\dot{\Omega}} = (\bm{\Omega} - \bm{\Omega}z^{-1})T_S^{-1}$. Furthermore, angular acceleration $\bm{\dot{\omega}}_0$ which is obtained from the differentiated gyroscope measurements is usually noisy. It has been shown, that using a second order filtering can help to reduce measurement nose. At the same time such a filter introduces time delay, which has to be considered in the derivation, as it is important to have a unique delay for all variables which are used in the Taylor expansion \cite{Smeur1}. Thus, the same second order filter is applied to all variables with a subscript $0$. By applying filtering (subscript $f$) and finite differences method to the Equation \ref{eq:main_eom_indi_inner_lin}, its discrete version results in
 \begin{equation}
 	\begin{bmatrix}
 		\bm{\dot{\omega}}\\
@@ -666,32 +653,156 @@ The first term of this equation is the angular acceleration based on the current
 		\bm{\dot{\omega}}_f\\
 		T_f
 	\end{bmatrix} + (\bm{G}_1+\bm{G}_2)(\bm{\Omega} - \bm{\Omega}_f) - \bm{G}_2z^{-1}(\bm{\Omega} - \bm{\Omega}_f)
-	\label{eq:TODO}
+	\label{eq:main_eom_indi_inner_lin_final}
 \end{equation}
-
+By solving Equation \ref{eq:main_eom_indi_inner_lin_final} for $\bm{\dot{\Omega}}$ and substituting $\bm{\dot{\omega}}$ with the equivalent input $\bm{\nu}_{ang}$, the control law of the inner loop is obtained
 \begin{equation}
 	\begin{split}
 		\bm{\dot{\Omega}}_c = \bm{\dot{\Omega}} = \bm{\dot{\Omega}}_f + (\bm{G}_1+\bm{G}_2)^{-1} \Bigg(
 		\begin{bmatrix}
-			\bm{\nu} - \bm{\dot{\Omega}}_f\\
+			\bm{\nu}_{ang} - \bm{\dot{\omega}}_f\\
 			\tilde{T}
 		\end{bmatrix} + \bm{G}_2z^{-1}(\bm{\Omega} - \bm{\Omega}_f) \Bigg)
-		\label{eq:TODO}	
+		\label{eq:indi_inner_control_law}	
 	\end{split}
 \end{equation}
-
-Note: \\
-- Name equations\\
-- Ts explain\\
-- remove brackets AND indices from bm\\
-- describe Attitude control with PD\\
-- derivation is based on the work of Smeur\\
-- Derivation of the inner INDI loop (what we want to control, detailed equations). \\
+where $\bm{\dot{\Omega}}$ is a vector of commanded rotational rates for every rotor and $\tilde{T} = T - T_f$ being the thrust increment which is provided by the outer loop \acrshort{INDI}. The block diagram of the inner loop \acrshort{INDI} controller is presented in Figure (TODO:Figure). In the figure the derived controller which controls the angular acceleration is augmented with two simple controllers which control the angular velocity $\bm{\omega}$ and the attitude $\bm{\eta}$ of the quadrotor. Each controller consists of a single gain. Thus, the reference values of the \acrshort{INDI} part of the inner loop are provided by these two controllers. 
 
 \subsection{Outer INDI loop for Quadrotor} \label{subsec: indi_outer}
 
-- Derivation of the outer INDI loop (what we want to control, detailed equations).
+In this subsection the derivation of the outer loop \acrshort{INDI} controller is introduced. The outer loop \acrshort{INDI} controls translational acceleration of the quadrotor. Linear momentum Equation \ref{eq:lin_momentum} serves as a basis for this derivation. For the simplicity of the further transformations the derivation is performed in the \acrshort{NED} frame (subscript $O$). Thus, the Equation \ref{eq:lin_momentum} becomes
+\begin{equation}
+	\begin{split}
+		\sum (\bm{F}^G)_O = m \cdot (\bm{\dot{v}}^G)_{O}
+		\label{eq:lin_momentum_indi_outer}
+	\end{split}
+\end{equation}
+As it is assumed that all forces apply to the center of gravity of the quadrotor, the superscript $G$ is omitted in the future. Thus, solving Equation \ref{eq:lin_momentum_indi_outer} for $\bm{\dot{v}}$ and assuming that the sum of all forces acting on the quadrotor consists only of gravitational, propulsive and aerodynamic forces, following equation is obtained
+\begin{equation}
+	\begin{split}
+		\bm{\dot{v}} = m^{-1} ((\bm{F}_G)_O + (\bm{F}_P)_O+ (\bm{F}_A)_O)
+		\label{eq:lin_momentum_indi_outer_simple}
+	\end{split}
+\end{equation}
+The aerodynamic force $(\bm{F}_A)_O$ is modelled as an unknown function of velocity $\bm{v}$ and wind vector $\bm{\chi}$. For the gravitational force $(\bm{F}_G)_O$ the simplest one-dimensional gravity model is assumed.
+\begin{equation}
+	\begin{split}
+		(\bm{F}_A)_O = \bm{f}(\bm{v}, \bm{\chi})
+		\label{eq:Fa}
+	\end{split}
+\end{equation}
+\begin{equation}
+	\begin{split}
+		(\bm{F}_G)_O = m 
+		\begin{bmatrix}
+			0\\
+			0\\
+			g
+		\end{bmatrix}_O
+		\label{eq:Fg}
+	\end{split}
+\end{equation}
+The propulsive force $(\bm{F}_P)_O$ (produced by the rotors) has only one nonzero component if defined in the body-fixed frame. To transform it to the \acrshort{NED} frame the rotation matrix $\bm{M}_{OB}$ is used. This results in 
+\begin{equation}
+	\begin{split}
+		(\bm{F}_P)_O = \bm{M}_{OB}
+		\begin{bmatrix}
+			0\\
+			0\\
+			-T
+		\end{bmatrix}_B = 
+		\begin{bmatrix}
+			* & * & c\Psi s\Theta c\Phi + s\Psi s\Phi\\
+			* & * & s\Psi s\Theta c\Phi + c\Psi s\Phi\\
+			* & * & c\Theta c\Phi
+		\end{bmatrix}
+		\begin{bmatrix}
+			0\\
+			0\\
+			-T
+		\end{bmatrix}_B = 
+		\begin{bmatrix}
+			(c\Psi s\Theta c\Phi + s\Psi s\Phi)(-T) \\
+			(s\Psi s\Theta c\Phi + c\Psi s\Phi)(-T) \\
+			(c\Theta c\Phi)(-T)
+		\end{bmatrix}_O
+		\label{eq:Fp}
+	\end{split}
+\end{equation}
+To obtain the incremental form of the linear momentum equation, the same strategy as in the case of the inner loop derivation is applied: the Equation \ref{eq:lin_momentum_indi_outer_simple} is linearized using Taylor series expansion
+\begin{equation}
+	\begin{split}
+		\bm{\dot{v}} &= m^{-1} [\bm{F}_G + \bm{F}_P(\Phi_0, \Theta_0, \Psi_0, T_0)+ \bm{F}_A(\bm{v}_0, \bm{\chi}_0)]  \\		
+		&+ \frac{\partial}{\partial \bm{v}} \big[ \bm{F}_A(\bm{v}, \bm{\chi}_0) \big] \bigg| _{\bm{v}=\bm{v}_0} (\bm{v}-\bm{v}_0) \\
+		&+ \frac{\partial}{\partial \bm{\chi}} \big[ \bm{F}_A(\bm{v}_0, \bm{\chi}) \big] \bigg| _{\bm{\chi}=\bm{\chi}_0} (\bm{\chi}-\bm{\chi}_0) \\
+		&+ \frac{\partial}{\partial \Phi} \big[ \bm{F}_P(\Phi, \Theta_0, \Psi_0, T_0) \big] \bigg| _{\Phi=\Phi_0} (\Phi-\Phi_0) \\
+		&+ \frac{\partial}{\partial \Theta} \big[ \bm{F}_P(\Phi_0, \Theta, \Psi_0, T_0) \big] \bigg| _{\Theta=\Theta_0} (\Theta-\Theta_0) \\
+		&+ \frac{\partial}{\partial \Psi} \big[ \bm{F}_P(\Phi_0, \Theta_0, \Psi, T_0) \big] \bigg| _{\Psi=\Psi_0} (\Psi-\Psi_0) \\
+		&+ \frac{\partial}{\partial T} \big[ \bm{F}_P(\Phi_0, \Theta_0, \Psi_0, T) \big] \bigg| _{T=T_0} (T-T_0) \\
+		\label{eq:main_eom_indi_outer_taylor}
+	\end{split}
+\end{equation}
+The first term on the right side of the Equation \ref{eq:main_eom_indi_outer_taylor} is the acceleration at previous time step $\bm{\dot{v}}_0$. It can be obtained from the onboard accelerometer and then tranformed to the \acrshort{NED} frame. The next two terms on the right are assumed to be zero since it is very complicated to develop an accurate model of the aerodynamic force as the nature of the wind influence can vary and remains unknown. It is also assumed that the change of the yaw angle $\Psi$ is small and can be neglected as well. By applying considered assumptions Equation \ref{eq:main_eom_indi_outer_taylor} is written as 
+\begin{equation}
+	\begin{split}
+		\bm{\dot{v}} = \bm{\dot{v}}_0 +  m^{-1} \bm{G}(\Phi_0, \Theta_0, \Psi_0, T_0) (\bm{u} - \bm{u}_0)
+		\label{eq:lin_momentum_indi_outer_lin}
+	\end{split}
+\end{equation}
+where
+\begin{equation}
+	\begin{split}
+		\bm{G}(\Phi_0, \Theta_0, \Psi_0, T_0) = 
+		\underbrace{
+		\begin{bmatrix}
+			(-c\Psi_0 s\Theta_0 s\Phi_0 + s\Psi_0 c\Phi_0)T_0  &%
+			c\Psi_0 c\Theta_0 c\Phi_0 T_0 &%
+			c\Psi_0 s\Theta_0 c\Phi_0 + s\Psi_0 s\Phi_0 \\			
+			(-s\Psi_0 s\Theta_0 s\Phi_0 - c\Psi_0 c\Phi_0)T_0 &%
+			s\Psi_0 c\Theta_0 c\Phi_0 T_0 &% 
+			s\Psi_0 s\Theta_0 c\Phi_0 - c\Psi_0 s\Phi_0\\
+			-c\Theta_0 s\Phi_0T_0 &%
+			-s\Theta_0 c\Phi_0T_0 &%
+			c\Theta_0 c\Phi_0
+		\end{bmatrix}}_\text{$\bm{G}(\Phi_0, \Theta_0, \Psi_0, T_0)$}
+		\label{eq:G}
+	\end{split}
+\end{equation}
+and
+\begin{equation}
+	\begin{split}
+		\bm{u} = 
+		\begin{bmatrix}
+			\Phi\\
+			\Theta\\
+			T
+		\end{bmatrix}
+		\label{eq:u_outer}
+	\end{split}
+\end{equation}
+$\bm{G}(\Phi_0, \Theta_0, \Psi_0, T_0)$ is the control effectiveness matrix which is computed based on the attitude and thrust values from the previous step. $\bm{u}$ is a vector of control variables which are passed to the inner loop.
 
+The linear acceleration $\bm{\dot{v}}_0$ which is obtained from accelerometer measurements is usually noisy. Applying the same filter as in the case of the inner loop derivation, the Equation \ref{eq:lin_momentum_indi_outer_lin} is given by 
+\begin{equation}
+	\begin{split}
+		\bm{\dot{v}} = \bm{\dot{v}}_f +  m^{-1} \bm{G}(\Phi_0, \Theta_0, \Psi_0, T_0) (\bm{u} - \bm{u}_f)
+		\label{eq:lin_momentum_indi_outer_lin_final}
+	\end{split}
+\end{equation}
+Solving Equation \ref{eq:lin_momentum_indi_outer_lin_final} for $\bm{u}$ and substituting $\bm{\dot{v}}$ with the equivalent control variable $\bm{\nu}_{lin}$, the control law of the outer loop is obtained
+\begin{equation}
+	\begin{split}
+		\bm{u_c} = \bm{u} = \bm{u}_f +  m \bm{G}^{-1}(\Phi_0, \Theta_0, \Psi_0, T_0) (\bm{\nu}_{lin} - \bm{\dot{v}}_f)
+		\label{eq:indi_outer_control_law}
+	\end{split}
+\end{equation}
+Figure (TODO:show Figure) shows the block diagram of the outer loop \acrshort{INDI}. Using the same approach as with the inner loop, the outer loop which controls linear acceleration is augmented with two closed loops consisting of two gains. These gains represent two controllers which control linear velocity and position. 
+
+TODOs: \\
+- 2.1   Source (Probably Holzapfel script) \\
+- 2.3.2 Figure with Crazyflie lever arms and motor numbers \\
+- 2.3.2 Figure with block diagram of the inner loop controller
+- 2.3.3 Figure with block diagram of the outer loop controller
 
 \chapter{Implementation} \label{cha:implementation}
 
@@ -744,7 +855,9 @@ Note: \\
 \thispagestyle{fancy}
 \chaptermark{Results}
 
-- To make the controller work a minimal knowledge of the system dynymics is need. Nevertherless G1, G2 still have to estimated accuratly because this 2 parameters do have inpact on the controller performance. 
+- To make the controller work a minimal knowledge of the system dynymics is need. Nevertherless G1, G2 still have to estimated accuratly because this 2 parameters do have inpact on the controller performance. \\
+- Plain step responses of the outer loop \\
+- Step responses with disturbance of the outer loop
 
 
 \chapter{Discussion} \label{cha:discussion}
