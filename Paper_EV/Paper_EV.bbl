@@ -33,4 +33,15 @@ E.J.J Smeur, Q.P. Chu, and G.C.H.E. de~Croon.
   disturbance rejection.
 \newblock {\em Control Engineering Practice, Vol. 73, p. 79-90}, 2018.
 
+\bibitem{bitcraze}
+Bitcraze, {Crazyflie 2.1}.
+\newblock \url{https://www.bitcraze.io/crazyflie-2-1/}.
+\newblock Accessed: 2020-03-05.
+
+\bibitem{foerster}
+J.~F{\"o}rster.
+\newblock Bachelor's thesis: System identification of the crazyflie 2.0 nano
+  quadrocopter.
+\newblock 2015.
+
 \end{thebibliography}

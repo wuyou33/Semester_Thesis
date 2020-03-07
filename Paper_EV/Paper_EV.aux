@@ -69,59 +69,74 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Inner INDI loop for Quadrotor}{5}}
 \newlabel{subsec: indi_inner}{{2.3.2}{5}}
 \citation{Smeur1}
+\citation{bitcraze}
 \newlabel{eq:main_eom_indi_inner}{{2.16}{6}}
 \newlabel{eq:m_c}{{2.17}{6}}
 \newlabel{eq:m_gyro}{{2.18}{6}}
-\citation{Smeur1}
+\@writefile{lof}{\contentsline {figure}{\numberline {2-1}{\ignorespaces Crazyflie 2.1 nano-quadrotor with indicated lever arms of the motors}}{7}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:frames_leverarms}{{2-1}{7}}
 \newlabel{eq:main_eom_indi_inner_taylor}{{2.19}{7}}
 \newlabel{eq:main_eom_indi_inner_lin}{{2.20}{7}}
-\newlabel{eq:G1}{{2.21}{7}}
-\newlabel{eq:G2}{{2.22}{7}}
+\citation{Smeur1}
+\newlabel{eq:G1}{{2.21}{8}}
+\newlabel{eq:G2}{{2.22}{8}}
 \newlabel{eq:main_eom_indi_inner_lin_final}{{2.23}{8}}
 \newlabel{eq:indi_inner_control_law}{{2.24}{8}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Outer INDI loop for Quadrotor}{8}}
 \newlabel{subsec: indi_outer}{{2.3.3}{8}}
-\newlabel{eq:lin_momentum_indi_outer}{{2.25}{8}}
-\newlabel{eq:lin_momentum_indi_outer_simple}{{2.26}{8}}
-\newlabel{eq:Fa}{{2.27}{8}}
-\newlabel{eq:Fg}{{2.28}{8}}
+\newlabel{eq:lin_momentum_indi_outer}{{2.25}{9}}
+\newlabel{eq:lin_momentum_indi_outer_simple}{{2.26}{9}}
+\newlabel{eq:Fa}{{2.27}{9}}
+\newlabel{eq:Fg}{{2.28}{9}}
 \newlabel{eq:Fp}{{2.29}{9}}
 \newlabel{eq:main_eom_indi_outer_taylor}{{2.30}{9}}
-\newlabel{eq:lin_momentum_indi_outer_lin}{{2.31}{9}}
-\newlabel{eq:G}{{2.32}{9}}
+\newlabel{eq:lin_momentum_indi_outer_lin}{{2.31}{10}}
+\newlabel{eq:G}{{2.32}{10}}
 \newlabel{eq:u_outer}{{2.33}{10}}
 \newlabel{eq:lin_momentum_indi_outer_lin_final}{{2.34}{10}}
 \newlabel{eq:indi_outer_control_law}{{2.35}{10}}
+\citation{bitcraze}
 \@writefile{toc}{\contentsline {chapter}{\numberline {3}Implementation}{11}}
 \newlabel{cha:implementation}{{3}{11}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.1}Research Quadrotor}{11}}
 \newlabel{sec:research_quadrotor}{{3.1}{11}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Implementation in Simulink (Simulink Model)}{11}}
-\newlabel{sec:simulink_model}{{3.2}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Purpose}{11}}
-\newlabel{subsec:purpose}{{3.2.1}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Structure}{11}}
-\newlabel{subsec:Structure}{{3.2.2}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Simulation Results}{11}}
-\newlabel{subsec:simulation_results}{{3.2.3}{11}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{11}}
-\newlabel{sec:implementation_on_hardware}{{3.3}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Parameter Estimation}{11}}
-\newlabel{subsec:parameter_estimation}{{3.3.1}{11}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{12}}
-\newlabel{subsec:structure_ofthe_code}{{3.3.2}{12}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments?}{12}}
-\newlabel{subsec:testing_with_fandm}{{3.3.3}{12}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Results}{13}}
-\newlabel{cha:results}{{4}{13}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Discussion}{14}}
-\newlabel{cha:discussion}{{5}{14}}
-\newlabel{pagesLTS.arabic.1}{{}{14}}
-\newlabel{pagesLTS.arabic.1.local}{{}{14}}
-\newlabel{pagesLTS.arabic}{{}{14}}
-\newlabel{pagesLTS.arabic.local}{{}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3-1}{\ignorespaces Crazyflie 2.1 nano-quadrotor}}{11}}
+\newlabel{fig:crazyflie_drone}{{3-1}{11}}
+\citation{foerster}
+\citation{foerster}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Simulink Model}{12}}
+\newlabel{sec:simulink_model}{{3.2}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Quadrotor Dynamics}{12}}
+\newlabel{subsec:quadrotor_dynamics}{{3.2.1}{12}}
+\newlabel{eq:thrust}{{3.1}{12}}
+\newlabel{eq:Fa_simulink}{{3.2}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Actuator Dynamics}{13}}
+\newlabel{subsec:actuator_dynamics}{{3.2.2}{13}}
+\newlabel{eq:act_dynamics_c}{{3.3}{13}}
+\newlabel{eq:act_dynamics_d}{{3.4}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Filtering}{13}}
+\newlabel{subsec:filtering}{{3.2.3}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.4}Simulation Results and Analysis}{13}}
+\newlabel{subsec:simulation_results}{{3.2.4}{13}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{14}}
+\newlabel{sec:implementation_on_hardware}{{3.3}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Parameter Estimation}{14}}
+\newlabel{subsec:parameter_estimation}{{3.3.1}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{14}}
+\newlabel{subsec:structure_ofthe_code}{{3.3.2}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments?}{14}}
+\newlabel{subsec:testing_with_fandm}{{3.3.3}{14}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Results}{15}}
+\newlabel{cha:results}{{4}{15}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Discussion}{16}}
+\newlabel{cha:discussion}{{5}{16}}
+\newlabel{pagesLTS.arabic.1}{{}{16}}
+\newlabel{pagesLTS.arabic.1.local}{{}{16}}
+\newlabel{pagesLTS.arabic}{{}{16}}
+\newlabel{pagesLTS.arabic.local}{{}{16}}
 \pagesLTS@ifcounter{pagesLTS.arabic.1.local.cnt}
-\setcounter{pagesLTS.arabic.1.local.cnt}{14}
+\setcounter{pagesLTS.arabic.1.local.cnt}{16}
 \bibstyle{unsrt}
 \bibdata{Lit/Literature}
 \bibcite{Slotine}{1}
@@ -130,6 +145,8 @@
 \bibcite{Silva}{4}
 \bibcite{Smeur1}{5}
 \bibcite{Smeur2}{6}
+\bibcite{bitcraze}{7}
+\bibcite{foerster}{8}
 \undonewlabel{pagesLTS.roman.local}
 \newlabel{pagesLTS.roman.local}{{}{17}}
 \undonewlabel{pagesLTS.roman}
@@ -144,8 +161,8 @@
 \pagesLTS@ifcounter{pagesLTS.roman.2.local.cnt}
 \setcounter{pagesLTS.roman.2.local.cnt}{2}
 \gdef\pagesLTS.lastpage{ii}
-\setcounter{pagesLTS.pagenr}{32}
+\setcounter{pagesLTS.pagenr}{34}
 \newlabel{VeryLastPage}{{}{ii}}
 \newlabel{pagesLTS.roman.2}{{}{ii}}
 \newlabel{pagesLTS.roman.2.local}{{}{18}}
-\newlabel{LastPages}{{}{32}}
+\newlabel{LastPages}{{}{34}}

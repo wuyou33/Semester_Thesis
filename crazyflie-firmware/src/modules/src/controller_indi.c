@@ -24,6 +24,7 @@
  */
 
 #include "controller_indi.h"
+#include "estimator.h"
 
 static float thrust_threshold = 300.0f;
 static float bound_control_input = 32000.0f;
@@ -36,9 +37,9 @@ static float attYawError;
 static struct Vectr positionRef; 
 static struct Vectr velocityRef;
 
-float K_xi_x = 5.0f;
-float K_xi_y = 5.0f;
-float K_xi_z = 5.0f;
+float K_xi_x = 1.0f;
+float K_xi_y = 1.0f;
+float K_xi_z = 1.0f;
 float K_dxi_x = 5.0f;
 float K_dxi_y = 5.0f;
 float K_dxi_z = 5.0f;
@@ -242,9 +243,10 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 		velocityRef.y = vel_set_y;
 		velocityRef.z = vel_set_z;
 		*/
-		//pos_set_x = setpoint->attitude.pitch;
+		//pos_set_x = -setpoint->attitude.pitch;
 		//pos_set_y = setpoint->attitude.roll;
 		//pos_set_z = -setpoint->thrust/60000.0f;
+
 
 		// State position, velocity
 		posS_x = state->position.x;
@@ -258,16 +260,16 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 		gyr_r = sensors->gyro.z; 
 
 		// Position controller
-		positionRef.x = posS_x;//pos_set_x;
-		positionRef.y = posS_y;//pos_set_y;
+		positionRef.x = pos_set_x;
+		positionRef.y = pos_set_y;
 		positionRef.z = pos_set_z;
 		velocityRef.x = K_xi_x*(positionRef.x - posS_x);
-		velocityRef.y = K_xi_x*(positionRef.y - posS_y);
-		velocityRef.z = K_xi_x*(positionRef.z - posS_z);
+		velocityRef.y = K_xi_y*(positionRef.y - posS_y);
+		velocityRef.z = K_xi_z*(positionRef.z - posS_z);
 
 		// Velocity controller
 		indi.linear_accel_ref.x = K_dxi_x*(velocityRef.x - velS_x);
-		indi.linear_accel_ref.y = K_dxi_x*(velocityRef.y - velS_y);
+		indi.linear_accel_ref.y = K_dxi_y*(velocityRef.y - velS_y);
 		indi.linear_accel_ref.z = K_dxi_z*(velocityRef.z - velS_z); 
 
 		// Read lin. acceleration (Body-fixed) obtained from sensors CHECKED
@@ -593,6 +595,10 @@ PARAM_ADD(PARAM_FLOAT, vel_set_y, &vel_set_y)
 PARAM_ADD(PARAM_FLOAT, vel_set_z, &vel_set_z)
 */
 PARAM_ADD(PARAM_FLOAT, arm, &arm)
+
+PARAM_ADD(PARAM_FLOAT, K_xi_x, &K_xi_x)
+PARAM_ADD(PARAM_FLOAT, K_xi_y, &K_xi_y)
+PARAM_ADD(PARAM_FLOAT, K_xi_z, &K_xi_z)
 
 PARAM_GROUP_STOP(INDI_Outer)
 

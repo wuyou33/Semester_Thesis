@@ -11,14 +11,15 @@
 \contentsline {subsection}{\numberline {2.3.3}Outer INDI loop for Quadrotor}{8}
 \contentsline {chapter}{\numberline {3}Implementation}{11}
 \contentsline {section}{\numberline {3.1}Research Quadrotor}{11}
-\contentsline {section}{\numberline {3.2}Implementation in Simulink (Simulink Model)}{11}
-\contentsline {subsection}{\numberline {3.2.1}Purpose}{11}
-\contentsline {subsection}{\numberline {3.2.2}Structure}{11}
-\contentsline {subsection}{\numberline {3.2.3}Simulation Results}{11}
-\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{11}
-\contentsline {subsection}{\numberline {3.3.1}Parameter Estimation}{11}
-\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{12}
-\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments?}{12}
-\contentsline {chapter}{\numberline {4}Results}{13}
-\contentsline {chapter}{\numberline {5}Discussion}{14}
+\contentsline {section}{\numberline {3.2}Simulink Model}{12}
+\contentsline {subsection}{\numberline {3.2.1}Quadrotor Dynamics}{12}
+\contentsline {subsection}{\numberline {3.2.2}Actuator Dynamics}{13}
+\contentsline {subsection}{\numberline {3.2.3}Filtering}{13}
+\contentsline {subsection}{\numberline {3.2.4}Simulation Results and Analysis}{13}
+\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{14}
+\contentsline {subsection}{\numberline {3.3.1}Parameter Estimation}{14}
+\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{14}
+\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments?}{14}
+\contentsline {chapter}{\numberline {4}Results}{15}
+\contentsline {chapter}{\numberline {5}Discussion}{16}
 \contentsline {chapter}{Appendix}{ii}

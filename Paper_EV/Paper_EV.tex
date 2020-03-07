@@ -37,6 +37,15 @@
 %\usepackage{fontspec}
 %\setmainfont{Arial}
 
+% For inserting images, figures
+\usepackage{tikz}
+
+% For citation of URLs
+\usepackage{url}
+
+% Define subsection depth
+\setcounter{secnumdepth}{3}
+
 % Set line spacing to 1.15pt
 \renewcommand{\baselinestretch}{1.15}
 
@@ -139,9 +148,12 @@
 \renewcommand*{\arraystretch}{1.4}		% vertical distance between entries, default is 1
 % List
 \newacronym{EOM}{EOM}{Equations of Motion}
+\newacronym{IMU}{IMU}{Inertial Measurement Unit}
 \newacronym{INDI}{INDI}{Incremental Nonlinear Dynamic Inversion}
+\newacronym{MCU}{MCU}{Microcontroller}
 \newacronym{NED}{NED}{North East Down}
 \newacronym{NDI}{NDI}{Nonlinear Dynamic Inversion}
+\newacronym{ToF}{ToF}{Time-of-Flight}
 % Make gls
 \renewcommand*\entryname{Acronym}
 \makeglossaries
@@ -352,6 +364,9 @@ English abstract of the thesis.
 
 \section{Contribution of the Thesis} \label{sec:contribution_ofthe_thesis}
 
+- 3. Implementation in Simulink for testing (both loops)\\
+- 3. Implementation on HW (outer loop)  
+
 \section{Structure of the Thesis} \label{sec:structure_ofthe_thesis} 
 
 
@@ -366,7 +381,7 @@ The aim of this chapter is to provide the theoretical background which serves as
 
 \section{Dynamic Equations of Motion of an Aircraft} \label{sec:eqs_motion}
 
-The dynamic equations which describe the general motion of an aircraft are usually coupled first order implicit nonlinear differential equations. However, in many cases it is sufficient to use their simplified versions (TODO:Source needed!). This section presents simplified general \acrshort{EOM} and describes the assumptions which were considered to derive them.
+The dynamic equations which describe the general motion of an aircraft are usually coupled first order implicit nonlinear differential equations. However, considering a quadrotor control problem a lot of plausible assumptions (e.g. neglecting the Coriolis and centrifugal acceleration due to the earth rotation) can be made to obtain more simplified versions of those equations. This section presents simplified general \acrshort{EOM} and describes the assumptions which were considered to derive them.
 
 For the derivation of the equations of motion the aircraft system will be assumed to be a rigid body. Such a rigid body system can be described uniquely by 12 states. Note that by taking in account additional effects, such as propulsion system dynamics, multi-body dynamics etc., the number of required state variables will increase. 
 
@@ -485,7 +500,7 @@ Thus, Equation (\ref{eq:u_control_law_i}) applied to Equation (\ref{eq:dy_i}) yi
 		\label{eq:lin_relation}
 	\end{split}
 \end{equation}
-The \acrshort{NDI} method was widely adopted for civil and military aircrafts and has numerous of extensions \cite{Horn}. Nevertheless, it has some drawbacks. The major one is that the control law derived using the \acrshort{NDI} approach is dependent on the full system dynamics model \cite{Sieberling}. The equations of motion of an aircraft usually have a complicated nonlinear character. Thus, describing complex physical phenomena often leads to the inconsistency between the real aircraft and its mathematical representation used in the model. As some of those inconsistencies are inevitable there is a need to build a control law which performance is less dependent on the uncertainties of the model. A method called \acrfull{INDI} can be used to achieve this, it is discussed in the next section.
+The \acrshort{NDI} method was widely adopted for civil and military aircrafts and has numerous of extensions \cite{Horn}. Nevertheless, it has some drawbacks. The major one is that the control law derived using the \acrshort{NDI} approach is dependent on the full system dynamics model \cite{Sieberling}. The equations of motion of an aircraft usually have a complicated nonlinear character. Thus, describing complex physical phenomena often leads to the inconsistency between the real aircraft and its mathematical representation used in the model. As some of those inconsistencies are inevitable there is a need to build a control law which performance is less dependent on the uncertainties of the model. A method called \acrfull{INDI} can be used to achieve this, it is discussed in the next subsection.
 
 \section{Incremental Nonlinear Dynamic Inversion} \label{sec:indi}
 
@@ -579,9 +594,21 @@ where $\bm{\omega}$ and $\dot{\bm{\omega}}$ are angular velocity and acceleratio
 	\label{eq:m_gyro}
 	\end{split}
 \end{equation}
-where $I_{rzz}$ is the element of the inertia matrix $I_{r}$ of the rotor, $l$ and $b$ lever arms as denoted in the Figure (TODO:Figure), $k_F$ and $k_M$ force and moment constants of the rotors.
+where $I_{rzz}$ is the element of the inertia matrix $I_{r}$ of the rotor, $l$ and $b$ lever arms as denoted in the Figure \ref{fig:frames_leverarms}, $k_F$ and $k_M$ force and moment constants of the rotors.
 
-As already explained in the previous section to derive the incremental control law the Taylor series expansion is perfromed on the Equation \ref{eq:main_eom_indi_inner}
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=1\textwidth]{figs/frames.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Crazyflie 2.1 nano-quadrotor with indicated lever arms of the motors]{Image of the Crazyflie 2.1 quadrotor adopted from \cite{bitcraze} with indicated lever arms of the motors.}
+	\label{fig:frames_leverarms}
+\end{figure}
+
+As already explained in the previous subsection to derive the incremental control law the Taylor series expansion is perfromed on the Equation \ref{eq:main_eom_indi_inner}
 \begin{equation}
 	\begin{split}
 		\begin{bmatrix}
@@ -799,12 +826,14 @@ Solving Equation \ref{eq:lin_momentum_indi_outer_lin_final} for $\bm{u}$ and sub
 Figure (TODO:show Figure) shows the block diagram of the outer loop \acrshort{INDI}. Using the same approach as with the inner loop, the outer loop which controls linear acceleration is augmented with two closed loops consisting of two gains. These gains represent two controllers which control linear velocity and position. 
 
 TODOs: \\
-- 2.1   Source (Probably Holzapfel script) \\
+- INDI inner loop (order)\\
 - 2.3.2 Figure with Crazyflie lever arms and motor numbers \\
-- 2.3.2 Figure with block diagram of the inner loop controller
+- 2.3.2 Figure with block diagram of the inner loop controller\\
 - 2.3.3 Figure with block diagram of the outer loop controller
 
 \chapter{Implementation} \label{cha:implementation}
+
+This chapter describes different aspects of the practical realization of the control architecture introduced in the previous chapter. Section \ref{sec:research_quadrotor} gives an overview about the quadrotor system on which the \acrshort{INDI} outer loop controller was implemented and tested. In section \ref{sec:simulink_model} the simulation model of the Crazyflie quadrotor with implemented \acrshort{INDI} inner and outer loops is presented. Finally, in section \ref{sec:implementation_on_hardware} the process of the controller implementation on the hardware system is described. Here, additionally to the complete outer loop implementation, it is described how the already existing inner loop was modified to achieve a better performance. 
 
 % Manually add Chapter names to the header (per default not included by Latex)
 \thispagestyle{fancy}
@@ -812,28 +841,96 @@ TODOs: \\
 
 \section{Research Quadrotor} \label{sec:research_quadrotor}
 
-- Some facts about Crazyflie hardware (foto, uC frequency, weight, length (foto of lever arms), onboard sensors, additional sensors/HW (optoflow, sd-card))
+The Crazyflie 2.1 quadrotor developed by Swedish company Bitcraze belongs to the nano-quadrotor class (see Figure \ref{fig:crazyflie_drone}). Its total weight ranges from 27g to 42g, which makes possible to extend the default hardware with a pair of additional extension decks of various functionality. As it is an open source project, the main firmware, development tools and other software packages are freely available. This is one of the reasons why this small quadrotor gained a lot of popularity in different academia fields, being used for tasks reaching from the classical control theory all the way down to the obstacle avoidance problems. 
 
-\section{Implementation in Simulink (Simulink Model)} \label{sec:simulink_model}
+The Crazyflie's main application \acrfull{MCU} is STM32F405. It runs the firmware with frequency of 1000 Hz and communicates with a large number of peripheral devices such as Bluetooth and long range radio, power management system \acrshort{MCU}, \acrfull{IMU} etc.. The \acrfull{IMU} consists of the 3-axis accelerometer, the 3-axis gyroscope and the high precision pressure sensor. 
 
-\subsection{Purpose} \label{subsec:purpose}
+The quadrotor used in this project was extended with a flow deck sensor. The flow deck itself is equipped with two sensors: the optical flow sensor which measures the visual motion and the \acrfull{ToF} sensor which measures the range to the next object along the body-fixed z-axis of the quadcopter. By employing these sensors, the flow deck can provide estimates of the current position and linear velocity.
 
-- Estimation of the relevant for the HW implementation components (which terms make a huge impact on the controller performance: G1, G1 etc)\\
-- Estimate where value explosion can occur\\
-- Testing the behaviour of the filter\\
-- Testing of the PD-gains
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.4\textwidth]{figs/crazyflie_drone.jpg}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Crazyflie 2.1 nano-quadrotor]{Crazyflie 2.1 nano-quadrotor \cite{bitcraze}}
+	\label{fig:crazyflie_drone}
+\end{figure}
 
-\subsection{Structure} \label{subsec:Structure}
-- Describe some assumptions: eg newton second law frame transformation from B to O for an easy representation\\
-- Present each equation of forces with explaining made assumptions\\
-- Parameter choice ($k_F$, $k_M$, ...)\\
-- Describe the actuator dynamics modelling\\
-- Describe the filter transfer function\\
-- Images of the Simulink model
+\section{Simulink Model} \label{sec:simulink_model}
 
-\subsection{Simulation Results} \label{subsec:simulation_results}
+Before implementing the outer loop of the \acrshort{INDI} controller derived in \ref{subsec: indi_outer} on the real Crazyflie quadrotor it was decided firstly to build a simulation model using Matlab/Simulink software. Such a simulation has a number of advantages compared to the direct implementation on the hardware. The main one is, it allows one to conveniently test different model components (e.g. filtering algorithms, actuator dynamic models etc.) on their dedicated functions, facilitating the debugging process. It also can ease the process of parameter tuning of the controller. 
 
+In the framework of this thesis the Simulink model was also applied to better understand the controller structure and its characteristics. Based on the simulation it was determined which of the control effectiveness terms have a greater influence on the system response and which ones can be neglected. Additionally the simulation model provided a good overview of potential computational problems and mistakes which could lead to drastically growing values and unstable behaviour of the system. To solve some of them, saturation blocks have been used  in different places.
+
+\subsection{Quadrotor Dynamics} \label{subsec:quadrotor_dynamics}
+
+The core of the Crazyflie simulation is the model of the quadrotor dynamics. It is based on dynamic equations of motion presented in Chapter \ref{sec:eqs_motion}. Similarly to the section \ref{subsec: indi_outer}, it was assumed that the sum of the forces in the linear momentum equation is composed of three components, namely gravitational, propulsive and aerodynamic. The gravity and the propulsive force have not been changed, so the Equations \ref{eq:Fg} and \ref{eq:Fp} were also adopted for the simulation model. The thrust value $T$ was modelled as a linear function of rotational rates of propellers 
+\begin{equation}
+	\begin{split}
+		T = - k_F (\Omega_1 + \Omega_2 + \Omega_3 + \Omega_4)
+		\label{eq:thrust}
+	\end{split}
+\end{equation}
+where $k_F$ is the force constant of the rotors. In subsection \ref{subsec:parameter_estimation} it is shown how to estimate the thrust coefficient directly from the flight data. However, for the simulation model $k_F$ was computed based on the assumption that the influence of the force constant of the rotors $k_F$ (considering the lever arm) is greater than the influence of the moment constant of the rotors $k_M$, and that the thrust to weight ratio expression $\frac{T}{W} \approx 2$.
+
+To account for aerodynamic effects such as drag the aerodynamic force was approximated with following expression 
+\begin{equation}
+	\begin{split}
+		(\bm{F}_A)_B =  
+		\begin{bmatrix}
+			-k_x (u_K)_B\\
+			-k_y (v_K)_B\\
+			-k_z (w_K)_B
+		\end{bmatrix}_B
+		\label{eq:Fa_simulink}
+	\end{split}
+\end{equation}
+where $(u_K)_B$, $(v_K)_B$ and $(w_K)_B$ are kinematic velocities of the quadrotor along the axes $x_K$, $y_K$ and $z_K$ respectively, given in the body-fixed coordinate frame. $k_x$, $k_y$ and $k_z$ are experimentally estimated drag coefficients adopted from \cite{foerster}.
+
+The angular momentum equation used in the simulation model has the same form as defined in Equation \ref{eq:ang_momentum}. The numerical values of the inertia tensor $(\bm{I}^G)_B$ were estimated using pendulum method in \cite{foerster}. The total external moment acting on the Crazyflie consists only of the propulsive moment $\bm{M}_P$ as it is defined in \ref{subsec: indi_inner}. It consist of the control moment generated by the rotors $\bm{M}_C$  and moment containing the gyroscopic effect of the rotors $\bm{M}_{gyro}$ (see Equations \ref{eq:m_c} and \ref{eq:m_gyro}). The moment constant of the rotor was computed to fulfil the requirements on $k_F$ and $k_M$ which were described above. To obtain the numerical estimate of the propeller inertia matrix $I_{rzz}$, the propeller was approximated with a bar element. This has been shown to be a valid assumption since the influence of the propeller inertia (due to its negligible weight) is very small.
+
+TODOs:\\
+- 3.2.1 reference to the table with all used constants in the appendix
+
+\subsection{Actuator Dynamics} \label{subsec:actuator_dynamics}
+
+The inner loop \acrshort{INDI} controller relies on the measurement of the rotor angular rates. If the actuator feedback is not available, it is possible to use its model instead. The model of the actuator dynamics was assumed to be a first order lag filter with following transfer function in continuous Laplace domain
+\begin{equation}
+	\begin{split}
+		A(s) = \frac{k}{1+Ts}
+		\label{eq:act_dynamics_c}
+	\end{split}
+\end{equation}
+where $k$ is the gain and $T$ the time constant. Section \ref{sec:implementation_on_hardware} shortly describes the process of using flight data to estimate the time constant $T$. In the Simulink model it was assumed that the actuator feedback is available, hovewer for the implementation on hardware it is necessary to have a discrete version of the transfer function in Equation \ref{eq:act_dynamics_c}. Transforming the transfer function in Equation \ref{eq:act_dynamics_c} from continuous domain into discrete by applying \textit{Zero-Order Hold method} results in
+\begin{equation}
+	\begin{split}
+		A(z) = \frac{k\alpha}{z+(\alpha-1)}
+		\label{eq:act_dynamics_d}
+	\end{split}
+\end{equation}
+with $\alpha = 1-e^{\frac{-T_S}{T}}$ and sample time $T_S$.
+
+\subsection{Filtering} \label{subsec:filtering}
+
+- Continuous TF \\
+- Discrete TF \\
+- All filter have the same parameter \\
+- Block diagram of the filter 
+
+\subsection{Simulation Results and Analysis} \label{subsec:simulation_results}
+
+- Inner loop subsubsection (Tell that it is descrete implementation and then analysis) \\
+- Outer loop subsubsection (- // -) \\
+- Appendix: simulink model images, table with all constants \\
 - Plot differences with or without some terms (G1, G2\_yaw) \\
+- Responces for different step inputs
+- pz-Plot
+
+TODOs:\\
+- 3.2.2 'Actuator Dynamics' Fig4 from Adaptive... Smeur paper
 
 \section{Implementation on the Hardware} \label{sec:implementation_on_hardware}
 
@@ -846,6 +943,8 @@ TODOs: \\
 - Outer loop (show new diagram of the controller)
 
 \subsection{Structure of the Code} \label{subsec:structure_ofthe_code}
+
+- Moore-Penrose instead of the inverse 
 
 \subsection{Testing with contact Forces and Moments?} \label{subsec:testing_with_fandm}
 

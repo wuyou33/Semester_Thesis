@@ -3,46 +3,49 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: Paper_EV.aux
 The style file: unsrt.bst
 Database file #1: Lit/Literature.bib
+Warning--I'm ignoring bitcraze's extra "title" field
+--line 63 of file Lit/Literature.bib
 Warning--empty journal in Silva
-You've used 6 entries,
+Warning--empty journal in foerster
+You've used 8 entries,
             1791 wiz_defined-function locations,
-            479 strings with 4445 characters,
-and the built_in function-call counts, 925 in all, are:
-= -- 71
-> -- 49
+            488 strings with 4697 characters,
+and the built_in function-call counts, 1162 in all, are:
+= -- 91
+> -- 54
 < -- 0
-+ -- 19
-- -- 13
-* -- 38
-:= -- 173
-add.period$ -- 18
-call.type$ -- 6
-change.case$ -- 5
++ -- 22
+- -- 14
+* -- 41
+:= -- 207
+add.period$ -- 24
+call.type$ -- 8
+change.case$ -- 7
 chr.to.int$ -- 0
-cite$ -- 7
-duplicate$ -- 50
-empty$ -- 90
-format.name$ -- 13
-if$ -- 198
+cite$ -- 10
+duplicate$ -- 63
+empty$ -- 122
+format.name$ -- 14
+if$ -- 254
 int.to.chr$ -- 0
-int.to.str$ -- 6
-missing$ -- 7
-newline$ -- 33
-num.names$ -- 6
-pop$ -- 23
+int.to.str$ -- 8
+missing$ -- 8
+newline$ -- 43
+num.names$ -- 7
+pop$ -- 36
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 18
+skip$ -- 24
 stack$ -- 0
 substring$ -- 0
-swap$ -- 5
+swap$ -- 6
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 1
-while$ -- 6
-width$ -- 7
-write$ -- 62
-(There was 1 warning)
+warning$ -- 2
+while$ -- 7
+width$ -- 9
+write$ -- 80
+(There were 3 warnings)
