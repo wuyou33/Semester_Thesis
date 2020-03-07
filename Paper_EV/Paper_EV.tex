@@ -900,7 +900,7 @@ TODOs:\\
 The inner loop \acrshort{INDI} controller relies on the measurement of the rotor angular rates. If the actuator feedback is not available, it is possible to use its model instead. The model of the actuator dynamics was assumed to be a first order lag filter with following transfer function in continuous Laplace domain
 \begin{equation}
 	\begin{split}
-		A(s) = \frac{k}{1+Ts}
+		A(s) = \frac{k}{1+T_S}
 		\label{eq:act_dynamics_c}
 	\end{split}
 \end{equation}
@@ -911,14 +911,43 @@ where $k$ is the gain and $T$ the time constant. Section \ref{sec:implementation
 		\label{eq:act_dynamics_d}
 	\end{split}
 \end{equation}
-with $\alpha = 1-e^{\frac{-T_S}{T}}$ and sample time $T_S$.
+with $\alpha = 1-e^{\frac{-T_S}{T}}$ and sample time $T_S$. The default frequency of the Crazyflie controller update is 500 Hz. Thus, sampling time $T_S$ was set to the reciprocal value of the default frequency. 
 
 \subsection{Filtering} \label{subsec:filtering}
 
-- Continuous TF \\
-- Discrete TF \\
-- All filter have the same parameter \\
-- Block diagram of the filter 
+As it was shown in Chapter \ref{cha:theoretical_background} (TODO also see Figures ... and ...), the inner and outer loops employ several second order filters. The main task of two of them is to reduce  noise in the measurements of the angular and linear acceleration. Other filters are applied to remaining feedback quantities. Using the same parameters for every filter, this technique accounts for the time delay which is introduced by the filters and ensures that all quantities that were fed back are from the same point in time. The gneral transfer function of a second order filter in continuous domain is defined by the following formula
+\begin{equation}
+	\begin{split}
+		F(s) = \frac{\omega_n^2}{s^2+2\zeta\omega_ns+\omega_n^2}
+		\label{eq:filter_c}
+	\end{split}
+\end{equation}
+with a relative damping coefficient $\zeta$ and an eigenfrequency $\omega_n$. To implement transfer function from Equation \ref{eq:filter_c} on a digital computer it must be transformed to the discrete domain. To perform this transformation \textit{bilinear transformation} (also called \textit{Tustin-Transformation}) was used. Using bilinear transformation, the mapping relation between $s$ and $z$ results in
+\begin{equation}
+	\begin{split}
+		s \ \widehat{=} \ \frac{2}{T_S} \frac{1-z^{-1}}{1+z^{-1}}
+		\label{eq:filter_c}
+	\end{split}
+\end{equation}
+Thus, the discrete version of the Equation \ref{eq:filter_c} is 
+\begin{equation}
+	\begin{split}
+		F(z) = \frac{n_0 + n_1z^{-1} + n_2z^{-2}}{d_0 + d_1z^{-1} + d_2z^{-2}}
+		\label{eq:filter_d}
+	\end{split}
+\end{equation}
+where 
+\begin{subequations}
+	\begin{align}
+		n_0 &= \omega_n^2 \\
+		n_1 &= 2\omega_n^2 \\
+		n_2 &= \omega_n^2 \\
+		d_0 &= \bigg[(\frac{2}{T_S})^2 + \frac{4\zeta \omega_n}{T_S} + \omega_n^2\bigg] \\
+		d_1 &= \bigg[\frac{8}{T_S^2} + 2\omega_n^2\bigg] \\
+		d_2 &= \bigg[(\frac{2}{T_S})^2 - \frac{4\zeta \omega_n}{T_S} + \omega_n^2\bigg]
+	\end{align}
+	\label{eq:filter_parameters}
+\end{subequations}
 
 \subsection{Simulation Results and Analysis} \label{subsec:simulation_results}
 
@@ -931,7 +960,8 @@ with $\alpha = 1-e^{\frac{-T_S}{T}}$ and sample time $T_S$.
 
 TODOs:\\
 - 3.2.2 'Actuator Dynamics' Fig4 from Adaptive... Smeur paper
-
+- 3.2.3 'Filtering' Reference figures of the inner and outer block diagrams
+- 3.2.3 'Filtering' Block diagram of the filter 
 \section{Implementation on the Hardware} \label{sec:implementation_on_hardware}
 
 \subsection{Parameter Estimation} \label{subsec:parameter_estimation}

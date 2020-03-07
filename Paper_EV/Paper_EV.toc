@@ -15,11 +15,11 @@
 \contentsline {subsection}{\numberline {3.2.1}Quadrotor Dynamics}{12}
 \contentsline {subsection}{\numberline {3.2.2}Actuator Dynamics}{13}
 \contentsline {subsection}{\numberline {3.2.3}Filtering}{13}
-\contentsline {subsection}{\numberline {3.2.4}Simulation Results and Analysis}{13}
+\contentsline {subsection}{\numberline {3.2.4}Simulation Results and Analysis}{14}
 \contentsline {section}{\numberline {3.3}Implementation on the Hardware}{14}
 \contentsline {subsection}{\numberline {3.3.1}Parameter Estimation}{14}
-\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{14}
-\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments?}{14}
-\contentsline {chapter}{\numberline {4}Results}{15}
-\contentsline {chapter}{\numberline {5}Discussion}{16}
+\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{15}
+\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments?}{15}
+\contentsline {chapter}{\numberline {4}Results}{16}
+\contentsline {chapter}{\numberline {5}Discussion}{17}
 \contentsline {chapter}{Appendix}{ii}

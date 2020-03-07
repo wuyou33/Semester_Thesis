@@ -42,7 +42,7 @@ ky = 10.25e-4;      % drag constant in y-direction [kg/s]
 kz = 7.553e-4;      % drag constant in z-direction [kg/s]
 
 % Actuator dynamics 
-T = 1/15;                          % Actuator time constant [s]
+T = 0.061658;                      % Actuator time constant [s]
 omegaR_init = [1; 1; 1; 1]*200;    % Initial rotor angular velocity [rad/s]
 
 % Matrices used for computation of the propulsive moment, G1 and G2
@@ -85,4 +85,11 @@ K_eta = 4;
 K_d_xi = 1.5;
 K_xi = 0.7;
 
+
+% Workin gains 
+% P = 0.7;
+% D = 0.7;
+
+% P = 1;
+% D = 2;
 
