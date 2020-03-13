@@ -16,6 +16,7 @@ filename = "csv_data/data_1901.csv";
 [tick, gyro_roll, gyro_pitch, gyro_yaw, cmd_thrust, cmd_roll,... 
  cmd_pitch, cmd_yaw, accelz] = import_logdata(filename);
 
+time = (tick - tick(1)) / 1000;
 
 %% Actuator dynamics
 cmd_roll_a = filter([alpha], [1, -(1-alpha)], cmd_roll);
@@ -67,17 +68,53 @@ display(['T = ' num2str(T) 's; Fs = ' num2str(Fs) 'Hz; alpha = ' num2str(alpha)]
 display(['G1_roll = ' num2str(G_roll) '; G1_pitch = ' num2str(G_pitch) ...
          '; G1_yaw = ' num2str(G_yaw(1)) '; G2_yaw = ' num2str(G_yaw(2))])
 
-% Plot contributions of G matrices
-figure('Name','G1_yaw contribution');
-plot(ang_accel_yaw_d); hold on
-plot([cmd_yaw_fd 0*cmd_yaw_fdd]*G_yaw)
-xlim([0 inf]); grid on;
-legend('ang\_accel\_yaw\_d', 'cmd*G1')
+% % Plot contributions of G matrices
+% figure('Name','G1_yaw contribution');
+% plot(ang_accel_yaw_d); hold on
+% plot([cmd_yaw_fd 0*cmd_yaw_fdd]*G_yaw)
+% xlim([0 inf]); grid on;
+% legend('ang\_accel\_yaw\_d', 'cmd*G1')
+% 
+% figure('Name','G2_yaw contribution');
+% plot(ang_accel_yaw_d); hold on
+% plot([0*cmd_yaw_fd cmd_yaw_fdd]*G_yaw)
+% xlim([0 inf]); grid on;
+% legend('ang\_accel\_yaw\_d', 'cmdd*G2')
 
-figure('Name','G2_yaw contribution');
-plot(ang_accel_yaw_d); hold on
-plot([0*cmd_yaw_fd cmd_yaw_fdd]*G_yaw)
-xlim([0 inf]); grid on;
-legend('ang\_accel\_yaw\_d', 'cmdd*G2')
+
+%% Plots for the papaer
+
+min = 1500;
+max = 6000;%size(time, 1);
+
+fig_c = figure('Name','G_yaw contribution');
+
+%subplot(2, 1, 1)
+plot(ang_accel_yaw_d(min:max)); hold on; grid on;
+plot([cmd_yaw_fd(min:max) 0*cmd_yaw_fdd(min:max)]*G_yaw)
+plot([cmd_yaw_fd(min:max) cmd_yaw_fdd(min:max)]*G_yaw)
+xlim([-inf inf]);
+xlabel('Samples $$[-]$$', 'Interpreter', 'latex');
+%ylabel('$$ \Delta\ddot{\omega}_z \ [rad/s^3]$$', 'Interpreter', 'latex');
+legend('$$ \Delta\ddot{\omega}_z $$', '$$ \Delta\dot{\Omega}_z \cdot G_1 $$', '$$ \Delta\dot{\Omega}_z \cdot G_1 +  \Delta\ddot{\Omega}_z \cdot G_2 $$', 'Interpreter', 'latex')
+
+% subplot(2, 1, 2)
+% plot(ang_accel_yaw_d(min:max)); hold on; grid on;
+% plot([0*cmd_yaw_fd(min:max) cmd_yaw_fdd(min:max)]*G_yaw)
+% xlim([-inf inf]);
+% xlabel('Samples $$[-]$$', 'Interpreter', 'latex');
+% %ylabel('$$ \Delta\ddot{\omega}_z \ [rad/s^3]$$', 'Interpreter', 'latex');
+% legend('$$ \Delta\ddot{\omega}_z $$', '$$ \Delta\ddot{\Omega}_z \cdot G_2 $$', 'Interpreter', 'latex')
+
+% Saving
+set(fig_c, 'Units', 'points');
+pos = get(fig_c, 'Position');                        % gives x left, y bottom, width, height
+width = pos(3);
+height = pos(4);
+set(fig_c, 'PaperUnits', 'points');
+set(fig_c, 'PaperPosition', [0 0 width height]);     % Position plot at left hand corner with width 5 and height 5.
+set(fig_c, 'PaperSize', [width height]);             % Set the paper to have width 5 and height 5.
+saveas(fig_c, 'g_contribution', 'pdf');                       % Save figure
+
 
 

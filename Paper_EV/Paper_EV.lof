@@ -1,3 +1,12 @@
 \vspace *{10pt}
 \contentsline {figure}{\numberline {2-1}{\ignorespaces Crazyflie 2.1 nano-quadrotor with indicated lever arms of the motors}}{7}
-\contentsline {figure}{\numberline {3-1}{\ignorespaces Crazyflie 2.1 nano-quadrotor}}{11}
+\contentsline {figure}{\numberline {2-2}{\ignorespaces Block diagram of the inner loop \acrshort {INDI} controller}}{9}
+\contentsline {figure}{\numberline {2-3}{\ignorespaces Attitude controller as an augmentation of the inner loop \acrshort {INDI} controller}}{9}
+\contentsline {figure}{\numberline {2-4}{\ignorespaces Block diagram of the outer loop \acrshort {INDI} controller.}}{11}
+\contentsline {figure}{\numberline {2-5}{\ignorespaces Position controller as an augmentation of the outer loop \acrshort {INDI} controller}}{12}
+\contentsline {figure}{\numberline {3-1}{\ignorespaces Crazyflie 2.1 nano-quadrotor}}{13}
+\contentsline {figure}{\numberline {3-2}{\ignorespaces Response of the outer loop model to a step input.}}{17}
+\contentsline {figure}{\numberline {3-3}{\ignorespaces Response of the inner loop model to the input provided by the outer loop}}{18}
+\contentsline {figure}{\numberline {3-4}{\ignorespaces Responses of the closed loop with and without gyroscopic effects.}}{19}
+\contentsline {figure}{\numberline {3-5}{\ignorespaces Contribution of control effectiveness terms to the angular acceleration}}{20}
+\contentsline {figure}{\numberline {3-6}{\ignorespaces Estimation of the actuator state in case of the missing actuator feedback}}{21}

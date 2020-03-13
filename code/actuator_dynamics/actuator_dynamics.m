@@ -5,7 +5,7 @@ close all
 %% Parameter 
 
 plot_full = 1;
-plot_4th = 0;
+plot_4th = 1;
 plot_est = 1;
 
 T_sample = 0.005;                           % time between two samples in [s]
@@ -30,7 +30,7 @@ log_sm = smooth(log, 20);
 
 % Plot
 if (plot_full)
-    figure;
+    figure('Name', 'plot_full');
     plot(log)
     hold on;
     plot(log_sm)
@@ -62,6 +62,7 @@ else
 end
 if (plot_full) 
     plot(step); 
+    legend('log', 'log smooth', 'step', 'Location', 'best')
 end
 
 %% Extract 4th pt1
@@ -76,10 +77,10 @@ end
 t = (0:T_sample:(size(log_4th,1)-1)*T_sample)';
 
 if (plot_4th)
-    figure;
+    figure('Name', 'ploth_4th');
     plot(t, log_4th); hold on; grid on; 
     plot(t, step_4th)
-    xlabel('Samples [-]')
+    xlabel('Time [s]')
     ylabel('frequency [Hz]')
     xlim([0 inf])
 end
@@ -102,8 +103,8 @@ tdata = (0:T_sample:(size(ydata,1)-1)*T_sample)';
 T = optimvar('T', 1);                   % Create optimization variable
 K = optimvar('K', 1);
 
-fun = @(T,K) K*(1-exp(-tdata/T));             % Create function to optimize
-response = fcn2optimexpr(fun, T, K);
+fun = @(T,K) K*(1-exp(-tdata/T));       % Create function to optimize
+response = fcn2optimexpr(fun, T, K);    % Convert function to optim expession
 obj = sum((response - ydata).^2);       % Define error function
 
 % Create optimization problem
@@ -123,13 +124,14 @@ responsedata = evaluate(response, sol);
 
 % Plot data
 if (plot_est)
-    figure; 
-    plot(tdata, ydata); grid on; hold on; 
+    fig_est = figure('Name', 'plot_est'); 
+    plot(tdata, ydata+log_4th(1)); grid on; hold on; 
     xlim([0 inf]); 
-    plot(tdata, responsedata);
-    xlabel('Samples [-]');
-    ylabel('frequency (scaled) [Hz]');
-    legend('original', 'estimated');
+    plot(tdata, responsedata+log_4th(1));
+    ylim([responsedata(1)+log_4th(1) 350])
+    xlabel('Time [s]');
+    ylabel('Frequency [Hz]');
+    legend('Measured', 'Fitted', 'Location', 'best');
 end
 
 
@@ -146,4 +148,17 @@ display(['Results: '])
 display(['Estimation approximating the transfer function with tfest(): ' num2str(1/G.Denominator(2))]);
 display(['Estimation by solving optimization problem: ' num2str(sol.T) ' s']);
 display(['Estimation by reading off the value at 63.2% of the steady state value: ' num2str(0.0675) ' s'])
+
+
+%% Save plot_est
+
+set(fig_est, 'Units', 'points');
+pos = get(fig_est, 'Position');                        % gives x left, y bottom, width, height
+width = pos(3);
+height = pos(4);
+set(fig_est, 'PaperUnits', 'points');
+set(fig_est, 'PaperPosition', [0 0 width height]);     % Position plot at left hand corner with width 5 and height 5.
+set(fig_est, 'PaperSize', [width height]);             % Set the paper to have width 5 and height 5.
+saveas(fig_est, 'actuator_dynamic_est', 'pdf');                       % Save figure
+
 

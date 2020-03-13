@@ -7,19 +7,20 @@
 \contentsline {section}{\numberline {2.2}Nonlinear Dynamic Inversion}{3}
 \contentsline {section}{\numberline {2.3}Incremental Nonlinear Dynamic Inversion}{5}
 \contentsline {subsection}{\numberline {2.3.1}General INDI}{5}
-\contentsline {subsection}{\numberline {2.3.2}Inner INDI loop for Quadrotor}{5}
-\contentsline {subsection}{\numberline {2.3.3}Outer INDI loop for Quadrotor}{8}
-\contentsline {chapter}{\numberline {3}Implementation}{11}
-\contentsline {section}{\numberline {3.1}Research Quadrotor}{11}
-\contentsline {section}{\numberline {3.2}Simulink Model}{12}
-\contentsline {subsection}{\numberline {3.2.1}Quadrotor Dynamics}{12}
-\contentsline {subsection}{\numberline {3.2.2}Actuator Dynamics}{13}
-\contentsline {subsection}{\numberline {3.2.3}Filtering}{13}
-\contentsline {subsection}{\numberline {3.2.4}Simulation Results and Analysis}{14}
-\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{14}
-\contentsline {subsection}{\numberline {3.3.1}Parameter Estimation}{14}
-\contentsline {subsection}{\numberline {3.3.2}Structure of the Code}{15}
-\contentsline {subsection}{\numberline {3.3.3}Testing with contact Forces and Moments?}{15}
-\contentsline {chapter}{\numberline {4}Results}{16}
-\contentsline {chapter}{\numberline {5}Discussion}{17}
+\contentsline {subsection}{\numberline {2.3.2}Inner loop INDI for Quadrotor}{5}
+\contentsline {subsection}{\numberline {2.3.3}Outer loop INDI for Quadrotor}{9}
+\contentsline {chapter}{\numberline {3}Implementation}{13}
+\contentsline {section}{\numberline {3.1}Research Quadrotor}{13}
+\contentsline {section}{\numberline {3.2}Simulink Model}{14}
+\contentsline {subsection}{\numberline {3.2.1}Quadrotor Dynamics}{14}
+\contentsline {subsection}{\numberline {3.2.2}Actuator Dynamics}{15}
+\contentsline {subsection}{\numberline {3.2.3}Filtering}{15}
+\contentsline {subsection}{\numberline {3.2.4}Simulation Results}{16}
+\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{17}
+\contentsline {subsection}{\numberline {3.3.1}Parameter Estimation of the Inner Loop}{17}
+\contentsline {subsection}{\numberline {3.3.2}Estimation of the Actuator Dynamics Time Constant}{19}
+\contentsline {subsection}{\numberline {3.3.3}Estimation of the Thrust Mappint}{21}
+\contentsline {subsection}{\numberline {3.3.4}Structure of the Code}{22}
+\contentsline {chapter}{\numberline {4}Results}{23}
+\contentsline {chapter}{\numberline {5}Discussion}{24}
 \contentsline {chapter}{Appendix}{ii}
