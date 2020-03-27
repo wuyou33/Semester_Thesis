@@ -53,6 +53,21 @@ static float gyr_p, gyr_q, gyr_r;
 
 // TODO: DELETE
 static float arm = 0;
+
+// EXPERIMENT
+static float m_cf = 0.030;
+static float m_r = 0.0025;
+static float k_gain, p_gain;
+
+static float disturbance;
+static float disturbance_f;
+static float disturbance_a;
+
+Butterworth2LowPass dist[3]; 
+
+static float linear_accel_ref_z_a ;
+static float az_computed;
+static float az_measured;
 // ev_tag
 
 static float actuatorThrust;
@@ -101,6 +116,8 @@ void indi_init_filters(void)
 		init_butterworth_2_low_pass(&indi.ddxi[i], tau_axis[i], sample_time, 0.0f);
 		init_butterworth_2_low_pass(&indi.ang[i], tau_axis[i], sample_time, 0.0f);
 		init_butterworth_2_low_pass(&indi.thr[i], tau_axis[i], sample_time, 0.0f);
+		// EXPERIMENT
+		init_butterworth_2_low_pass(&dist[i], tau_axis[i], sample_time, 0.0f);
 	}
 }
 
@@ -135,6 +152,12 @@ static inline void filter_ang(Butterworth2LowPass *filter, struct Angles *old_va
 static inline void filter_thrust(Butterworth2LowPass *filter, float *old_thrust, float *new_thrust) 
 {
 	*new_thrust = update_butterworth_2_low_pass(&filter[0], *old_thrust);
+}
+
+// EXPERIMENT
+static inline void filter_disturbance(Butterworth2LowPass *filter, float *old_disturbance, float *new_disturbance) 
+{
+	*new_disturbance = update_butterworth_2_low_pass(&filter[0], *old_disturbance);
 }
 
 
@@ -368,9 +391,7 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 		indi.T_inner = indi.T_inner + indi.act_dyn.p*(indi.T_inner_f - indi.T_inner); 
 
 		// Compute trust that goes into the inner loop
-		//if (velocityRef.z != 0) {
-			indi.T_incremented = indi.T_tilde + indi.T_inner;
-		//}
+		indi.T_incremented = indi.T_tilde + indi.T_inner;
 
 		// Compute commanded attitude to the inner INDI
 		indi.attitude_c.phi = indi.attitude_f.phi + indi.phi_tilde*180/PI;
@@ -380,6 +401,27 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 		indi.T_incremented = clamp(indi.T_incremented, MIN_THRUST, MAX_THRUST);
 		indi.attitude_c.phi = clamp(indi.attitude_c.phi, -10.0f, 10.0f); 	
 		indi.attitude_c.theta = clamp(indi.attitude_c.theta, -10.0f, 10.0f);
+
+
+		// EXPERIMENT 
+		k_gain = m_cf / (m_cf + m_r);
+
+		disturbance = m_r * 9.81f / m_cf;
+		
+		// Filter disturbance
+		filter_disturbance(dist, &disturbance, &disturbance_f);
+		
+		// Pass disturbance through the act. dynamics
+		disturbance_a = disturbance_a + indi.act_dyn.p*(disturbance_f - disturbance_a); 
+
+		// Pass ref. acceleration through the act. dynamics
+		linear_accel_ref_z_a = linear_accel_ref_z_a + indi.act_dyn.p*(indi.linear_accel_ref.z - linear_accel_ref_z_a); 
+
+		p_gain = 1 + (k_gain - 1);
+
+		az_computed = 1/p_gain * (disturbance-disturbance_a) + k_gain*linear_accel_ref_z_a;
+		az_measured = (-sensors->acc.z + 1)*9.81f;
+
 
 
 		/********** INDI INNER LOOP ****************/
@@ -669,5 +711,16 @@ LOG_ADD(LOG_FLOAT, T_incremented, &indi.T_incremented)
 
 LOG_ADD(LOG_FLOAT, cmd_phi, &indi.attitude_c.phi)
 LOG_ADD(LOG_FLOAT, cmd_theta, &indi.attitude_c.theta)
+
+//EXPERIMENT
+LOG_ADD(LOG_FLOAT, az_computed, &az_computed)
+LOG_ADD(LOG_FLOAT, az_measured, &az_measured)
+
+LOG_ADD(LOG_FLOAT, az_reference, &indi.linear_accel_ref.z)
+LOG_ADD(LOG_FLOAT, az_reference_a, &linear_accel_ref_z_a)
+
+LOG_ADD(LOG_FLOAT, disturbance, &disturbance)
+LOG_ADD(LOG_FLOAT, disturbance_a, &disturbance_a)
+LOG_ADD(LOG_FLOAT, disturbance_f, &disturbance_f)
 
 LOG_GROUP_STOP(INDI_Outer)

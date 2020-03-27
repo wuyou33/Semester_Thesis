@@ -96,7 +96,7 @@ plot([cmd_yaw_fd(min:max) cmd_yaw_fdd(min:max)]*G_yaw)
 xlim([-inf inf]);
 xlabel('Samples $$[-]$$', 'Interpreter', 'latex');
 %ylabel('$$ \Delta\ddot{\omega}_z \ [rad/s^3]$$', 'Interpreter', 'latex');
-legend('$$ \Delta\ddot{\omega}_z $$', '$$ \Delta\dot{\Omega}_z \cdot G_1 $$', '$$ \Delta\dot{\Omega}_z \cdot G_1 +  \Delta\ddot{\Omega}_z \cdot G_2 $$', 'Interpreter', 'latex')
+legend('$$ \ddot{\omega}_z $$', '$$ \dot{\Omega}_z \cdot G_1 $$', '$$ \dot{\Omega}_z \cdot G_1 +  \ddot{\Omega}_z \cdot G_2 $$', 'Interpreter', 'latex')
 
 % subplot(2, 1, 2)
 % plot(ang_accel_yaw_d(min:max)); hold on; grid on;

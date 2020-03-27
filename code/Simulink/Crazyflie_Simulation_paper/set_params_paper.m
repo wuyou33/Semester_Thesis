@@ -7,10 +7,6 @@ close all
 % 'FX_Y' or 'MX_Y' with: 
 % - X: Force nature (e.g gravitational (G), aerodynamical (A), propulsive (P) etc)
 % - Y Coordinate frame (e.g Body-Fixed (B), NED (O) etc)
-% 
-% Notation of other values: (TODO)
-% - omegaR_X: vector of rotor angular velocities
-% - ...
 
 
 %% Dynamics
@@ -35,6 +31,7 @@ I_CF_1_inv = inv(I_CF_1);                 % Inverted I_CF_1
 % Propulsive force
 k_f = 1.6e-4;       % motor constant for F_P and M_P[N/(rad/s)]
 k_m = 1e-6;         % motor constant for M_P [N*m/(rad/s)]
+
 
 % Aerodynanic force
 kx = 10.25e-4;      % drag constant in x-direction [kg/s]
@@ -66,6 +63,7 @@ omega_n = 50;       % in [rad/s]
 zeta = 0.55;        
 Ts = 1/500;          % sample time in [s]
 
+% Without frequency warping
 N_0 = omega_n^2;
 N_1 = 2*omega_n^2;
 N_2 = omega_n^2; 
@@ -73,6 +71,15 @@ N_2 = omega_n^2;
 D_0 = 4/(Ts^2) + 4*zeta*omega_n/Ts + omega_n^2; 
 D_1 = -8/(Ts^2) + 2*omega_n^2; 
 D_2 = 4/(Ts^2) - 4*zeta*omega_n/Ts + omega_n^2; 
+
+% With frequency warping
+% N_0 = 1;
+% N_1 = 2;
+% N_2 = 1;
+% 
+% D_0 = 1/(tan(omega_n*Ts/2)^2) + 2*zeta/(tan(omega_n*Ts/2)) + 1;
+% D_1 = -2/(tan(omega_n*Ts/2)^2) + 4*zeta/(tan(omega_n*Ts/2));
+% D_2 = 1/(tan(omega_n*Ts/2)^2) - 2*zeta/(tan(omega_n*Ts/2)) + 1;
 
 % Outer INDI
 T_init = m_CF*0.1;      % T(t=0)!=0, prevents landing in singularity
@@ -84,12 +91,4 @@ K_eta = 4;
 % PD gains (outer loop)
 K_d_xi = 1.5;
 K_xi = 0.7;
-
-
-% Workin gains 
-% P = 0.7;
-% D = 0.7;
-
-% P = 1;
-% D = 2;
 

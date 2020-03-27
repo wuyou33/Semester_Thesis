@@ -4,19 +4,21 @@ close all
 
 %% Set some variables 
 T = 1/15;                       % Actuator dynamics time constant [s]
-Ts = 0.01;                      % Sampling time [s]
+Ts = 1/500;                      % Sampling time [s]
+omega_n = 50;
+zeta = 0.55;
 
 %% Filter test
 
 %Check if manually transformed H(s) corresponds to the one computed with
 %matlab
 
-% s = tf('s');
-% z = tf('z', Ts);
-% 
-% H = omega_n^2/(s^2 + 2*zeta*omega_n*s + omega_n^2);
-% Hz = tf( (N_0/D_0*z^2 + N_1/D_0*z + N_2/D_0)/((z^2 + D_1/D_0*z + D_2/D_0)));
-% Hzm = c2d(H, Ts, 'tustin')
+s = tf('s');
+z = tf('z', Ts);
+
+H = omega_n^2/(s^2 + 2*zeta*omega_n*s + omega_n^2);
+%Hz = tf( (N_0/D_0*z^2 + N_1/D_0*z + N_2/D_0)/((z^2 + D_1/D_0*z + D_2/D_0)));
+Hzm = c2d(H, Ts, 'tustin')
 % 
 % step(H, Hz, Hzm)
 % legend('H', 'Hz', 'Hzm')

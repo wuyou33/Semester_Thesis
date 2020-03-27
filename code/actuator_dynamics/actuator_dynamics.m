@@ -130,7 +130,7 @@ if (plot_est)
     plot(tdata, responsedata+log_4th(1));
     ylim([responsedata(1)+log_4th(1) 350])
     xlabel('Time [s]');
-    ylabel('Frequency [Hz]');
+    ylabel('Rotation frequency [Hz]');
     legend('Measured', 'Fitted', 'Location', 'best');
 end
 

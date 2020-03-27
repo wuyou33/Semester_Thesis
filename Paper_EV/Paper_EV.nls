@@ -2,7 +2,7 @@
 
  \nomgroup{B}
 
-  \item [{\( F \)}]\begingroup \DimensUnits {}{$N$}\nomdescr {Force}\nomeqref {0}
+  \item [{\( \bm {F} \)}]\begingroup \DimensUnits {}{$N$}\nomdescr {Force}\nomeqref {0}
 		\nompageref{xiv}
   \item [{\( g \)}]\begingroup \DimensUnits {}{$m/s^2$}\nomdescr {Gravitational acceleration}\nomeqref {0}
 		\nompageref{xiv}

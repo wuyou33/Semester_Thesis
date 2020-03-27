@@ -1,4 +1,4 @@
-\nomenclatureentry{B\( F \)@[{\( F \)}]\begingroup \DimensUnits {}{$N$}\nomdescr {Force}\nomeqref {0}|nompageref}{xiv}
+\nomenclatureentry{B\( \bm {F} \)@[{\( \bm {F} \)}]\begingroup \DimensUnits {}{$N$}\nomdescr {Force}\nomeqref {0}|nompageref}{xiv}
 \nomenclatureentry{B\( g \)@[{\( g \)}]\begingroup \DimensUnits {}{$m/s^2$}\nomdescr {Gravitational acceleration}\nomeqref {0}|nompageref}{xiv}
 \nomenclatureentry{G\( \alpha \)@[{\( \alpha \)}]\begingroup \DimensUnits {}{$rad$}\nomdescr {Angle of attack}\nomeqref {0}|nompageref}{xiv}
 \nomenclatureentry{G\( \zeta \)@[{\( \zeta \)}]\begingroup \DimensUnits {}{--}\nomdescr {Damping of a linear second order system}\nomeqref {0}|nompageref}{xiv}
