@@ -9,10 +9,6 @@
 % pdflatex Paper_EV
 % pdflatex Paper_EV
 %
-% TODO:
-% - Title page: Dr. -> Dr. ir.
-% - Acronyms, right order of full and short appearences
-% - Create List of Symbols
 %
 %#################################################################################
 %#################################################################################
@@ -165,31 +161,6 @@
 \renewcommand*\entryname{Acronym}
 \makeglossaries
 
-% Package for setting up the list of symbols
-%https://tex.stackexchange.com/questions/112884/how-to-achieve-nomenclature-entries-like-symbol-description-dimension-and-uni
-\usepackage{nomencl,etoolbox,ragged2e,siunitx}
-%
-\newcommand{\DimensUnits}[2]{\makebox[1em]{#1}\makebox[4em]{#2\hfill}\ignorespaces}
-\newcommand{\insertnomheaders}{\item[\bfseries Symbol]\DimensUnits{}{\textbf{Unit}}\textbf{Description}}
-%
-\renewcommand\nomgroup[1]{%
-  \item[\large\bfseries
-  \ifstrequal{#1}{A}{Acronyms}{%
-  \ifstrequal{#1}{B}{Latin Letters}{%
-  \ifstrequal{#1}{G}{Greek Letters}{%
-  \ifstrequal{#1}{S}{Indices}{% 
-  \ifstrequal{#1}{U}{Subscripts}{%   
-  \ifstrequal{#1}{X}{Other Symbols}{}}}}}}]
-  \insertnomheaders
-  }
-%
-\renewcommand*{\nompreamble}{\markboth{\nomname}{\nomname}}
-% parbox - Description
-\newcommand{\nomdescr}[1]{\parbox[t]{10cm}{\RaggedRight #1}}
-\newcommand{\nomwithdim}[5]{\nomenclature[#1]{#2}{\DimensUnits{}{#5}\nomdescr{#3}}}
-%
-\makenomenclature
-
 
 %#################################################################################%#################################################################################%#################################################################################
 
@@ -312,135 +283,206 @@ Incremental Nonlinear Dynamic Inversion (INDI) is a promising control technique,
 \chaptermark{Table of Acronyms}
 
 %Insert empty page after table of acronyms
-\newpage\null\thispagestyle{empty}
-
-% Add Table of Symbols
-%\chapter*{Table of Symbols} \label{sec:symbols}
-\mbox{}
-\nomwithdim{B, 001}{\( A(s),~A(z) \)}{Transfer function of the actuator dynamics}{}{--}
-\nomwithdim{B, 002}{\( A'(s),~A'(z) \)}{Transfer function of the actuator dynamics model}{}{--}
-\nomwithdim{B, 002}{\( a(t) \)}{Function of the first order lag element in time domain}{}{--}
-\nomwithdim{B, 005}{\( b \)}{Lever arm of the rotors to the C.G. along the body $y$-axis}{}{$m$}
-\nomwithdim{B, 010}{\( d \)}{Disturbance}{}{$m/s^2$}
-\nomwithdim{B, 010}{\( d_0, d_1, d_2 \)}{Denominator coefficients of the discrete second order filter}{}{--}
-\nomwithdim{B, 015}{\( E(t) \)}{Objective function}{}{$m$}
-\nomwithdim{B, 020}{\( \bm{F} \)}{Force vector}{}{$N$}
-\nomwithdim{B, 020}{\( \bm{F}_A \)}{Aerodynamic force vector}{}{$N$}
-\nomwithdim{B, 020}{\( \bm{F}_G \)}{Gravitational force vector}{}{$N$}
-\nomwithdim{B, 020}{\( \bm{F}_P \)}{Propulsive force vector}{}{$N$}
-\nomwithdim{B, 021}{\( \bm{f}(\bm{x}) \)}{Nonlinear vector field}{}{--}
-\nomwithdim{B, 025}{\( \bm{G} \)}{Control effectiveness matrix of the outer loop}{}{--}
-\nomwithdim{B, 025}{\( \bm{G}_1 \)}{Control effectiveness matrix of the inner loop}{}{--}
-\nomwithdim{B, 025}{\( \bm{G}_2 \)}{Control effectiveness matrix of the inner loop}{}{--}
-\nomwithdim{B, 025}{\( \bm{G}_{inner} \)}{Dynamics matrix of the inner loop}{}{--}
-\nomwithdim{B, 025}{\( \bm{G}_{outer} \)}{Dynamics matrix of the outer loop}{}{--}
-\nomwithdim{B, 025}{\( \bm{G}(x) \)}{Input matrix}{}{--}
-\nomwithdim{B, 025}{\( g \)}{Gravitational acceleration}{}{$m/s^2$}
-\nomwithdim{B, 030}{\( H(s),~H(z) \)}{Transfer function of the second order filter}{}{--}
-\nomwithdim{B, 031}{\( \bm{h}(\bm{x}) \)}{Nonlinear vector field}{}{--}
-\nomwithdim{B, 035}{\( \bm{I} \)}{Inertia tensor of the quadrotor}{}{$Nm^2$}
-\nomwithdim{B, 036}{\( \bm{I_{rzz}} \)}{$zz$-element of the inertia tensor of the rotor}{}{$Nm^2$}
-\nomwithdim{B, 036}{\( i \)}{Relative degree of the dynamic system}{}{--}
-\nomwithdim{B, 040}{\( K \)}{Compensation gain}{}{--}
-\nomwithdim{B, 040}{\( K_{cmd} \)}{Thrust mapping parameter}{}{--}
-\nomwithdim{B, 041}{\( k \)}{Drag coefficient}{}{$kg/s$}
-\nomwithdim{B, 041}{\( k \)}{Gain of the actuator dynamics}{}{--}
-\nomwithdim{B, 041}{\( k_F \)}{Force constant of the rotors}{}{$\frac{N}{rad/s}$}
-\nomwithdim{B, 041}{\( k_M \)}{Moment constant of the rotors}{}{$\frac{Nm}{rad/s}$}
-\nomwithdim{B, 045}{\( L \)}{Lie derivative operator}{}{--}
-\nomwithdim{B, 045}{\( l \)}{Lever arm of the rotors to the C.G. along the body $y$-axis}{}{$m$}
-\nomwithdim{B, 050}{\( \bm{M} \)}{Moment vector}{}{$Nm$}
-\nomwithdim{B, 050}{\( \bm{M}_A \)}{Aerodynamic moment vector}{}{$Nm$}
-\nomwithdim{B, 050}{\( \bm{M}_c \)}{Control moment vector}{}{$Nm$}
-\nomwithdim{B, 050}{\( \bm{M}_G \)}{Gravitational moment vector}{}{$Nm$}
-\nomwithdim{B, 050}{\( \bm{M}_{gyro} \)}{Moment vector due to the gyroscopic effects of the rotor}{}{$Nm$}
-\nomwithdim{B, 050}{\( \bm{M}_{OB} \)}{Transformation matrix from the body-fixed into NED frame}{}{--}
-\nomwithdim{B, 050}{\( \bm{M}_P \)}{Propulsion moment vector}{}{$Nm$}
-\nomwithdim{B, 052}{\( m \)}{Mass of the quadrotor}{}{$kg$}
-\nomwithdim{B, 052}{\( m_{cf} \)}{Mass of the Crazyflie quadrotor}{}{$kg$}
-\nomwithdim{B, 053}{\( m_r \)}{Additional mass (disturbance)}{}{$kg$}
-\nomwithdim{B, 055}{\( n \)}{Number of samples}{}{$m$}
-\nomwithdim{B, 055}{\( n_0, n_1, n_2 \)}{Numerator coefficients of the discrete second order filter}{}{--}
-\nomwithdim{B, 060}{\( P \)}{Parameter}{}{--}
-\nomwithdim{B, 060}{\( p \)}{Roll rate}{}{$rad/s$}
-\nomwithdim{B, 065}{\( q \)}{Pitch rate}{}{$rad/s$}
-\nomwithdim{B, 070}{\( r \)}{Yaw rate}{}{$rad/s$}
-\nomwithdim{B, 075}{\( s \)}{Laplace variable}{}{--}
-\nomwithdim{B, 080}{\( T \)}{Thrust}{}{$N$}
-\nomwithdim{B, 080}{\( T \)}{Time constant of the actuator dynamics}{}{$s$}
-\nomwithdim{B, 080}{\( T_{cmd} \)}{Thrust in motor units}{}{--}
-\nomwithdim{B, 080}{\( T_s \)}{Sample time of the controller}{}{$s$}
-\nomwithdim{B, 081}{\( \tilde{T} \)}{Thrust increment}{}{$N$}
-\nomwithdim{B, 081}{\( t \)}{Time}{}{$s$}
-\nomwithdim{B, 085}{\( \bm{u} \)}{Input vector}{}{--}
-\nomwithdim{B, 085}{\( \bm{u}_c \)}{Control vector}{}{--}
-\nomwithdim{B, 085}{\( u \)}{$x$-component of the velocity vector}{}{$m/s$}
-\nomwithdim{B, 090}{\( V \)}{Component of the velocity vector}{}{$m/s$}
-\nomwithdim{B, 091}{\( v \)}{$y$-component of the velocity vector}{}{$m/s$}
-\nomwithdim{B, 091}{\( \bm{v} \)}{Velocity vector}{}{$m/s$}
-\nomwithdim{B, 095}{\( W \)}{Weight of the quadrotor}{}{$N$}
-\nomwithdim{B, 095}{\( w \)}{$z$-component of the velocity vector}{}{$m/s$}
-\nomwithdim{B, 100}{\( \bm{x} \)}{State vector}{}{--}
-\nomwithdim{B, 100}{\( x \)}{Position coordinate in $x$-direction}{}{$m$}
-\nomwithdim{B, 105}{\( \bm{y} \)}{Output vector}{}{--}
-\nomwithdim{B, 105}{\( y \)}{Position coordinate in $y$-direction}{}{$m$}
-\nomwithdim{B, 110}{\( \bm{z} \)}{Transformed state vector}{}{--}
-\nomwithdim{B, 110}{\( z \)}{z-Transformation variable}{}{--}
-\nomwithdim{B, 110}{\( z \)}{Position coordinate in $z$-direction}{}{$m$}
-
-\nomwithdim{G, 200}{\( \alpha \)}{Parameter of the discrete first order lag element}{}{$N$}
-\nomwithdim{G, 205}{\( \zeta \)}{Relative damping coefficient of the second order filter}{}{--}
-\nomwithdim{G, 206}{\( \bm{\eta} \)}{Attitude vector}{}{$rad$}
-\nomwithdim{G, 210}{\( \Theta \)}{Pitch angle}{}{$rad$}
-\nomwithdim{G, 210}{\( \tilde{\Theta} \)}{Pitch angle increment}{}{$rad$}
-\nomwithdim{G, 210}{\( \Theta_c \)}{Control pitch angle}{}{$rad$}
-\nomwithdim{G, 215}{\( \bm{\nu} \)}{Virtual control input vector}{}{--}
-\nomwithdim{G, 215}{\( \bm{\nu}_{\bm{\dot{v}}} \)}{Virtual control input vector of the outer loop}{}{$m/s^2$}
-\nomwithdim{G, 215}{\( \bm{\nu}_{\bm{\dot{\omega}}} \)}{Virtual control input vector of the inner loop}{}{$rad/s^2$}
-\nomwithdim{G, 219}{\( \bm{\xi} \)}{Position vector}{}{$m$}
-\nomwithdim{G, 220}{\( \Phi \)}{Roll/Bank angle}{}{$rad$}
-\nomwithdim{G, 220}{\( \tilde{\Phi} \)}{Roll angle increment}{}{$rad$}
-\nomwithdim{G, 220}{\( \Phi_c \)}{Control roll angle}{}{$rad$}
-\nomwithdim{G, 221}{\( \bm{\phi}(\bm{x}) \)}{State transformation function}{}{--}
-\nomwithdim{G, 225}{\( \bm{\chi} \)}{Wind vector}{}{$m/s$}
-\nomwithdim{G, 230}{\( \Psi \)}{Yaw/Bank angle}{}{$rad$}
-\nomwithdim{G, 235}{\( \bm{\Omega} \)}{Propeller rate vector of the four rotors}{}{$rad/s$}
-\nomwithdim{G, 235}{\( \bm{\Omega}_i \)}{Propeller rate of the i-th rotor}{}{$rad/s$}
-\nomwithdim{G, 235}{\( \tilde{\bm{\Omega}} \)}{Propeller rate increment}{}{$rad/s$}
-\nomwithdim{G, 235}{\( \bm{\Omega}_c \)}{Propeller rate control vector of the four rotors around}{}{$rad/s$}
-\nomwithdim{G, 236}{\( \bm{\omega} \)}{Angular velocity vector of the quadrotor}{}{$rad/s$}
-\nomwithdim{G, 236}{\( \omega_n \)}{Cutoff frequency of the second order filter}{}{$rad/s$}
-
-\nomwithdim{S}{\( 0 \)}{Initial point in time}{}{--}
-\nomwithdim{S}{\( a \)}{Passed through the actuator dynamics}{}{--}
-\nomwithdim{S}{\( B \)}{Body-fixed coordinate frame}{}{--}
-\nomwithdim{S}{\( D \)}{Down}{}{--}
-\nomwithdim{S}{\( E \)}{East}{}{--}
-\nomwithdim{S}{\( f \)}{Filtered}{}{--}
-\nomwithdim{S}{\( G \)}{Center of gravity}{}{--}
-\nomwithdim{S}{\( G \)}{Gravitational}{}{--}
-\nomwithdim{S}{\( K \)}{Kinematic coordinate frame}{}{--}
-\nomwithdim{S}{\( N \)}{North}{}{--}
-\nomwithdim{S}{\( O \)}{North-East-Down coordinate frame}{}{--}
-\nomwithdim{S}{\( R \)}{Reference point}{}{--}
-\nomwithdim{S}{\( x \)}{$x$-component of a variable}{}{--}
-\nomwithdim{S}{\( y \)}{$y$-component of a variable}{}{--}
-\nomwithdim{S}{\( z \)}{$z$-component of a variable}{}{--}
-
-\nomwithdim{X, 400}{\( L \)}{Lie derivative operator}{}{--}
-\nomwithdim{X, 401}{\( \nabla \)}{Nabla-Operator}{}{--}
-
-\renewcommand{\nomname}{Table of Symbols}
-
-\printnomenclature[6em]
+\newpage\null\thispagestyle{empty}\newpage
 
 % Manually add Chapter names to the header (per default not included by Latex) 
-\thispagestyle{fancy_beginning}
+\protect\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Symbols}
+
+\chapter*{Table of Symbols} \label{sec:table_of_symbols}
+
+\textbf{Latin Letters}
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+    \textbf{Symbol} & \textbf{Unit} & \textbf{Description} \\ [1.2ex] 
+    $A(s),~A(z)$ & -- & Transfer function of the actuator dynamics \\ 
+    $A'(s),~A'(z)$ & -- & Transfer function of the actuator dynamics model \\
+    $a(t)$ & -- & Function of the first order lag element in time domain \\
+    $b$ & $m$ & Lever arm of the rotors to the C.G. along the body $y$-axis \\
+    $d$ & $m/s^2$ & Disturbance \\
+    $d_0, d_1, d_2$ & -- & Denominator coefficients of the discrete second order filter \\
+    $E(t)$ & -- & Objective function \\
+    $\bm{F}$ & $N$ & Force vector \\
+    $\bm{F}_A$ & $N$ & Aerodynamic force vector \\
+    $\bm{F}_G$ & $N$ & Gravitational force vector \\
+    $\bm{F}_P$ & $N$ & Propulsive force vector \\
+    $\bm{f}(\bm{x})$ & -- & Nonlinear vector field \\
+    $\bm{G}$ & -- & Control effectiveness matrix of the outer loop \\
+    $\bm{G}_1$ & -- & Control effectiveness matrix of the inner loop \\
+    $\bm{G}_2$ & -- & Control effectiveness matrix of the inner loop \\
+    $\bm{G}_{inner}$ & -- & Dynamics matrix of the inner loop \\
+    $\bm{G}_{outer}$ & -- & Dynamics matrix of the outer loop \\
+    $\bm{G}(x)$ & -- & Input matrix \\
+    $g$ & $m/s^2$ & Gravitational acceleration \\
+    $H(s),~H(z)$ & -- & Transfer function of the second order filter \\
+    $\bm{h}(\bm{x})$ & -- & Nonlinear vector field \\
+    $\bm{I}$ & $Nm^2$ & Inertia tensor of the quadrotor \\
+    $\bm{I_{rzz}}$ & $Nm^2$ & $zz$-element of the inertia tensor of the rotor \\
+    $i$ & -- & Relative degree of the dynamic system \\
+    $K$ & -- & Compensation gain \\
+    $K_{cmd}$ & -- & Thrust mapping parameter \\
+    $k$ & $kg/s$ & Drag coefficient \\ %[0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  %\captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_latin_1}
+\end{table}
+
+% Manually add Chapter names to the header (per default not included by Latex) 
+\protect\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Symbols}
+
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+    $k$ & -- & Gain of the actuator dynamics \\ 
+    $k_F$ & $\frac{N}{rad/s}$ & Force constant of the rotors \\
+    $k_M$ & $\frac{Nm}{rad/s}$ & Moment constant of the rotors \\
+    $L$ & -- & Lie derivative operator \\
+    $l$ & $m$ & Lever arm of the rotors to the C.G. along the body $y$-axis \\
+    $\bm{M}$ & $Nm$ & Moment vector \\
+    $\bm{M}_A$ & $Nm$ & Aerodynamic Moment vector \\
+    $\bm{M}_c$ & $Nm$ & Control moment vector \\
+    $\bm{M}_G$ & $Nm$ & Gravitational Moment vector \\
+    $\bm{M}_{gyro}$ & $Nm$ & Moment vector due to the gyroscopic effects of the rotor \\
+    $\bm{M}_{OB}$ & -- & Transformation matrix from the body-fixed into NED frame \\
+    $\bm{M}_P$ & $Nm$ & Propulsion moment vector \\
+    $m$ & $kg$ & Mass of the quadrotor \\
+    $m_{cf}$ & $kg$ & Mass of the Crazyflie quadrotor \\
+    $m_r$ & $kg$ & Additional mass (disturbance \\
+    $n$ & -- & Number of samples \\
+    $n_0, n_1, n_2$ & -- & Numerator coefficients of the discrete second order filter \\
+    $P$ & -- & Parameter \\
+    $p$ & $rad/s$ & Roll rate \\ 
+	$q$ & $rad/s$ & Pitch rate \\
+    $r$ & $rad/s$ & Yaw rate \\
+	$s$ & -- & Laplace variable \\
+    $T$ & $N$ & Thrust \\
+	$T$ & $s$ & Time constant of the actuator dynamics \\
+    $T_{cmd}$ & -- & Thrust in motor units \\
+	$T_s$ & $s$ & Sample time of the controller \\
+    $\tilde{T}$ & $N$ & Thrust increment\\
+	$t$ & $s$ & Time \\    
+    $u$ & -- & Input vector \\
+    $\bm{u}_c$ & -- & Control vector \\
+    $u$ & $m/s$ & $x$-component of the velocity vector \\ %[0.5ex]
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_latin_2}
+\end{table}
+
+% Manually add Chapter names to the header (per default not included by Latex) 
+\protect\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Symbols}
+
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+    $V$ & $m/s$ & Component of the velocity vector \\ 
+    $v$ & $m/s$ & $y$-component of the velocity vector \\
+    $ \bm{v}$ & $m/s$ & Velocity vector \\
+    $W$ & $N$ & Weight of the quadrotor \\
+    $w$ & $m/s$ & $z$-component of the velocity vector \\
+    $\bm{x}$ & -- & State vector \\
+    $x$ & $m$ & Position coordinate in $x$-direction \\
+    $\bm{y}$ & -- & Output vector \\
+    $y$ & $m$ & Position coordinate in $y$-direction \\
+    $\bm{z} $ & -- & Transformed state vector \\
+    $z$ & -- & z-Transformation variable \\
+    $z$ & $m$ & Position coordinate in $z$-direction \\ %[0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_latin_3}
+\end{table}
+
+% Manually add Chapter names to the header (per default not included by Latex) 
+\protect\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Symbols}
+
+\textbf{Greek Letters}
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+    \textbf{Symbol} & \textbf{Unit} & \textbf{Description} \\ [1.2ex] 
+    $\alpha$ & -- & Parameter of the discrete first order lag element \\ 
+    $\zeta$ & -- & Relative damping coefficient of the second order filter \\
+    $\bm{\eta}$ & $rad$ & Attitude vector \\
+    $\Theta$ & $rad$ & Pitch angle \\
+    $\tilde{\Theta}$ & $rad$ & Pitch angle increment \\
+    $\Theta_c$ & $rad$ & Control pitch angle \\
+    $\bm{\nu}$ & -- & Virtual control input vector \\
+    $\bm{\nu}_{\bm{\dot{v}}}$ & $m/s^2$ & Virtual control input vector of the outer loop \\
+    $\bm{\nu}_{\bm{\dot{\omega}}}$ & $rad/s^2$ & Virtual control input vector of the inner loop \\
+    $\bm{\xi}$ & $m$ & Position vector \\
+    $\Phi$ & $rad$ & Roll/Bank angle \\
+    $\tilde{\Phi}$ & $rad$ & Roll angle increment \\
+    $\Phi_c$ & $rad$ & Control roll angle \\
+	$\bm{\phi}(\bm{x})$ & -- & State transformation function \\ %[0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_greek}
+\end{table}
+
+\textbf{Indices}
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{10cm}} 
+    \textbf{Symbol} & \textbf{Description} \\ [1.2ex] 
+    $0$ & Initial point in time \\ 
+    $a$ & Passed through the actuator dynamics \\ 
+    $B$ & Body-fixed coordinate frame \\ 
+    $D$ & Down \\
+    $E$ & East \\ 
+    $f$ & Filtered \\ 
+    $G$ & Center of gravity \\ 
+    $G$ & Gravitational \\
+    $K$ & Kinematic coordinate frame \\
+    $N$ & North \\
+    $O$ & North-East-Down coordinate frame \\
+    $R$ & Reference point \\
+    $x$ & $x$-component of a variable \\
+	$y$ & $y$-component of a variable \\
+	$z$ & $z$-component of a variable \\ %[0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_indices}
+\end{table}
+
+\textbf{Other Symbols}
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{10cm}} 
+    \textbf{Symbol} & \textbf{Description} \\ [1.2ex] 
+    $L$ & Lie derivative operator \\ 
+	$\nabla$ & Nabla-Operator \\ %[0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_other_symbols}
+\end{table}
+
+% Manually add Chapter names to the header (per default not included by Latex) 
+\protect\thispagestyle{fancy_beginning}
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \chaptermark{Table of Symbols}
 
 %Insert empty page after table of symbols
-\newpage\null\thispagestyle{empty}\newpage
+\newpage
 
 % Beginning of the core text 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

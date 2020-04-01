@@ -24,61 +24,26 @@
  */
 
 #include "controller_indi.h"
-#include "estimator.h"
 
 static float thrust_threshold = 300.0f;
 static float bound_control_input = 32000.0f;
 
 static attitude_t attitudeDesired;
 static attitude_t rateDesired;
-static float attYawError; 
-
-// ev_tag
-static struct Vectr positionRef; 
-static struct Vectr velocityRef;
-
-float K_xi_x = 1.0f;
-float K_xi_y = 1.0f;
-float K_xi_z = 1.0f;
-float K_dxi_x = 5.0f;
-float K_dxi_y = 5.0f;
-float K_dxi_z = 5.0f;
-float K_thr = 0.00024730f;
-
-static float pos_set_x, pos_set_y, pos_set_z; 
-//static float vel_set_x, vel_set_y, vel_set_z;
-static float posS_x, posS_y, posS_z;
-static float velS_x, velS_y, velS_z;
-static float gyr_p, gyr_q, gyr_r;
-
-// TODO: DELETE
-static float arm = 0;
-
-// EXPERIMENT
-static float m_cf = 0.030;
-static float m_r = 0.0025;
-static float k_gain, p_gain;
-
-static float disturbance;
-static float disturbance_f;
-static float disturbance_a;
-
-Butterworth2LowPass dist[3]; 
-
-static float linear_accel_ref_z_a ;
-static float az_computed;
-static float az_measured;
-// ev_tag
-
 static float actuatorThrust;
-static float roll_kp = 3.0f;
-static float pitch_kp = 3.0f;
-static float yaw_kp = 3.0f;
+static float roll_kp = 5.0f;
+static float pitch_kp = 5.0f;
+static float yaw_kp = 5.0f;
+
+static float attYawError; 
 
 static float r_roll;
 static float r_pitch;
 static float r_yaw;
 static float accelz;
+
+static vector_t refOuterINDI;				// Reference values from outer loop INDI
+static bool outerLoopActive = false ; 		// if 1, outer loop INDI is activated
 
 static struct IndiVariables indi = {
 		.g1 = {STABILIZATION_INDI_G1_P, STABILIZATION_INDI_G1_Q, STABILIZATION_INDI_G1_R},
@@ -113,11 +78,6 @@ void indi_init_filters(void)
 	for (int8_t i = 0; i < 3; i++) {
 		init_butterworth_2_low_pass(&indi.u[i], tau_axis[i], sample_time, 0.0f);
 		init_butterworth_2_low_pass(&indi.rate[i], tau_axis[i], sample_time, 0.0f);
-		init_butterworth_2_low_pass(&indi.ddxi[i], tau_axis[i], sample_time, 0.0f);
-		init_butterworth_2_low_pass(&indi.ang[i], tau_axis[i], sample_time, 0.0f);
-		init_butterworth_2_low_pass(&indi.thr[i], tau_axis[i], sample_time, 0.0f);
-		// EXPERIMENT
-		init_butterworth_2_low_pass(&dist[i], tau_axis[i], sample_time, 0.0f);
 	}
 }
 
@@ -134,47 +94,6 @@ static inline void filter_pqr(Butterworth2LowPass *filter, struct FloatRates *ne
 	update_butterworth_2_low_pass(&filter[2], new_values->r);
 }
 
-// ev_tag
-static inline void filter_ddxi(Butterworth2LowPass *filter, struct Vectr *old_values, struct Vectr *new_values)
-{
-	new_values->x = update_butterworth_2_low_pass(&filter[0], old_values->x);
-	new_values->y = update_butterworth_2_low_pass(&filter[1], old_values->y);
-	new_values->z = update_butterworth_2_low_pass(&filter[2], old_values->z);
-}
-
-static inline void filter_ang(Butterworth2LowPass *filter, struct Angles *old_values, struct Angles *new_values)
-{
-	new_values->phi = update_butterworth_2_low_pass(&filter[0], old_values->phi);
-	new_values->theta = update_butterworth_2_low_pass(&filter[1], old_values->theta);
-	new_values->psi = update_butterworth_2_low_pass(&filter[2], old_values->psi);
-}
-
-static inline void filter_thrust(Butterworth2LowPass *filter, float *old_thrust, float *new_thrust) 
-{
-	*new_thrust = update_butterworth_2_low_pass(&filter[0], *old_thrust);
-}
-
-// EXPERIMENT
-static inline void filter_disturbance(Butterworth2LowPass *filter, float *old_disturbance, float *new_disturbance) 
-{
-	*new_disturbance = update_butterworth_2_low_pass(&filter[0], *old_disturbance);
-}
-
-
-// Computes transformation matrix from body frame (index B) into NED frame (index O)
-void m_ob(struct Angles att, float matrix[3][3]) {
-
-	matrix[0][0] = cosf(att.theta)*cosf(att.psi);
-	matrix[0][1] = sinf(att.phi)*sinf(att.theta)*cosf(att.psi) - cosf(att.phi)*sinf(att.psi); 
-	matrix[0][2] = cosf(att.phi)*sinf(att.theta)*cosf(att.psi) + sinf(att.phi)*sinf(att.psi);
-	matrix[1][0] = cosf(att.theta)*sinf(att.psi);
-	matrix[1][1] = sinf(att.phi)*sinf(att.theta)*sinf(att.psi) + cosf(att.phi)*cosf(att.psi);
-	matrix[1][2] = cosf(att.phi)*sinf(att.theta)*sinf(att.psi) - sinf(att.phi)*cosf(att.psi);
-	matrix[2][0] = -sinf(att.theta);
-	matrix[2][1] = sinf(att.phi)*cosf(att.theta);
-	matrix[2][2] = cosf(att.phi)*cosf(att.theta);
-}
-
 /**
  * @brief Caclulate finite difference form a filter array
  * The filter already contains the previous values
@@ -189,11 +108,20 @@ static inline void finite_difference_from_filter(float *output, Butterworth2LowP
 	}
 }
 
-// Compute minor of the specific element of a function
-static inline void minor() 
-{
+static float capAngle(float angle) {
+  float result = angle;
 
+  while (result > 180.0f) {
+    result -= 360.0f;
+  }
+
+  while (result < -180.0f) {
+    result += 360.0f;
+  }
+
+  return result;
 }
+
 
 void controllerINDIInit(void)
 {
@@ -211,6 +139,7 @@ void controllerINDIInit(void)
 
 	attitudeControllerInit(ATTITUDE_UPDATE_DT);
 	positionControllerInit();
+	positionControllerINDIInit();
 }
 
 bool controllerINDITest(void)
@@ -241,214 +170,53 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 		}
 	}
 
-	//if (RATE_DO_EXECUTE(POSITION_RATE, tick)) {
-		//positionController(&actuatorThrust, &attitudeDesired, setpoint, state);
-	//}
+	if (RATE_DO_EXECUTE(POSITION_RATE, tick) && !outerLoopActive) {
+		positionController(&actuatorThrust, &attitudeDesired, setpoint, state);
+	}
 
 	/*
 	 * Skipping calls faster than ATTITUDE_RATE
 	 */
 	if (RATE_DO_EXECUTE(ATTITUDE_RATE, tick)) {
 
-		/********** INDI OUTER LOOP ****************/
-
-		// Reading setpoints in Position Hold mode
-		//velocityRef.x = setpoint->velocity.x;
-		//velocityRef.y = -setpoint->velocity.y;
-		//velocityRef.z = -setpoint->velocity.z;
-
- 		// Mapping of roll, pitch, thrust commands to reference velocity/position commands 
-		/*
-		vel_set_z = setpoint->attitude.pitch;
-		vel_set_y = setpoint->attitude.roll;
-		vel_set_x = setpoint->thrust/60000.0f;
-		velocityRef.x = vel_set_x;
-		velocityRef.y = vel_set_y;
-		velocityRef.z = vel_set_z;
-		*/
-		//pos_set_x = -setpoint->attitude.pitch;
-		//pos_set_y = setpoint->attitude.roll;
-		//pos_set_z = -setpoint->thrust/60000.0f;
-
-
-		// State position, velocity
-		posS_x = state->position.x;
-		posS_y = -state->position.y;
-		posS_z = -state->position.z;
-		velS_x = state->velocity.x;
-		velS_y = -state->velocity.y;
-		velS_z = -state->velocity.z;
-		gyr_p = sensors->gyro.x;
-		gyr_q = sensors->gyro.y;
-		gyr_r = sensors->gyro.z; 
-
-		// Position controller
-		positionRef.x = pos_set_x;
-		positionRef.y = pos_set_y;
-		positionRef.z = pos_set_z;
-		velocityRef.x = K_xi_x*(positionRef.x - posS_x);
-		velocityRef.y = K_xi_y*(positionRef.y - posS_y);
-		velocityRef.z = K_xi_z*(positionRef.z - posS_z);
-
-		// Velocity controller
-		indi.linear_accel_ref.x = K_dxi_x*(velocityRef.x - velS_x);
-		indi.linear_accel_ref.y = K_dxi_y*(velocityRef.y - velS_y);
-		indi.linear_accel_ref.z = K_dxi_z*(velocityRef.z - velS_z); 
-
-		// Read lin. acceleration (Body-fixed) obtained from sensors CHECKED
-		indi.linear_accel_s.x = (sensors->acc.x)*9.81f;
-		indi.linear_accel_s.y = (-sensors->acc.y)*9.81f;
-		indi.linear_accel_s.z = (-sensors->acc.z)*9.81f;
-
-		// Filter lin. acceleration 
-		filter_ddxi(indi.ddxi, &indi.linear_accel_s, &indi.linear_accel_f);
-
-		// Obtain actual attitude values (in deg)
-		indi.attitude_s.phi = state->attitude.roll; 
-		indi.attitude_s.theta = state->attitude.pitch;
-		indi.attitude_s.psi = -state->attitude.yaw;
-		filter_ang(indi.ang, &indi.attitude_s, &indi.attitude_f);
-
-    	
-		// in (rad)
-		struct Angles att = {
-			.phi = indi.attitude_f.phi/180*PI,
-			.theta = indi.attitude_f.theta/180*PI,
-			.psi = indi.attitude_f.psi/180*PI,
-		};
-
-		// Compute transformation matrix from body frame (index B) into NED frame (index O)
-		float M_OB[3][3] = {0};
-		m_ob(att, M_OB);
-
-		// Transform lin. acceleration in NED (add gravity to the z-component)
-		indi.linear_accel_ft.x = M_OB[0][0]*indi.linear_accel_f.x + M_OB[0][1]*indi.linear_accel_f.y + M_OB[0][2]*indi.linear_accel_f.z;
-		indi.linear_accel_ft.y = M_OB[1][0]*indi.linear_accel_f.x + M_OB[1][1]*indi.linear_accel_f.y + M_OB[1][2]*indi.linear_accel_f.z;
-		indi.linear_accel_ft.z = M_OB[2][0]*indi.linear_accel_f.x + M_OB[2][1]*indi.linear_accel_f.y + M_OB[2][2]*indi.linear_accel_f.z + 9.81f;
-
-		// Compute lin. acceleration error
-		indi.linear_accel_err.x = indi.linear_accel_ref.x - indi.linear_accel_ft.x;
-		indi.linear_accel_err.y = indi.linear_accel_ref.y - indi.linear_accel_ft.y;
-		indi.linear_accel_err.z = indi.linear_accel_ref.z - indi.linear_accel_ft.z;
-
-		// Elements of G ("-" because T points in neg. z-direction, "*9.81" because T/m=a=g, 
-		// negative psi to account wring implementation of the inner loop)
-		float g11 = (cosf(att.phi)*sinf(-att.psi) - sinf(att.phi)*sinf(att.theta)*cosf(-att.psi))*(-9.81f);
-		float g12 = (cosf(att.phi)*cosf(-att.theta)*cosf(-att.psi))*(-9.81f);
-		float g13 = (sinf(att.phi)*sinf(-att.psi) + cosf(att.phi)*sinf(att.theta)*cosf(-att.psi));
-		float g21 = (-cosf(att.phi)*cosf(-att.psi) - sinf(att.phi)*sinf(att.theta)*sinf(-att.psi))*(-9.81f);
-		float g22 = (cosf(att.phi)*cosf(att.theta)*sinf(-att.psi))*(-9.81f);
-		float g23 = (-sinf(att.phi)*cosf(-att.psi) + cosf(att.phi)*sinf(att.theta)*sinf(-att.psi));
-		float g31 = (-sinf(att.phi)*cosf(att.theta))*(-9.81f);
-		float g32 = (-cosf(att.phi)*sinf(att.theta))*(-9.81f);
-		float g33 = (cosf(att.phi)*cosf(att.theta));
-
-		// (G'*G)
-		float a11 = g11*g11 + g21*g21 + g31*g31;
-		float a12 = g11*g12 + g21*g22 + g31*g32;
-		float a13 = g11*g13 + g21*g23 + g31*g33;
-		float a21 = g12*g11 + g22*g21 + g32*g31;
-		float a22 = g12*g12 + g22*g22 + g32*g32;
-		float a23 = g12*g13 + g22*g23 + g32*g33;
-		float a31 = g13*g11 + g23*g21 + g33*g31;
-		float a32 = g13*g12 + g23*g22 + g33*g32;
-		float a33 = g13*g13 + g23*g23 + g33*g33;
-
-		// Determinant of (G'*G)
-		float detG = (a11*a22*a33 + a12*a23*a31 + a21*a32*a13) - (a13*a22*a31 + a11*a32*a23 + a12*a21*a33); 
-		
-		// Inverse of (G'*G)
-		float a11_inv = (a22*a33 - a23*a32)/detG;
-		float a12_inv = (a13*a32 - a12*a33)/detG;
-		float a13_inv = (a12*a23 - a13*a22)/detG;
-		float a21_inv = (a23*a31 - a21*a33)/detG;
-		float a22_inv = (a11*a33 - a13*a31)/detG;
-		float a23_inv = (a13*a21 - a11*a23)/detG;
-		float a31_inv = (a21*a32 - a22*a31)/detG;
-		float a32_inv = (a12*a31 - a11*a32)/detG;
-		float a33_inv = (a11*a22 - a12*a21)/detG; 
-
-		// G_inv = (G'*G)_inv*G'
-		float g11_inv = a11_inv*g11 + a12_inv*g12 + a13_inv*g13;
-		float g12_inv = a11_inv*g21 + a12_inv*g22 + a13_inv*g23;
-		float g13_inv = a11_inv*g31 + a12_inv*g32 + a13_inv*g33;
-		float g21_inv = a21_inv*g11 + a22_inv*g12 + a23_inv*g13;
-		float g22_inv = a21_inv*g21 + a22_inv*g22 + a23_inv*g23;
-		float g23_inv = a21_inv*g31 + a22_inv*g32 + a23_inv*g33;
-		float g31_inv = a31_inv*g11 + a32_inv*g12 + a33_inv*g13;
-		float g32_inv = a31_inv*g21 + a32_inv*g22 + a33_inv*g23;
-		float g33_inv = a31_inv*g31 + a32_inv*g32 + a33_inv*g33;
-
-		// Lin. accel. error multiplied CF mass and G^(-1) matrix (T_tilde negated because motor accepts only positiv commands, angles in rad)
-		indi.phi_tilde   = (g11_inv*indi.linear_accel_err.x + g12_inv*indi.linear_accel_err.y + g13_inv*indi.linear_accel_err.z);
-		indi.theta_tilde = (g21_inv*indi.linear_accel_err.x + g22_inv*indi.linear_accel_err.y + g23_inv*indi.linear_accel_err.z);
-		indi.T_tilde     = -(g31_inv*indi.linear_accel_err.x + g32_inv*indi.linear_accel_err.y + g33_inv*indi.linear_accel_err.z)/K_thr; 	
-
-		// Filter thrust
-		filter_thrust(indi.thr, &indi.T_incremented, &indi.T_inner_f);
-	
-		// Pass thrust through actuator dynamics
-		indi.T_inner = indi.T_inner + indi.act_dyn.p*(indi.T_inner_f - indi.T_inner); 
-
-		// Compute trust that goes into the inner loop
-		indi.T_incremented = indi.T_tilde + indi.T_inner;
-
-		// Compute commanded attitude to the inner INDI
-		indi.attitude_c.phi = indi.attitude_f.phi + indi.phi_tilde*180/PI;
-		indi.attitude_c.theta = indi.attitude_f.theta + indi.theta_tilde*180/PI;	
-
-		// Clamp commands
-		indi.T_incremented = clamp(indi.T_incremented, MIN_THRUST, MAX_THRUST);
-		indi.attitude_c.phi = clamp(indi.attitude_c.phi, -10.0f, 10.0f); 	
-		indi.attitude_c.theta = clamp(indi.attitude_c.theta, -10.0f, 10.0f);
-
-
-		// EXPERIMENT 
-		k_gain = m_cf / (m_cf + m_r);
-
-		disturbance = m_r * 9.81f / m_cf;
-		
-		// Filter disturbance
-		filter_disturbance(dist, &disturbance, &disturbance_f);
-		
-		// Pass disturbance through the act. dynamics
-		disturbance_a = disturbance_a + indi.act_dyn.p*(disturbance_f - disturbance_a); 
-
-		// Pass ref. acceleration through the act. dynamics
-		linear_accel_ref_z_a = linear_accel_ref_z_a + indi.act_dyn.p*(indi.linear_accel_ref.z - linear_accel_ref_z_a); 
-
-		p_gain = 1 + (k_gain - 1);
-
-		az_computed = 1/p_gain * (disturbance-disturbance_a) + k_gain*linear_accel_ref_z_a;
-		az_measured = (-sensors->acc.z + 1)*9.81f;
-
-
-
-		/********** INDI INNER LOOP ****************/
+		// Call outer loop INDI (position controller)
+		if (outerLoopActive) {
+			positionControllerINDI(sensors, state, &refOuterINDI);
+		}
 
 		// Switch between manual and automatic position control
 		if (setpoint->mode.z == modeDisable) {
-			actuatorThrust = indi.T_incremented*arm;					// changed from setpoint->thrust to indi.T_incremented
+			if (outerLoopActive) {
+				// INDI position controller active, INDI attitude controller becomes inner loop
+				actuatorThrust = refOuterINDI.z;
+			}
+			else {
+				// INDI position controller not active, INDI attitude controller is main loop
+				actuatorThrust = setpoint->thrust;
+			}
 		}
 		if (setpoint->mode.x == modeDisable || setpoint->mode.y == modeDisable) {
-			attitudeDesired.roll = setpoint->attitude.roll;	
-			attitudeDesired.pitch = setpoint->attitude.pitch;						
+			if (outerLoopActive) {
+				// INDI position controller active, INDI attitude controller becomes inner loop
+				attitudeDesired.roll = refOuterINDI.x;
+				attitudeDesired.pitch = refOuterINDI.y;
+			}
+			else {
+				// INDI position controller not active, INDI attitude controller is main loop
+				attitudeDesired.roll = setpoint->attitude.roll;
+				attitudeDesired.pitch = setpoint->attitude.pitch;
+			}
 		}
 
 //	    attitudeControllerCorrectAttitudePID(state->attitude.roll, state->attitude.pitch, state->attitude.yaw,
 //	                                attitudeDesired.roll, attitudeDesired.pitch, attitudeDesired.yaw,
 //	                                &rateDesired.roll, &rateDesired.pitch, &rateDesired.yaw);
 
-		rateDesired.roll = roll_kp*(indi.attitude_c.phi - state->attitude.roll);			// ev_tag: changed from attitudeDesired.roll
-		rateDesired.pitch = pitch_kp*(indi.attitude_c.theta - state->attitude.pitch);		// ev_tag: changed from attitudeDesired.pitch
+		rateDesired.roll = roll_kp*(attitudeDesired.roll - state->attitude.roll);
+		rateDesired.pitch = pitch_kp*(attitudeDesired.pitch - state->attitude.pitch);
 		//rateDesired.yaw = yaw_kp*(attitudeDesired.yaw - state->attitude.yaw);
 		attYawError = attitudeDesired.yaw - state->attitude.yaw;		
-		if (attYawError > 180.0f) {
-			attYawError = attYawError - 360.0f;
-		}
-		else if (attYawError < -180.0f) {
-			attYawError = attYawError + 360.0f;
-		}
+		attYawError = capAngle(attYawError);
 		rateDesired.yaw = yaw_kp*attYawError;
 
 
@@ -505,14 +273,11 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 		float attitude_error_q = radians(rateDesired.pitch) - stateAttitudeRatePitch;
 		float attitude_error_r = radians(rateDesired.yaw) - stateAttitudeRateYaw;
 
-		indi.angular_accel_ref.p = indi.reference_acceleration.err_p * attitude_error_p
-				- indi.reference_acceleration.rate_p * body_rates.p;
+		indi.angular_accel_ref.p = indi.reference_acceleration.err_p * attitude_error_p;
 
-		indi.angular_accel_ref.q = indi.reference_acceleration.err_q * attitude_error_q
-				- indi.reference_acceleration.rate_q * body_rates.q;
+		indi.angular_accel_ref.q = indi.reference_acceleration.err_q * attitude_error_q;
 
-		indi.angular_accel_ref.r = indi.reference_acceleration.err_r * attitude_error_r
-				- indi.reference_acceleration.rate_r * body_rates.r;
+		indi.angular_accel_ref.r = indi.reference_acceleration.err_r * attitude_error_r;
 
 		/*
 		 * 5. Update the For each axis: delta_command = 1/control_effectiveness * (angular_acceleration_reference – angular_acceleration)
@@ -576,6 +341,7 @@ void controllerINDI(control_t *control, setpoint_t *setpoint,
 	control->roll = indi.u_in.p;
 	control->pitch = indi.u_in.q;
 	control->yaw  = indi.u_in.r;
+
 }
 
 PARAM_GROUP_START(ctrlINDI)
@@ -599,6 +365,7 @@ PARAM_ADD(PARAM_FLOAT, act_dyn_q, &indi.act_dyn.q)
 PARAM_ADD(PARAM_FLOAT, act_dyn_r, &indi.act_dyn.r)
 PARAM_ADD(PARAM_FLOAT, filt_cutoff, &indi.filt_cutoff)
 PARAM_ADD(PARAM_FLOAT, filt_cutoff_r, &indi.filt_cutoff_r)
+PARAM_ADD(PARAM_UINT8, outerLoopActive, &outerLoopActive)
 PARAM_GROUP_STOP(ctrlINDI)
 
 LOG_GROUP_START(ctrlINDI)
@@ -623,104 +390,3 @@ LOG_ADD(LOG_FLOAT, rate_d[0], &indi.rate_d[0])
 LOG_ADD(LOG_FLOAT, rate_d[1], &indi.rate_d[1])
 LOG_ADD(LOG_FLOAT, rate_d[2], &indi.rate_d[2])
 LOG_GROUP_STOP(ctrlINDI)
-
-
-// INDI outer loop
-PARAM_GROUP_START(INDI_Outer)
-
-PARAM_ADD(PARAM_FLOAT, pos_set_x, &pos_set_x)
-PARAM_ADD(PARAM_FLOAT, pos_set_y, &pos_set_y)
-PARAM_ADD(PARAM_FLOAT, pos_set_z, &pos_set_z)
-/*
-PARAM_ADD(PARAM_FLOAT, vel_set_x, &vel_set_x)
-PARAM_ADD(PARAM_FLOAT, vel_set_y, &vel_set_y)
-PARAM_ADD(PARAM_FLOAT, vel_set_z, &vel_set_z)
-*/
-PARAM_ADD(PARAM_FLOAT, arm, &arm)
-
-PARAM_ADD(PARAM_FLOAT, K_xi_x, &K_xi_x)
-PARAM_ADD(PARAM_FLOAT, K_xi_y, &K_xi_y)
-PARAM_ADD(PARAM_FLOAT, K_xi_z, &K_xi_z)
-
-PARAM_GROUP_STOP(INDI_Outer)
-
-
-LOG_GROUP_START(INDI_Outer)
-
-// Angular veocity
-LOG_ADD(LOG_FLOAT, gyr_p, &gyr_p)
-LOG_ADD(LOG_FLOAT, gyr_q, &gyr_q)
-LOG_ADD(LOG_FLOAT, gyr_r, &gyr_r)
-
-// Position
-LOG_ADD(LOG_FLOAT, posS_x, &posS_x)
-LOG_ADD(LOG_FLOAT, posS_y, &posS_y)
-LOG_ADD(LOG_FLOAT, posS_z, &posS_z)
-
-LOG_ADD(LOG_FLOAT, posRef_x, &positionRef.x)
-LOG_ADD(LOG_FLOAT, posRef_y, &positionRef.y)
-LOG_ADD(LOG_FLOAT, posRef_z, &positionRef.z)
-
-// Velocity
-LOG_ADD(LOG_FLOAT, velS_x, &velS_x)
-LOG_ADD(LOG_FLOAT, velS_y, &velS_y)
-LOG_ADD(LOG_FLOAT, velS_z, &velS_z)
-
-LOG_ADD(LOG_FLOAT, velRef_x, &velocityRef.x)
-LOG_ADD(LOG_FLOAT, velRef_y, &velocityRef.y)
-LOG_ADD(LOG_FLOAT, velRef_z, &velocityRef.z)
-
-// Attitude
-LOG_ADD(LOG_FLOAT, angS_roll, &indi.attitude_s.phi)
-LOG_ADD(LOG_FLOAT, angS_pitch, &indi.attitude_s.theta)
-LOG_ADD(LOG_FLOAT, angS_yaw, &indi.attitude_s.psi)
-
-LOG_ADD(LOG_FLOAT, angF_roll, &indi.attitude_f.phi)
-LOG_ADD(LOG_FLOAT, angF_pitch, &indi.attitude_f.theta)
-LOG_ADD(LOG_FLOAT, angF_yaw, &indi.attitude_f.psi)
-
-// Acceleration
-LOG_ADD(LOG_FLOAT, accRef_x, &indi.linear_accel_ref.x)
-LOG_ADD(LOG_FLOAT, accRef_y, &indi.linear_accel_ref.y)
-LOG_ADD(LOG_FLOAT, accRef_z, &indi.linear_accel_ref.z)
-
-LOG_ADD(LOG_FLOAT, accS_x, &indi.linear_accel_s.x)
-LOG_ADD(LOG_FLOAT, accS_y, &indi.linear_accel_s.y)
-LOG_ADD(LOG_FLOAT, accS_z, &indi.linear_accel_s.z)
-
-LOG_ADD(LOG_FLOAT, accF_x, &indi.linear_accel_f.x)
-LOG_ADD(LOG_FLOAT, accF_y, &indi.linear_accel_f.y)
-LOG_ADD(LOG_FLOAT, accF_z, &indi.linear_accel_f.z)
-
-LOG_ADD(LOG_FLOAT, accFT_x, &indi.linear_accel_ft.x)
-LOG_ADD(LOG_FLOAT, accFT_y, &indi.linear_accel_ft.y)
-LOG_ADD(LOG_FLOAT, accFT_z, &indi.linear_accel_ft.z)
-
-LOG_ADD(LOG_FLOAT, accErr_x, &indi.linear_accel_err.x)
-LOG_ADD(LOG_FLOAT, accErr_y, &indi.linear_accel_err.y)
-LOG_ADD(LOG_FLOAT, accErr_z, &indi.linear_accel_err.z)
-
-// INDI outer loop variables
-LOG_ADD(LOG_FLOAT, phi_tilde, &indi.phi_tilde)
-LOG_ADD(LOG_FLOAT, theta_tilde, &indi.theta_tilde)
-LOG_ADD(LOG_FLOAT, T_tilde, &indi.T_tilde)
-
-LOG_ADD(LOG_FLOAT, T_inner, &indi.T_inner)
-LOG_ADD(LOG_FLOAT, T_inner_f, &indi.T_inner_f)
-LOG_ADD(LOG_FLOAT, T_incremented, &indi.T_incremented)
-
-LOG_ADD(LOG_FLOAT, cmd_phi, &indi.attitude_c.phi)
-LOG_ADD(LOG_FLOAT, cmd_theta, &indi.attitude_c.theta)
-
-//EXPERIMENT
-LOG_ADD(LOG_FLOAT, az_computed, &az_computed)
-LOG_ADD(LOG_FLOAT, az_measured, &az_measured)
-
-LOG_ADD(LOG_FLOAT, az_reference, &indi.linear_accel_ref.z)
-LOG_ADD(LOG_FLOAT, az_reference_a, &linear_accel_ref_z_a)
-
-LOG_ADD(LOG_FLOAT, disturbance, &disturbance)
-LOG_ADD(LOG_FLOAT, disturbance_a, &disturbance_a)
-LOG_ADD(LOG_FLOAT, disturbance_f, &disturbance_f)
-
-LOG_GROUP_STOP(INDI_Outer)
