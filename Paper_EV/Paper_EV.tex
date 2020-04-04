@@ -324,7 +324,7 @@ Incremental Nonlinear Dynamic Inversion (INDI) is a promising control technique,
     $i$ & -- & Relative degree of the dynamic system \\
     $K$ & -- & Compensation gain \\
     $K_{cmd}$ & -- & Thrust mapping parameter \\
-    $k$ & $kg/s$ & Drag coefficient \\ %[0.5ex]  
+    $K_{\eta}$ & -- & Gain of the inner loop \\ %[0.5ex]  
   \end{tabular}
   %\caption[Sample table 1]{Sample table 1}  
   %\captionsetup{font=bf, belowskip=-0.5cm}
@@ -340,6 +340,10 @@ Incremental Nonlinear Dynamic Inversion (INDI) is a promising control technique,
 \begin{table}[H]
   %\centering
   \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+    $K_{\omega}$ & -- & Gain of the inner loop \\
+    $K_{\xi}$ & -- & Gain of the outer loop \\
+    $K_{\dot{v}}$ & -- & Gain of the outer loop \\
+    $k$ & $kg/s$ & Drag coefficient \\ 
     $k$ & -- & Gain of the actuator dynamics \\ 
     $k_F$ & $\frac{N}{rad/s}$ & Force constant of the rotors \\
     $k_M$ & $\frac{Nm}{rad/s}$ & Moment constant of the rotors \\
@@ -366,11 +370,7 @@ Incremental Nonlinear Dynamic Inversion (INDI) is a promising control technique,
 	$T$ & $s$ & Time constant of the actuator dynamics \\
     $T_{cmd}$ & -- & Thrust in motor units \\
 	$T_s$ & $s$ & Sample time of the controller \\
-    $\tilde{T}$ & $N$ & Thrust increment\\
-	$t$ & $s$ & Time \\    
-    $u$ & -- & Input vector \\
-    $\bm{u}_c$ & -- & Control vector \\
-    $u$ & $m/s$ & $x$-component of the velocity vector \\ %[0.5ex]
+    $\tilde{T}$ & $N$ & Thrust increment \\ %[0.5ex]
   \end{tabular}
   %\caption[Sample table 1]{Sample table 1}  
   \captionsetup{font=bf, belowskip=-0.5cm}
@@ -386,6 +386,10 @@ Incremental Nonlinear Dynamic Inversion (INDI) is a promising control technique,
 \begin{table}[H]
   %\centering
   \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+	$t$ & $s$ & Time \\    
+    $u$ & -- & Input vector \\
+    $\bm{u}_c$ & -- & Control vector \\
+    $u$ & $m/s$ & $x$-component of the velocity vector \\
     $V$ & $m/s$ & Component of the velocity vector \\ 
     $v$ & $m/s$ & $y$-component of the velocity vector \\
     $ \bm{v}$ & $m/s$ & Velocity vector \\
@@ -397,7 +401,7 @@ Incremental Nonlinear Dynamic Inversion (INDI) is a promising control technique,
     $y$ & $m$ & Position coordinate in $y$-direction \\
     $\bm{z} $ & -- & Transformed state vector \\
     $z$ & -- & z-Transformation variable \\
-    $z$ & $m$ & Position coordinate in $z$-direction \\ %[0.5ex]  
+    $z$ & $m$ & Position coordinate in $z$-direction %[0.5ex]  
   \end{tabular}
   %\caption[Sample table 1]{Sample table 1}  
   \captionsetup{font=bf, belowskip=-0.5cm}
@@ -425,14 +429,25 @@ Incremental Nonlinear Dynamic Inversion (INDI) is a promising control technique,
     $\bm{\nu}_{\bm{\dot{v}}}$ & $m/s^2$ & Virtual control input vector of the outer loop \\
     $\bm{\nu}_{\bm{\dot{\omega}}}$ & $rad/s^2$ & Virtual control input vector of the inner loop \\
     $\bm{\xi}$ & $m$ & Position vector \\
-    $\Phi$ & $rad$ & Roll/Bank angle \\
-    $\tilde{\Phi}$ & $rad$ & Roll angle increment \\
-    $\Phi_c$ & $rad$ & Control roll angle \\
-	$\bm{\phi}(\bm{x})$ & -- & State transformation function \\ %[0.5ex]  
+    $\Phi$ & $rad$ & Roll/Bank angle \\ %[0.5ex]  
   \end{tabular}
   %\caption[Sample table 1]{Sample table 1}  
   \captionsetup{font=bf, belowskip=-0.5cm}
-  \label{table:tab_greek}
+  \label{table:tab_greek_1}
+\end{table}
+
+
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+    $\tilde{\Phi}$ & $rad$ & Roll angle increment \\
+    $\Phi_c$ & $rad$ & Control roll angle \\
+	$\bm{\phi}(\bm{x})$ & -- & State transformation function %[0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_greek_2}
 \end{table}
 
 \textbf{Indices}
@@ -455,7 +470,7 @@ Incremental Nonlinear Dynamic Inversion (INDI) is a promising control technique,
     $R$ & Reference point \\
     $x$ & $x$-component of a variable \\
 	$y$ & $y$-component of a variable \\
-	$z$ & $z$-component of a variable \\ %[0.5ex]  
+	$z$ & $z$-component of a variable %[0.5ex]  
   \end{tabular}
   %\caption[Sample table 1]{Sample table 1}  
   \captionsetup{font=bf, belowskip=-0.5cm}

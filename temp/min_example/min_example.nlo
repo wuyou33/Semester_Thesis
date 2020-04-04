@@ -1,0 +1,39 @@
+\nomenclatureentry{B, 002\( a(t) \)@[{\( a(t) \)}]\begingroup \DimensUnits {}{--}\nomdescr {Function of the first order lag element in time domain}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 005\( b \)@[{\( b \)}]\begingroup \DimensUnits {}{$m$}\nomdescr {Lever arm of the rotors to the C.G. along the body $y$-axis}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 010\( d \)@[{\( d \)}]\begingroup \DimensUnits {}{$m/s^2$}\nomdescr {Disturbance}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 010\( d_0, d_1, d_2 \)@[{\( d_0, d_1, d_2 \)}]\begingroup \DimensUnits {}{--}\nomdescr {Denominator coefficients of the discrete second order filter}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 015\( E(t) \)@[{\( E(t) \)}]\begingroup \DimensUnits {}{$m$}\nomdescr {Objective function}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 020\( \bm {F} \)@[{\( \bm {F} \)}]\begingroup \DimensUnits {}{$N$}\nomdescr {Force vector}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 020\( \bm {F}_A \)@[{\( \bm {F}_A \)}]\begingroup \DimensUnits {}{$N$}\nomdescr {Aerodynamic force vector}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 020\( \bm {F}_G \)@[{\( \bm {F}_G \)}]\begingroup \DimensUnits {}{$N$}\nomdescr {Gravitational force vector}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 020\( \bm {F}_P \)@[{\( \bm {F}_P \)}]\begingroup \DimensUnits {}{$N$}\nomdescr {Propulsive force vector}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 021\( \bm {f}(\bm {x}) \)@[{\( \bm {f}(\bm {x}) \)}]\begingroup \DimensUnits {}{--}\nomdescr {Nonlinear vector field}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 025\( g \)@[{\( g \)}]\begingroup \DimensUnits {}{$m/s^2$}\nomdescr {Gravitational acceleration}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 030\( H(s),~H(z) \)@[{\( H(s),~H(z) \)}]\begingroup \DimensUnits {}{--}\nomdescr {Transfer function of the second order filter}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 031\( \bm {h}(\bm {x}) \)@[{\( \bm {h}(\bm {x}) \)}]\begingroup \DimensUnits {}{--}\nomdescr {Nonlinear vector field}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 035\( \bm {I} \)@[{\( \bm {I} \)}]\begingroup \DimensUnits {}{$Nm^2$}\nomdescr {Inertia tensor of the quadrotor}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 036\( \bm {I_{rzz}} \)@[{\( \bm {I_{rzz}} \)}]\begingroup \DimensUnits {}{$Nm^2$}\nomdescr {$zz$-element of the inertia tensor of the rotor}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 036\( i \)@[{\( i \)}]\begingroup \DimensUnits {}{--}\nomdescr {Relative degree of the dynamic system}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 040\( K \)@[{\( K \)}]\begingroup \DimensUnits {}{--}\nomdescr {Compensation gain}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 040\( K_{cmd} \)@[{\( K_{cmd} \)}]\begingroup \DimensUnits {}{--}\nomdescr {Thrust mapping parameter}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 041\( k \)@[{\( k \)}]\begingroup \DimensUnits {}{$kg/s$}\nomdescr {Drag coefficient}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 041\( k \)@[{\( k \)}]\begingroup \DimensUnits {}{--}\nomdescr {Gain of the actuator dynamics}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 041\( k_F \)@[{\( k_F \)}]\begingroup \DimensUnits {}{$\frac {N}{rad/s}$}\nomdescr {Force constant of the rotors}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 041\( k_M \)@[{\( k_M \)}]\begingroup \DimensUnits {}{$\frac {Nm}{rad/s}$}\nomdescr {Moment constant of the rotors}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 045\( L \)@[{\( L \)}]\begingroup \DimensUnits {}{--}\nomdescr {Lie derivative operator}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 045\( l \)@[{\( l \)}]\begingroup \DimensUnits {}{$m$}\nomdescr {Lever arm of the rotors to the C.G. along the body $y$-axis}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 050\( \bm {M} \)@[{\( \bm {M} \)}]\begingroup \DimensUnits {}{$Nm$}\nomdescr {Moment vector}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 050\( \bm {M}_A \)@[{\( \bm {M}_A \)}]\begingroup \DimensUnits {}{$Nm$}\nomdescr {Aerodynamic moment vector}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 050\( \bm {M}_c \)@[{\( \bm {M}_c \)}]\begingroup \DimensUnits {}{$Nm$}\nomdescr {Control moment vector}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 050\( \bm {M}_G \)@[{\( \bm {M}_G \)}]\begingroup \DimensUnits {}{$Nm$}\nomdescr {Gravitational moment vector}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 050\( \bm {M}_{gyro} \)@[{\( \bm {M}_{gyro} \)}]\begingroup \DimensUnits {}{$Nm$}\nomdescr {Moment vector due to the gyroscopic effects of the rotor}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 050\( \bm {M}_{OB} \)@[{\( \bm {M}_{OB} \)}]\begingroup \DimensUnits {}{--}\nomdescr {Transformation matrix from the body-fixed into NED frame}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 050\( \bm {M}_P \)@[{\( \bm {M}_P \)}]\begingroup \DimensUnits {}{$Nm$}\nomdescr {Propulsion moment vector}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 053\( m_r \)@[{\( m_r \)}]\begingroup \DimensUnits {}{$kg$}\nomdescr {Additional mass (disturbance)}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 055\( n \)@[{\( n \)}]\begingroup \DimensUnits {}{$m$}\nomdescr {Number of samples}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 055\( n_0, n_1, n_2 \)@[{\( n_0, n_1, n_2 \)}]\begingroup \DimensUnits {}{--}\nomdescr {Numerator coefficients of the discrete second order filter}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 060\( P \)@[{\( P \)}]\begingroup \DimensUnits {}{--}\nomdescr {Parameter}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 060\( p \)@[{\( p \)}]\begingroup \DimensUnits {}{$rad/s$}\nomdescr {Roll rate}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 065\( q \)@[{\( q \)}]\begingroup \DimensUnits {}{$rad/s$}\nomdescr {Pitch rate}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 070\( r \)@[{\( r \)}]\begingroup \DimensUnits {}{$rad/s$}\nomdescr {Yaw rate}\nomeqref {0}|nompageref}{iii}
+\nomenclatureentry{B, 075\( s \)@[{\( s \)}]\begingroup \DimensUnits {}{--}\nomdescr {Laplace variable}\nomeqref {0}|nompageref}{iii}

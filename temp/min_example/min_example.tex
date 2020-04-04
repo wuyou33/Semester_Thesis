@@ -1,0 +1,165 @@
+\documentclass[11pt, a4paper, twoside]{report}
+
+% Define page layout
+\usepackage[
+ left=2.5cm,
+ right=2.5cm,
+ top=2.5cm,
+ bottom=3cm]
+{geometry}
+
+\usepackage{pageslts}
+\usepackage{bm}
+\usepackage{float}
+\usepackage{subcaption}
+
+% Package and settings for adding header/footer
+\usepackage{fancyhdr}
+
+% Set style for pages with arabic numbering 
+\fancyhf{}
+\fancyhf[HRE,HLO]{}
+\fancyhf[HRO,HLE]{\fontsize{11}{12}\selectfont \leftmark}
+\fancyhf[FRE,FLO]{\fontsize{11}{12}\selectfont Topic\\\vspace*{0.1cm}Name Surname}
+\fancyhf[FLE,FRO]{\fontsize{11}{12}\selectfont Page \thepage \thinspace / \lastpageref{pagesLTS.arabic}}
+\renewcommand{\headrulewidth}{0.1pt}	%upper line
+\renewcommand{\footrulewidth}{0.1pt}	%lower line
+
+% Set style for pages with roman numbering 
+\fancypagestyle{fancy_beginning}{%
+\fancyhf{}%
+\fancyhf[HRE,HLO]{}%
+\fancyhf[HRO,HLE]{\fontsize{11}{12}\selectfont \leftmark}%
+\fancyhf[FRE,FLO]{\fontsize{11}{12}\selectfont Topic\\\vspace*{0.1cm}Name Surname}
+\fancyhf[FLE,FRO]{\fontsize{11}{12}\selectfont Page \thepage}%
+\renewcommand{\headrulewidth}{0.1pt}%	%upper line
+\renewcommand{\footrulewidth}{0.1pt}%	%lower line
+}
+
+\usepackage[titles]{tocloft}
+
+% Package for setting up the list of symbols
+\usepackage{nomencl,etoolbox,ragged2e,siunitx}
+\newcommand{\DimensUnits}[2]{\makebox[1em]{#1}\makebox[4em]{#2\hfill}\ignorespaces}
+\newcommand{\insertnomheaders}{\item[\bfseries Symbol]\DimensUnits{}{\textbf{Unit}}\textbf{Description}}
+\renewcommand\nomgroup[1]{%
+  \item[\large\bfseries
+  \ifstrequal{#1}{A}{Acronyms}{%
+  \ifstrequal{#1}{B}{Latin Letters}{%
+  \ifstrequal{#1}{G}{Greek Letters}{%
+  \ifstrequal{#1}{S}{Indices}{% 
+  \ifstrequal{#1}{U}{Subscripts}{%   
+  \ifstrequal{#1}{X}{Other Symbols}{}}}}}}]
+  \insertnomheaders
+  }
+\renewcommand*{\nompreamble}{\markboth{\nomname}{\nomname}}
+\newcommand{\nomdescr}[1]{\parbox[t]{10cm}{\RaggedRight #1}}
+\newcommand{\nomwithdim}[5]{\nomenclature[#1]{#2}{\DimensUnits{}{#5}\nomdescr{#3}}}
+\makenomenclature
+
+
+\begin{document}
+\pagenumbering{roman}
+   
+\tableofcontents							
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Contents}
+
+\newpage\null\thispagestyle{empty}
+
+
+\chapter*{List of Symbols}
+
+\textbf{Latin Letters}
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[h]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+    \textbf{Symbol} & \textbf{Unit} & \textbf{Description} \\ [1.2ex] 
+    Content & Content & Content \\ 
+    Content & Content & Content \\
+    Content & Content & Content \\ [0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_1}
+\end{table}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table1}
+
+
+% Add Table of Symbols
+\mbox{}
+\nomwithdim{B, 002}{\( a(t) \)}{Function of the first order lag element in time domain}{}{--}
+\nomwithdim{B, 005}{\( b \)}{Lever arm of the rotors to the C.G. along the body $y$-axis}{}{$m$}
+\nomwithdim{B, 010}{\( d \)}{Disturbance}{}{$m/s^2$}
+\nomwithdim{B, 010}{\( d_0, d_1, d_2 \)}{Denominator coefficients of the discrete second order filter}{}{--}
+\nomwithdim{B, 015}{\( E(t) \)}{Objective function}{}{$m$}
+\nomwithdim{B, 020}{\( \bm{F} \)}{Force vector}{}{$N$}
+\nomwithdim{B, 020}{\( \bm{F}_A \)}{Aerodynamic force vector}{}{$N$}
+\nomwithdim{B, 020}{\( \bm{F}_G \)}{Gravitational force vector}{}{$N$}
+\nomwithdim{B, 020}{\( \bm{F}_P \)}{Propulsive force vector}{}{$N$}
+\nomwithdim{B, 021}{\( \bm{f}(\bm{x}) \)}{Nonlinear vector field}{}{--}
+\nomwithdim{B, 025}{\( g \)}{Gravitational acceleration}{}{$m/s^2$}
+\nomwithdim{B, 030}{\( H(s),~H(z) \)}{Transfer function of the second order filter}{}{--}
+\nomwithdim{B, 031}{\( \bm{h}(\bm{x}) \)}{Nonlinear vector field}{}{--}
+\nomwithdim{B, 035}{\( \bm{I} \)}{Inertia tensor of the quadrotor}{}{$Nm^2$}
+\nomwithdim{B, 036}{\( \bm{I_{rzz}} \)}{$zz$-element of the inertia tensor of the rotor}{}{$Nm^2$}
+\nomwithdim{B, 036}{\( i \)}{Relative degree of the dynamic system}{}{--}
+\nomwithdim{B, 040}{\( K \)}{Compensation gain}{}{--}
+\nomwithdim{B, 040}{\( K_{cmd} \)}{Thrust mapping parameter}{}{--}
+\nomwithdim{B, 041}{\( k \)}{Drag coefficient}{}{$kg/s$}
+\nomwithdim{B, 041}{\( k \)}{Gain of the actuator dynamics}{}{--}
+\nomwithdim{B, 041}{\( k_F \)}{Force constant of the rotors}{}{$\frac{N}{rad/s}$}
+\nomwithdim{B, 041}{\( k_M \)}{Moment constant of the rotors}{}{$\frac{Nm}{rad/s}$}
+\nomwithdim{B, 045}{\( L \)}{Lie derivative operator}{}{--}
+\nomwithdim{B, 045}{\( l \)}{Lever arm of the rotors to the C.G. along the body $y$-axis}{}{$m$}
+\nomwithdim{B, 050}{\( \bm{M} \)}{Moment vector}{}{$Nm$}
+\nomwithdim{B, 050}{\( \bm{M}_A \)}{Aerodynamic moment vector}{}{$Nm$}
+\nomwithdim{B, 050}{\( \bm{M}_c \)}{Control moment vector}{}{$Nm$}
+\nomwithdim{B, 050}{\( \bm{M}_G \)}{Gravitational moment vector}{}{$Nm$}
+\nomwithdim{B, 050}{\( \bm{M}_{gyro} \)}{Moment vector due to the gyroscopic effects of the rotor}{}{$Nm$}
+\nomwithdim{B, 050}{\( \bm{M}_{OB} \)}{Transformation matrix from the body-fixed into NED frame}{}{--}
+\nomwithdim{B, 050}{\( \bm{M}_P \)}{Propulsion moment vector}{}{$Nm$}
+\nomwithdim{B, 053}{\( m_r \)}{Additional mass (disturbance)}{}{$kg$}
+\nomwithdim{B, 055}{\( n \)}{Number of samples}{}{$m$}
+\nomwithdim{B, 055}{\( n_0, n_1, n_2 \)}{Numerator coefficients of the discrete second order filter}{}{--}
+\nomwithdim{B, 060}{\( P \)}{Parameter}{}{--}
+\nomwithdim{B, 060}{\( p \)}{Roll rate}{}{$rad/s$}
+\nomwithdim{B, 065}{\( q \)}{Pitch rate}{}{$rad/s$}
+\nomwithdim{B, 070}{\( r \)}{Yaw rate}{}{$rad/s$}
+\nomwithdim{B, 075}{\( s \)}{Laplace variable}{}{--}
+
+\printnomenclature[6em]
+
+% Manually add Chapter names to the header (per default not included by Latex) 
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Symbols}
+
+\newpage\null\thispagestyle{empty}\newpage
+
+\pagenumbering{arabic}
+
+% Activate default fancy design
+\pagestyle{fancy} 
+\renewcommand{\chaptermark}[1]{\markboth{\ \thechapter \ #1}{}}
+
+\chapter{Introduction}
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Introduction}
+
+\chapter{Second Chapter}
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Second Chapter}
+
+\end{document}
+
