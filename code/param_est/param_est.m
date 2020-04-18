@@ -2,14 +2,16 @@ clc
 clear 
 close all
 
+
 %% Parameters 
-Ts = 1/500;
-Fs = 1/Ts;
+Ts = 1/500;                      % Sample time [s]
+Fs = 1/Ts;                       % Sample frequency [Hz]
 
 T = 0.0617;                      % Time constant T [s]
 alpha = 1 - exp(-Ts/T);   
 
 filename = "csv_data/data_1901.csv";
+
 
 %% Import data
 
@@ -17,6 +19,7 @@ filename = "csv_data/data_1901.csv";
  cmd_pitch, cmd_yaw, accelz] = import_logdata(filename);
 
 time = (tick - tick(1)) / 1000;
+
 
 %% Actuator dynamics
 cmd_roll_a = filter([alpha], [1, -(1-alpha)], cmd_roll);
@@ -63,7 +66,8 @@ G_yaw = [cmd_yaw_fd cmd_yaw_fdd] \ ang_accel_yaw_d;
 
 %G_yaw(2) = G_yaw(2)*1000;
 
-%%  Plot results 
+
+%%  Plot and display results 
 display(['T = ' num2str(T) 's; Fs = ' num2str(Fs) 'Hz; alpha = ' num2str(alpha)])
 display(['G1_roll = ' num2str(G_roll) '; G1_pitch = ' num2str(G_pitch) ...
          '; G1_yaw = ' num2str(G_yaw(1)) '; G2_yaw = ' num2str(G_yaw(2))])
@@ -84,28 +88,28 @@ display(['G1_roll = ' num2str(G_roll) '; G1_pitch = ' num2str(G_pitch) ...
 
 %% Plots for the papaer
 
-% min = 1500;
-% max = 6000;%size(time, 1);
-% 
-% fig_c = figure('Name','G_yaw contribution');
-% 
-% %subplot(2, 1, 1)
+min = 1500;
+max = 6000;%size(time, 1);
+
+fig_c = figure('Name','G_yaw contribution');
+
+% subplot(2, 1, 1)
+plot(ang_accel_yaw_d(min:max)); hold on; grid on;
+plot([cmd_yaw_fd(min:max) 0*cmd_yaw_fdd(min:max)]*G_yaw)
+plot([cmd_yaw_fd(min:max) cmd_yaw_fdd(min:max)]*G_yaw)
+xlim([-inf inf]);
+xlabel('Samples $$[-]$$', 'Interpreter', 'latex');
+%ylabel('$$ \Delta\ddot{\omega}_z \ [rad/s^3]$$', 'Interpreter', 'latex');
+legend('$$ \ddot{\omega}_z $$', '$$ \dot{\Omega}_z \cdot G_1 $$', '$$ \dot{\Omega}_z \cdot G_1 +  \ddot{\Omega}_z \cdot G_2 $$', 'Interpreter', 'latex')
+
+% subplot(2, 1, 2)
 % plot(ang_accel_yaw_d(min:max)); hold on; grid on;
-% plot([cmd_yaw_fd(min:max) 0*cmd_yaw_fdd(min:max)]*G_yaw)
-% plot([cmd_yaw_fd(min:max) cmd_yaw_fdd(min:max)]*G_yaw)
+% plot([0*cmd_yaw_fd(min:max) cmd_yaw_fdd(min:max)]*G_yaw)
 % xlim([-inf inf]);
 % xlabel('Samples $$[-]$$', 'Interpreter', 'latex');
 % %ylabel('$$ \Delta\ddot{\omega}_z \ [rad/s^3]$$', 'Interpreter', 'latex');
-% legend('$$ \ddot{\omega}_z $$', '$$ \dot{\Omega}_z \cdot G_1 $$', '$$ \dot{\Omega}_z \cdot G_1 +  \ddot{\Omega}_z \cdot G_2 $$', 'Interpreter', 'latex')
-% 
-% % subplot(2, 1, 2)
-% % plot(ang_accel_yaw_d(min:max)); hold on; grid on;
-% % plot([0*cmd_yaw_fd(min:max) cmd_yaw_fdd(min:max)]*G_yaw)
-% % xlim([-inf inf]);
-% % xlabel('Samples $$[-]$$', 'Interpreter', 'latex');
-% % %ylabel('$$ \Delta\ddot{\omega}_z \ [rad/s^3]$$', 'Interpreter', 'latex');
-% % legend('$$ \Delta\ddot{\omega}_z $$', '$$ \Delta\ddot{\Omega}_z \cdot G_2 $$', 'Interpreter', 'latex')
-% 
+% legend('$$ \Delta\ddot{\omega}_z $$', '$$ \Delta\ddot{\Omega}_z \cdot G_2 $$', 'Interpreter', 'latex')
+
 % % Saving
 % set(fig_c, 'Units', 'points');
 % pos = get(fig_c, 'Position');                        % gives x left, y bottom, width, height

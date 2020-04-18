@@ -166,6 +166,7 @@ xlabel('Time $$[s]$$', 'Interpreter', 'latex');
 ylabel('$$x \ [m]$$', 'Interpreter', 'latex');
 xlim([0 inf])
 legend('reference', 'response with $$G_2$$', 'response without $$G_2$$', 'Interpreter', 'latex', 'Location', 'best')
+set(0,'DefaultLegendAutoUpdate','off')
 
 % Draw circle
 a=1.5; % horizontal radius

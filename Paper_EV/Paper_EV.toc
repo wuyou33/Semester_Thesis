@@ -9,19 +9,19 @@
 \contentsline {subsection}{\numberline {2.3.1}General INDI}{6}
 \contentsline {subsection}{\numberline {2.3.2}Inner loop INDI for a Quadrotor}{6}
 \contentsline {subsection}{\numberline {2.3.3}Outer loop INDI for a Quadrotor}{10}
-\contentsline {chapter}{\numberline {3}Implementation}{14}
-\contentsline {section}{\numberline {3.1}Research Quadrotor}{14}
-\contentsline {section}{\numberline {3.2}Simulink Model}{15}
-\contentsline {subsection}{\numberline {3.2.1}Quadrotor Dynamics}{15}
-\contentsline {subsection}{\numberline {3.2.2}Actuator Dynamics}{16}
-\contentsline {subsection}{\numberline {3.2.3}Filtering}{16}
-\contentsline {subsection}{\numberline {3.2.4}Simulation Results}{17}
-\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{19}
-\contentsline {subsection}{\numberline {3.3.1}Parameter Estimation of the Inner Loop}{19}
-\contentsline {subsection}{\numberline {3.3.2}Estimation of the Actuator Dynamics Time Constant}{21}
-\contentsline {subsection}{\numberline {3.3.3}Estimation of the Thrust Mappint}{22}
-\contentsline {subsection}{\numberline {3.3.4}Implementation of the Outer Loop on the Crazyflie's Hardware}{23}
-\contentsline {chapter}{\numberline {4}Results}{25}
-\contentsline {section}{\numberline {4.1}Disturbance Rejection}{25}
-\contentsline {section}{\numberline {4.2}Position Controller Response}{27}
-\contentsline {chapter}{\numberline {5}Discussion}{28}
+\contentsline {chapter}{\numberline {3}Implementation}{15}
+\contentsline {section}{\numberline {3.1}Research Quadrotor}{15}
+\contentsline {section}{\numberline {3.2}Simulink Model}{16}
+\contentsline {subsection}{\numberline {3.2.1}Quadrotor Dynamics}{16}
+\contentsline {subsection}{\numberline {3.2.2}Actuator Dynamics}{17}
+\contentsline {subsection}{\numberline {3.2.3}Filtering}{17}
+\contentsline {subsection}{\numberline {3.2.4}Simulation Results}{18}
+\contentsline {section}{\numberline {3.3}Implementation on the Hardware}{20}
+\contentsline {subsection}{\numberline {3.3.1}Parameter Estimation of the Inner Loop}{20}
+\contentsline {subsection}{\numberline {3.3.2}Estimation of the Actuator Dynamics Time Constant}{22}
+\contentsline {subsection}{\numberline {3.3.3}Estimation of the Thrust Mapping}{23}
+\contentsline {subsection}{\numberline {3.3.4}Implementation of the Outer Loop on the Crazyflie's Hardware}{24}
+\contentsline {chapter}{\numberline {4}Results}{27}
+\contentsline {section}{\numberline {4.1}Disturbance Rejection}{27}
+\contentsline {section}{\numberline {4.2}Position Controller Response}{29}
+\contentsline {chapter}{\numberline {5}Discussion}{31}

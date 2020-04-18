@@ -33,26 +33,32 @@
 #include "crtp_commander.h"
 #include "crtp_commander_high_level.h"
 
+#include "cf_math.h"
 #include "param.h"
+#include "static_mem.h"
 
 static bool isInit;
 const static setpoint_t nullSetpoint;
+static setpoint_t tempSetpoint;
+static state_t lastState;
 const static int priorityDisable = COMMANDER_PRIORITY_DISABLE;
 
 static uint32_t lastUpdate;
 static bool enableHighLevel = false;
 
 static QueueHandle_t setpointQueue;
+STATIC_MEM_QUEUE_ALLOC(setpointQueue, 1, sizeof(setpoint_t));
 static QueueHandle_t priorityQueue;
+STATIC_MEM_QUEUE_ALLOC(priorityQueue, 1, sizeof(int));
 
 /* Public functions */
 void commanderInit(void)
 {
-  setpointQueue = xQueueCreate(1, sizeof(setpoint_t));
+  setpointQueue = STATIC_MEM_QUEUE_CREATE(setpointQueue);
   ASSERT(setpointQueue);
   xQueueSend(setpointQueue, &nullSetpoint, 0);
 
-  priorityQueue = xQueueCreate(1, sizeof(int));
+  priorityQueue = STATIC_MEM_QUEUE_CREATE(priorityQueue);
   ASSERT(priorityQueue);
   xQueueSend(priorityQueue, &priorityDisable, 0);
 
@@ -75,7 +81,23 @@ void commanderSetSetpoint(setpoint_t *setpoint, int priority)
     // This is a potential race but without effect on functionality
     xQueueOverwrite(setpointQueue, setpoint);
     xQueueOverwrite(priorityQueue, &priority);
+    // Send the high-level planner to idle so it will forget its current state
+    // and start over if we switch from low-level to high-level in the future.
+    crtpCommanderHighLevelStop();
   }
+}
+
+void commanderNotifySetpointsStop(int remainValidMillisecs)
+{
+  uint32_t currentTime = xTaskGetTickCount();
+  int timeSetback = MIN(
+    COMMANDER_WDT_TIMEOUT_SHUTDOWN - M2T(remainValidMillisecs),
+    currentTime
+  );
+  xQueuePeek(setpointQueue, &tempSetpoint, 0);
+  tempSetpoint.timestamp = currentTime - timeSetback;
+  xQueueOverwrite(setpointQueue, &tempSetpoint);
+  crtpCommanderHighLevelTellState(&lastState);
 }
 
 void commanderGetSetpoint(setpoint_t *setpoint, const state_t *state)
@@ -104,6 +126,10 @@ void commanderGetSetpoint(setpoint_t *setpoint, const state_t *state)
     setpoint->attitudeRate.yaw = 0;
     // Keep Z as it is
   }
+  // This copying is not strictly necessary because stabilizer.c already keeps
+  // a static state_t containing the most recent state estimate. However, it is
+  // not accessible by the public interface.
+  lastState = *state;
 }
 
 bool commanderTest(void)

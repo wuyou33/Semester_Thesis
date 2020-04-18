@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.20)  2 APR 2020 09:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.11.20)  18 APR 2020 00:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1187,11 +1187,11 @@ Package: glossary-tree 2017/11/14 v4.35 (NLCT)
 \glo@main@file=\write5
 \openout5 = `Paper_EV.glo'.
 
-Package glossaries Info: Writing glossary file Paper_EV.glo on input line 162.
+Package glossaries Info: Writing glossary file Paper_EV.glo on input line 167.
 \glo@acronym@file=\write6
 \openout6 = `Paper_EV.acn'.
 
-Package glossaries Info: Writing glossary file Paper_EV.acn on input line 162.
+Package glossaries Info: Writing glossary file Paper_EV.acn on input line 167.
 
 (./Paper_EV.aux
 \c@pagesLTS.roman.1.local.cnt=\count337
@@ -1204,19 +1204,19 @@ LaTeX Warning: Label `eq:filter_c' multiply defined.
 )
 \openout1 = `Paper_EV.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 167.
-LaTeX Font Info:    ... okay on input line 167.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 167.
-LaTeX Font Info:    ... okay on input line 167.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 167.
-LaTeX Font Info:    ... okay on input line 167.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 167.
-LaTeX Font Info:    ... okay on input line 167.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 167.
-LaTeX Font Info:    ... okay on input line 167.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 167.
-LaTeX Font Info:    ... okay on input line 167.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 167.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 172.
+LaTeX Font Info:    ... okay on input line 172.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 172.
 
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
@@ -1300,7 +1300,7 @@ File: siunitx-abbreviations.cfg 2017/11/26 v2.7k siunitx: Abbreviated units
 Package pageslts Warning: Package hyperref NOT detected.
 (pageslts)                pageslts would support hyperref. The page references
 (pageslts)                will NOT be hyperlinked!
-(pageslts)                 on input line 167.
+(pageslts)                 on input line 172.
 
 \AtBeginShipoutBox=\box74
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/pdflscape.sty
@@ -1321,12 +1321,12 @@ Package: ltcaption 2013/06/09 v1.4-94 longtable captions (AR)
 Package caption Info: supertabular package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c__siunitx_mathsf_int=\count346
-LaTeX Font Info:    Try loading font information for U+msa on input line 167.
+LaTeX Font Info:    Try loading font information for U+msa on input line 172.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 167.
+LaTeX Font Info:    Try loading font information for U+msb on input line 172.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1342,7 +1342,7 @@ pdfTeX warning: pdflatex (file ./figs/Title_page.pdf): PDF inclusion: found PDF
 <figs/Title_page.pdf, id=4, 597.55246pt x 845.07718pt>
 File: figs/Title_page.pdf Graphic file (type pdf)
 <use figs/Title_page.pdf>
-Package pdftex.def Info: figs/Title_page.pdf  used on input line 173.
+Package pdftex.def Info: figs/Title_page.pdf  used on input line 178.
 (pdftex.def)             Requested size: 597.551pt x 845.07512pt.
 
 
@@ -1350,7 +1350,7 @@ pdfTeX warning: pdflatex (file ./figs/Title_page.pdf): PDF inclusion: found PDF
  version <1.7>, but at most version <1.5> allowed
 File: figs/Title_page.pdf Graphic file (type pdf)
 <use figs/Title_page.pdf>
-Package pdftex.def Info: figs/Title_page.pdf  used on input line 173.
+Package pdftex.def Info: figs/Title_page.pdf  used on input line 178.
 (pdftex.def)             Requested size: 597.551pt x 845.07512pt.
 
 
@@ -1363,23 +1363,23 @@ pdfTeX warning: pdflatex (file ./figs/Title_page.pdf): PDF inclusion: found PDF
 <figs/Title_page.pdf, id=7, page=1, 597.55246pt x 845.07718pt>
 File: figs/Title_page.pdf Graphic file (type pdf)
 <use figs/Title_page.pdf, page 1>
-Package pdftex.def Info: figs/Title_page.pdf , page1 used on input line 173.
+Package pdftex.def Info: figs/Title_page.pdf , page1 used on input line 178.
 (pdftex.def)             Requested size: 597.551pt x 845.07512pt.
 File: figs/Title_page.pdf Graphic file (type pdf)
 <use figs/Title_page.pdf, page 1>
-Package pdftex.def Info: figs/Title_page.pdf , page1 used on input line 173.
+Package pdftex.def Info: figs/Title_page.pdf , page1 used on input line 178.
 (pdftex.def)             Requested size: 597.57834pt x 845.1138pt.
 File: figs/Title_page.pdf Graphic file (type pdf)
 <use figs/Title_page.pdf, page 1>
-Package pdftex.def Info: figs/Title_page.pdf , page1 used on input line 173.
+Package pdftex.def Info: figs/Title_page.pdf , page1 used on input line 178.
 (pdftex.def)             Requested size: 597.57834pt x 845.1138pt.
 File: figs/Title_page.pdf Graphic file (type pdf)
 <use figs/Title_page.pdf, page 1>
-Package pdftex.def Info: figs/Title_page.pdf , page1 used on input line 173.
+Package pdftex.def Info: figs/Title_page.pdf , page1 used on input line 178.
 (pdftex.def)             Requested size: 597.57834pt x 845.1138pt.
 File: figs/Title_page.pdf Graphic file (type pdf)
 <use figs/Title_page.pdf, page 1>
-Package pdftex.def Info: figs/Title_page.pdf , page1 used on input line 173.
+Package pdftex.def Info: figs/Title_page.pdf , page1 used on input line 178.
 (pdftex.def)             Requested size: 597.57834pt x 845.1138pt.
 [1
 
@@ -1387,25 +1387,40 @@ Package pdftex.def Info: figs/Title_page.pdf , page1 used on input line 173.
 
  <./figs/Title_page.pdf>] [2]
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <13> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 181.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 186.
 Missing character: There is no Ã in font phvr7t!
 Missing character: There is no ¤ in font phvr7t!
 Missing character: There is no Ã in font phvr7t!
 Missing character: There is no ¼ in font phvr7t!
 
-Underfull \hbox (badness 10000) in paragraph at lines 182--190
+Underfull \hbox (badness 10000) in paragraph at lines 187--200
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 182--190
+Underfull \hbox (badness 10000) in paragraph at lines 187--200
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 187--200
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 187--200
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 187--200
 
  []
 
 <figs/fsd.png, id=33, 258.9675pt x 93.34875pt>
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 197.
+Package pdftex.def Info: figs/fsd.png  used on input line 207.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1416,10 +1431,10 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [3{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./figs/fsd.png>]
 [4]
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <10.95> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 201.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 211.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 219.
+Package pdftex.def Info: figs/fsd.png  used on input line 229.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1430,7 +1445,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [5] [6]
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 232.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 242.
  (./Paper_EV.toc
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 1.
@@ -1440,7 +1455,7 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10.95> not available
 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 240.
+Package pdftex.def Info: figs/fsd.png  used on input line 250.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1457,7 +1472,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 259.
+Package pdftex.def Info: figs/fsd.png  used on input line 269.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1471,7 +1486,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 ] [10] (./Paper_EV.acr)
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 286.
+Package pdftex.def Info: figs/fsd.png  used on input line 296.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1488,7 +1503,7 @@ Underfull \vbox (badness 4132) has occurred while \output is active []
 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 378.
+Package pdftex.def Info: figs/fsd.png  used on input line 388.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1504,7 +1519,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 409.
+Package pdftex.def Info: figs/fsd.png  used on input line 419.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1518,7 +1533,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 452.
+Package pdftex.def Info: figs/fsd.png  used on input line 462.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1530,7 +1545,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [15]
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 500.
+Package pdftex.def Info: figs/fsd.png  used on input line 510.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1551,7 +1566,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 549.
+Package pdftex.def Info: figs/fsd.png  used on input line 559.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1565,7 +1580,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 ]
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 551.
+Package pdftex.def Info: figs/fsd.png  used on input line 561.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1578,7 +1593,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 Chapter 2.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 584.
+Package pdftex.def Info: figs/fsd.png  used on input line 594.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1591,7 +1606,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 ]
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 640.
+Package pdftex.def Info: figs/fsd.png  used on input line 650.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1603,7 +1618,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [4]
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 685.
+Package pdftex.def Info: figs/fsd.png  used on input line 695.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1614,10 +1629,10 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [5]
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <11> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 686.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 696.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 726.
+Package pdftex.def Info: figs/fsd.png  used on input line 736.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1633,14 +1648,14 @@ sion <1.7>, but at most version <1.5> allowed
 <figs/frames.pdf, id=113, 963.6pt x 542.025pt>
 File: figs/frames.pdf Graphic file (type pdf)
 <use figs/frames.pdf>
-Package pdftex.def Info: figs/frames.pdf  used on input line 779.
+Package pdftex.def Info: figs/frames.pdf  used on input line 789.
 (pdftex.def)             Requested size: 364.19667pt x 204.8551pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 786.
+Package pdftex.def Info: figs/fsd.png  used on input line 796.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1650,7 +1665,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [7]
-Overfull \hbox (19.24237pt too wide) detected at line 833
+Overfull \hbox (19.24237pt too wide) detected at line 843
 \OML/cmm/b/it/10.95 G[]\OT1/cmr/m/n/10.95 (\OML/cmm/b/it/10.95 !\OT1/cmr/m/n/10
 .95 ) = []
  []
@@ -1660,7 +1675,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 833.
+Package pdftex.def Info: figs/fsd.png  used on input line 843.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1676,14 +1691,14 @@ und PDF version <1.7>, but at most version <1.5> allowed
 <figs/indi_inner_croped.pdf, id=133, 640.31023pt x 233.12796pt>
 File: figs/indi_inner_croped.pdf Graphic file (type pdf)
 <use figs/indi_inner_croped.pdf>
-Package pdftex.def Info: figs/indi_inner_croped.pdf  used on input line 876.
+Package pdftex.def Info: figs/indi_inner_croped.pdf  used on input line 886.
 (pdftex.def)             Requested size: 455.24411pt x 165.75322pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 883.
+Package pdftex.def Info: figs/fsd.png  used on input line 893.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1699,11 +1714,11 @@ nd PDF version <1.7>, but at most version <1.5> allowed
 <figs/pid_inner_croped.pdf, id=138, 448.32294pt x 122.36615pt>
 File: figs/pid_inner_croped.pdf Graphic file (type pdf)
 <use figs/pid_inner_croped.pdf>
-Package pdftex.def Info: figs/pid_inner_croped.pdf  used on input line 887.
+Package pdftex.def Info: figs/pid_inner_croped.pdf  used on input line 897.
 (pdftex.def)             Requested size: 318.66948pt x 86.97952pt.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 928.
+Package pdftex.def Info: figs/fsd.png  used on input line 938.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1718,7 +1733,7 @@ tiple pdfs with page group included in a single page
 >]
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 974.
+Package pdftex.def Info: figs/fsd.png  used on input line 984.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1734,11 +1749,11 @@ und PDF version <1.7>, but at most version <1.5> allowed
 <figs/indi_outer_croped.pdf, id=215, 610.77385pt x 190.93231pt>
 File: figs/indi_outer_croped.pdf Graphic file (type pdf)
 <use figs/indi_outer_croped.pdf>
-Package pdftex.def Info: figs/indi_outer_croped.pdf  used on input line 1039.
+Package pdftex.def Info: figs/indi_outer_croped.pdf  used on input line 1049.
 (pdftex.def)             Requested size: 455.24411pt x 142.31612pt.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1046.
+Package pdftex.def Info: figs/fsd.png  used on input line 1056.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1753,11 +1768,11 @@ nd PDF version <1.7>, but at most version <1.5> allowed
 <figs/pid_outer_croped.pdf, id=219, 523.37653pt x 119.9943pt>
 File: figs/pid_outer_croped.pdf Graphic file (type pdf)
 <use figs/pid_outer_croped.pdf>
-Package pdftex.def Info: figs/pid_outer_croped.pdf  used on input line 1051.
+Package pdftex.def Info: figs/pid_outer_croped.pdf  used on input line 1061.
 (pdftex.def)             Requested size: 364.19667pt x 83.49739pt.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1059.
+Package pdftex.def Info: figs/fsd.png  used on input line 1070.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1769,16 +1784,16 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 pdfTeX warning: pdflatex (file ./figs/pid_outer_croped.pdf): PDF inclusion: mul
 tiple pdfs with page group included in a single page
->]
+>] [14]
 Chapter 3.
-<figs/crazyflie_drone.jpg, id=293, 1027.84pt x 1027.84pt>
+<figs/crazyflie_drone.jpg, id=296, 1027.84pt x 1027.84pt>
 File: figs/crazyflie_drone.jpg Graphic file (type jpg)
 <use figs/crazyflie_drone.jpg>
-Package pdftex.def Info: figs/crazyflie_drone.jpg  used on input line 1079.
+Package pdftex.def Info: figs/crazyflie_drone.jpg  used on input line 1092.
 (pdftex.def)             Requested size: 168.4381pt x 168.42569pt.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1090.
+Package pdftex.def Info: figs/fsd.png  used on input line 1103.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1786,24 +1801,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[14
+[15
 
  <./figs/crazyflie_drone.jpg>]
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1119.
-(pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
-
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 29.72038pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[15]
-File: figs/fsd.png Graphic file (type png)
-<use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1153.
+Package pdftex.def Info: figs/fsd.png  used on input line 1130.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1813,19 +1816,9 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [16]
-<figs/sim_outer_all.pdf, id=306, 421.575pt x 316.18124pt>
-File: figs/sim_outer_all.pdf Graphic file (type pdf)
-<use figs/sim_outer_all.pdf>
-Package pdftex.def Info: figs/sim_outer_all.pdf  used on input line 1187.
-(pdftex.def)             Requested size: 386.96027pt x 290.22449pt.
-<figs/sim_inner_all.pdf, id=307, 421.575pt x 316.18124pt>
-File: figs/sim_inner_all.pdf Graphic file (type pdf)
-<use figs/sim_inner_all.pdf>
-Package pdftex.def Info: figs/sim_inner_all.pdf  used on input line 1198.
-(pdftex.def)             Requested size: 386.96027pt x 290.22449pt.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1204.
+Package pdftex.def Info: figs/fsd.png  used on input line 1161.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1835,11 +1828,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [17]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
+<figs/sim_outer_all.pdf, id=310, 421.575pt x 316.18124pt>
+File: figs/sim_outer_all.pdf Graphic file (type pdf)
+<use figs/sim_outer_all.pdf>
+Package pdftex.def Info: figs/sim_outer_all.pdf  used on input line 1200.
+(pdftex.def)             Requested size: 368.74661pt x 276.56624pt.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1205.
+Package pdftex.def Info: figs/fsd.png  used on input line 1206.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1848,15 +1844,32 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[18 <./figs/sim_outer_all.pdf> <./figs/sim_inner_all.pdf>]
-<figs/g2.pdf, id=404, 421.575pt x 316.18124pt>
+[18]
+<figs/sim_inner_all.pdf, id=314, 421.575pt x 316.18124pt>
+File: figs/sim_inner_all.pdf Graphic file (type pdf)
+<use figs/sim_inner_all.pdf>
+Package pdftex.def Info: figs/sim_inner_all.pdf  used on input line 1211.
+(pdftex.def)             Requested size: 368.74661pt x 276.56624pt.
+File: figs/fsd.png Graphic file (type png)
+<use figs/fsd.png>
+Package pdftex.def Info: figs/fsd.png  used on input line 1218.
+(pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 29.72038pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[19 <./figs/sim_outer_all.pdf> <./figs/sim_inner_all.pdf>]
+<figs/g2.pdf, id=407, 421.575pt x 316.18124pt>
 File: figs/g2.pdf Graphic file (type pdf)
 <use figs/g2.pdf>
-Package pdftex.def Info: figs/g2.pdf  used on input line 1210.
+Package pdftex.def Info: figs/g2.pdf  used on input line 1223.
 (pdftex.def)             Requested size: 318.66948pt x 239.00726pt.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1228.
+Package pdftex.def Info: figs/fsd.png  used on input line 1241.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1865,15 +1878,15 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[19 <./figs/g2.pdf>]
-<figs/g_contribution.pdf, id=433, 421.575pt x 316.18124pt>
+[20 <./figs/g2.pdf>]
+<figs/g_contribution.pdf, id=436, 421.575pt x 316.18124pt>
 File: figs/g_contribution.pdf Graphic file (type pdf)
 <use figs/g_contribution.pdf>
-Package pdftex.def Info: figs/g_contribution.pdf  used on input line 1260.
+Package pdftex.def Info: figs/g_contribution.pdf  used on input line 1273.
 (pdftex.def)             Requested size: 377.85344pt x 283.39777pt.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1271.
+Package pdftex.def Info: figs/fsd.png  used on input line 1284.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1882,38 +1895,35 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[20 <./figs/g_contribution.pdf>]
+[21 <./figs/g_contribution.pdf>]
 
 pdfTeX warning: pdflatex (file ./figs/actuator_croped.pdf): PDF inclusion: foun
 d PDF version <1.7>, but at most version <1.5> allowed
-<figs/actuator_croped.pdf, id=457, 357.603pt x 133.9695pt>
+<figs/actuator_croped.pdf, id=461, 357.603pt x 133.9695pt>
 File: figs/actuator_croped.pdf Graphic file (type pdf)
 <use figs/actuator_croped.pdf>
-Package pdftex.def Info: figs/actuator_croped.pdf  used on input line 1276.
+Package pdftex.def Info: figs/actuator_croped.pdf  used on input line 1289.
 (pdftex.def)             Requested size: 318.66948pt x 119.38577pt.
-<figs/actuator_dynamic_est.pdf, id=458, 421.575pt x 316.18124pt>
+File: figs/fsd.png Graphic file (type png)
+<use figs/fsd.png>
+Package pdftex.def Info: figs/fsd.png  used on input line 1314.
+(pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 29.72038pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[22 <./figs/actuator_croped.pdf>]
+<figs/actuator_dynamic_est.pdf, id=500, 421.575pt x 316.18124pt>
 File: figs/actuator_dynamic_est.pdf Graphic file (type pdf)
 <use figs/actuator_dynamic_est.pdf>
-Package pdftex.def Info: figs/actuator_dynamic_est.pdf  used on input line 1304
+Package pdftex.def Info: figs/actuator_dynamic_est.pdf  used on input line 1319
 .
 (pdftex.def)             Requested size: 364.19667pt x 273.15047pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1315.
-(pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 29.72038pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[21 <./figs/actuator_croped.pdf>]
-File: figs/fsd.png Graphic file (type png)
-<use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1327.
+Package pdftex.def Info: figs/fsd.png  used on input line 1339.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1922,7 +1932,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[22 <./figs/actuator_dynamic_est.pdf>]
+[23 <./figs/actuator_dynamic_est.pdf>]
 Missing character: There is no â in font phvr7t!
 Missing character: There is no € in font phvr7t!
 Missing character: There is no “ in font phvr7t!
@@ -1932,10 +1942,10 @@ Missing character: There is no “ in font phvr7t!
 Missing character: There is no â in font phvr7t!
 Missing character: There is no € in font phvr7t!
 Missing character: There is no “ in font phvr7t!
-<figs/thrust_mapping.pdf, id=520, 421.575pt x 316.18124pt>
+<figs/thrust_mapping.pdf, id=523, 421.575pt x 316.18124pt>
 File: figs/thrust_mapping.pdf Graphic file (type pdf)
 <use figs/thrust_mapping.pdf>
-Package pdftex.def Info: figs/thrust_mapping.pdf  used on input line 1354.
+Package pdftex.def Info: figs/thrust_mapping.pdf  used on input line 1369.
 (pdftex.def)             Requested size: 455.24411pt x 341.4417pt.
 
 
@@ -1945,18 +1955,15 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 pdfTeX warning: pdflatex (file ./figs/indi_outer_mod_croped.pdf): PDF inclusion
 : found PDF version <1.7>, but at most version <1.5> allowed
-<figs/indi_outer_mod_croped.pdf, id=521, 635.0365pt x 291.14574pt>
+<figs/indi_outer_mod_croped.pdf, id=524, 635.0365pt x 291.14574pt>
 File: figs/indi_outer_mod_croped.pdf Graphic file (type pdf)
 <use figs/indi_outer_mod_croped.pdf>
-Package pdftex.def Info: figs/indi_outer_mod_croped.pdf  used on input line 137
-8.
+Package pdftex.def Info: figs/indi_outer_mod_croped.pdf  used on input line 139
+5.
 (pdftex.def)             Requested size: 455.24411pt x 208.71405pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1388.
+Package pdftex.def Info: figs/fsd.png  used on input line 1401.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1964,10 +1971,10 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[23]
+[24]
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1388.
+Package pdftex.def Info: figs/fsd.png  used on input line 1404.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -1976,23 +1983,58 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[24 <./figs/thrust_mapping.pdf> <./figs/indi_outer_mod_croped.pdf>]
+[25 <./figs/thrust_mapping.pdf> <./figs/indi_outer_mod_croped.pdf>]
+File: figs/fsd.png Graphic file (type png)
+<use figs/fsd.png>
+Package pdftex.def Info: figs/fsd.png  used on input line 1405.
+(pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 29.72038pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[26]
 Chapter 4.
 
 
 pdfTeX warning: pdflatex (file ./figs/experiment_croped.pdf): PDF inclusion: fo
 und PDF version <1.7>, but at most version <1.5> allowed
-<figs/experiment_croped.pdf, id=608, 605.49915pt x 196.20703pt>
+<figs/experiment_croped.pdf, id=614, 599.1705pt x 194.09714pt>
 File: figs/experiment_croped.pdf Graphic file (type pdf)
 <use figs/experiment_croped.pdf>
-Package pdftex.def Info: figs/experiment_croped.pdf  used on input line 1406.
-(pdftex.def)             Requested size: 455.24411pt x 147.52315pt.
+Package pdftex.def Info: figs/experiment_croped.pdf  used on input line 1422.
+(pdftex.def)             Requested size: 455.24411pt x 147.47388pt.
+File: figs/fsd.png Graphic file (type png)
+<use figs/fsd.png>
+Package pdftex.def Info: figs/fsd.png  used on input line 1445.
+(pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 29.72038pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[27
+
+ <./figs/experiment_croped.pdf>]
+<figs/mean_std.pdf, id=646, 421.575pt x 316.18124pt>
+File: figs/mean_std.pdf Graphic file (type pdf)
+<use figs/mean_std.pdf>
+Package pdftex.def Info: figs/mean_std.pdf  used on input line 1454.
+(pdftex.def)             Requested size: 409.71692pt x 307.29367pt.
+<figs/disturbance_rej.pdf, id=647, 421.575pt x 316.18124pt>
+File: figs/disturbance_rej.pdf Graphic file (type pdf)
+<use figs/disturbance_rej.pdf>
+Package pdftex.def Info: figs/disturbance_rej.pdf  used on input line 1468.
+(pdftex.def)             Requested size: 409.71692pt x 307.29367pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1424.
+Package pdftex.def Info: figs/fsd.png  used on input line 1475.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -2001,17 +2043,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[25
+[28 <./figs/mean_std.pdf>]
+Underfull \vbox (badness 2617) has occurred while \output is active []
 
- <./figs/experiment_croped.pdf>]
-<figs/disturbance_rej.pdf, id=639, 421.575pt x 316.18124pt>
-File: figs/disturbance_rej.pdf Graphic file (type pdf)
-<use figs/disturbance_rej.pdf>
-Package pdftex.def Info: figs/disturbance_rej.pdf  used on input line 1432.
-(pdftex.def)             Requested size: 409.71692pt x 307.29367pt.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1441.
+Package pdftex.def Info: figs/fsd.png  used on input line 1483.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -2020,15 +2057,15 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[26 <./figs/disturbance_rej.pdf>]
-<figs/results_responses.pdf, id=659, 421.575pt x 316.18124pt>
+[29 <./figs/disturbance_rej.pdf>]
+<figs/results_responses.pdf, id=689, 421.575pt x 316.18124pt>
 File: figs/results_responses.pdf Graphic file (type pdf)
 <use figs/results_responses.pdf>
-Package pdftex.def Info: figs/results_responses.pdf  used on input line 1452.
+Package pdftex.def Info: figs/results_responses.pdf  used on input line 1488.
 (pdftex.def)             Requested size: 409.71692pt x 307.29367pt.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1463.
+Package pdftex.def Info: figs/fsd.png  used on input line 1502.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 
@@ -2037,11 +2074,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[27 <./figs/results_responses.pdf>]
+[30 <./figs/results_responses.pdf>]
 Chapter 5.
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1477.
+Package pdftex.def Info: figs/fsd.png  used on input line 1518.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2049,7 +2086,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[28
+[31
 
 ]
 \c@pagesLTS.arabic.1.local.count=\count355
@@ -2063,7 +2100,7 @@ gn for ro-tor-craft.
 AED: pageslts setting LastPage 
 File: figs/fsd.png Graphic file (type png)
 <use figs/fsd.png>
-Package pdftex.def Info: figs/fsd.png  used on input line 1503.
+Package pdftex.def Info: figs/fsd.png  used on input line 1544.
 (pdftex.def)             Requested size: 71.13188pt x 25.64035pt.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2072,12 +2109,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 
-Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 1503.
+Package undolabl Warning: Label `pagesLTS.roman' overridden on input line 1544.
 
 
 
 Package undolabl Warning: Label `pagesLTS.roman.local' overridden on input line
- 1503.
+ 1544.
 
 
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -2087,8 +2124,8 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [1
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1503.
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 1503.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1544.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 1544.
 \c@pagesLTS.roman.2.local.count=\count356
  
 AED: pageslts setting VeryLastPage via AfterLastShipout 
@@ -2096,24 +2133,24 @@ AED: pageslts setting VeryLastPage via AfterLastShipout
 AED: pageslts setting LastPages via AfterLastShipout 
 
 
-Package pageslts Info: Total number of pages is odd.
+Package pageslts Info: Total number of pages is even.
 
 
 (./Paper_EV.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1503.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1503.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 1544.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1544.
 
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1503.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1544.
  ) 
 Here is how much of TeX's memory you used:
- 33528 strings out of 492982
- 669828 string characters out of 6134895
- 750551 words of memory out of 5000000
- 36530 multiletter control sequences out of 15000+600000
+ 33567 strings out of 492982
+ 670403 string characters out of 6134895
+ 750793 words of memory out of 5000000
+ 36568 multiletter control sequences out of 15000+600000
  554884 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,22n,61p,10359b,776s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2137,10 +2174,10 @@ pe1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helve
 tic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.
 pfb>
-Output written on Paper_EV.pdf (45 pages, 2207927 bytes).
+Output written on Paper_EV.pdf (48 pages, 2233884 bytes).
 PDF statistics:
- 761 PDF objects out of 1000 (max. 8388607)
- 609 compressed objects within 7 object streams
+ 790 PDF objects out of 1000 (max. 8388607)
+ 634 compressed objects within 7 object streams
  0 named destinations out of 1000 (max. 500000)
- 123 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 128 words of extra memory for PDF output out of 10000 (max. 10000000)
 

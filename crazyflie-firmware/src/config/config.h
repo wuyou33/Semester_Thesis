@@ -55,7 +55,7 @@
   #define MCU_ID_ADDRESS          0x1FFF7A10
   #define MCU_FLASH_SIZE_ADDRESS  0x1FFF7A22
   #ifndef FREERTOS_HEAP_SIZE
-    #define FREERTOS_HEAP_SIZE      40000
+    #define FREERTOS_HEAP_SIZE      20000
   #endif
   #define FREERTOS_MIN_STACK_SIZE 150       // M4-FPU register setup is bigger so stack needs to be bigger
   #define FREERTOS_MCU_CLOCK_HZ   168000000
@@ -85,7 +85,7 @@
 #define PM_TASK_PRI             0
 #define USDLOG_TASK_PRI         1
 #define USDWRITE_TASK_PRI       0
-#define PCA9685_TASK_PRI        3
+#define PCA9685_TASK_PRI        2
 #define CMD_HIGH_LEVEL_TASK_PRI 2
 #define BQ_OSD_TASK_PRI         1
 #define GTGPS_DECK_TASK_PRI     1
@@ -98,6 +98,9 @@
 
 #define SYSLINK_TASK_PRI        3
 #define USBLINK_TASK_PRI        3
+#define ACTIVE_MARKER_TASK_PRI  3
+#define AI_DECK_TASK_PRI        3
+#define UART2_TASK_PRI          3
 
 // Not compiled
 #if 0
@@ -141,6 +144,10 @@
 #define UART1_TEST_TASK_NAME    "UART1TEST"
 #define UART2_TEST_TASK_NAME    "UART2TEST"
 #define KALMAN_TASK_NAME        "KALMAN"
+#define ACTIVE_MARKER_TASK_NAME "ACTIVEMARKER-DECK"
+#define AI_DECK_GAP_TASK_NAME   "AI-DECK-GAP"
+#define AI_DECK_NINA_TASK_NAME  "AI-DECK-NINA"
+#define UART2_TASK_NAME         "UART2"
 
 //Task stack sizes
 #define SYSTEM_TASK_STACKSIZE         (2* configMINIMAL_STACK_SIZE)
@@ -167,8 +174,11 @@
 #define USDLOG_TASK_STACKSIZE         (2 * configMINIMAL_STACK_SIZE)
 #define USDWRITE_TASK_STACKSIZE       (2 * configMINIMAL_STACK_SIZE)
 #define PCA9685_TASK_STACKSIZE        (2 * configMINIMAL_STACK_SIZE)
-#define CMD_HIGH_LEVEL_TASK_STACKSIZE configMINIMAL_STACK_SIZE
+#define CMD_HIGH_LEVEL_TASK_STACKSIZE (2 * configMINIMAL_STACK_SIZE)
 #define MULTIRANGER_TASK_STACKSIZE    (2 * configMINIMAL_STACK_SIZE)
+#define ACTIVEMARKER_TASK_STACKSIZE   configMINIMAL_STACK_SIZE
+#define AI_DECK_TASK_STACKSIZE        configMINIMAL_STACK_SIZE
+#define UART2_TASK_STACKSIZE          configMINIMAL_STACK_SIZE
 
 //The radio channel. From 0 to 125
 #define RADIO_CHANNEL 80

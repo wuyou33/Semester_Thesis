@@ -38,7 +38,6 @@ float K_dxi_z = 5.0f;
 // Thrust mapping parameter
 float K_thr = 0.00024730f;
 
-static float pos_set_x, pos_set_y, pos_set_z; 	// Ref. position commanded from the client
 static float posS_x, posS_y, posS_z;			// Current position
 static float velS_x, velS_y, velS_z;			// Current velocity
 static float gyr_p, gyr_q, gyr_r;				// Current rates
@@ -46,9 +45,6 @@ static float gyr_p, gyr_q, gyr_r;				// Current rates
 // Reference values
 static struct Vectr positionRef; 
 static struct Vectr velocityRef;
-
-// Arming parameter (0: not ready; 1: ready to fly)
-static float arm = 0;
 
 
 static struct IndiOuterVariables indiOuter = {
@@ -116,9 +112,10 @@ void positionControllerINDIInit(void)
 }
 
 
-void positionControllerINDI(const sensorData_t *sensors, 
-	 						const state_t *state,
-	 						vector_t *refOuterINDI) { 
+void positionControllerINDI(const sensorData_t *sensors,
+                            setpoint_t *setpoint,
+                            const state_t *state, 
+                            vector_t *refOuterINDI){ 
 
 	// Read states (position, velocity)
 	posS_x = state->position.x;
@@ -131,13 +128,24 @@ void positionControllerINDI(const sensorData_t *sensors,
 	gyr_q = sensors->gyro.y;
 	gyr_r = sensors->gyro.z; 
 
+	// Read in velocity setpoints
+    velocityRef.x = setpoint->velocity.x;
+	velocityRef.y = -setpoint->velocity.y;
+    velocityRef.z = -setpoint->velocity.z;
+
 	// Position controller (Proportional)
-	positionRef.x = pos_set_x;
-	positionRef.y = pos_set_y;
-	positionRef.z = pos_set_z;
-	velocityRef.x = K_xi_x*(positionRef.x - posS_x);
-	velocityRef.y = K_xi_y*(positionRef.y - posS_y);
-	velocityRef.z = K_xi_z*(positionRef.z - posS_z);
+	if (setpoint->mode.x == modeAbs) {
+		positionRef.x = setpoint->position.x;
+		velocityRef.x = K_xi_x*(positionRef.x - posS_x);
+	}
+	if (setpoint->mode.y == modeAbs) {
+		positionRef.y = -setpoint->position.y;
+		velocityRef.y = K_xi_y*(positionRef.y - posS_y);
+	}
+	if (setpoint->mode.z == modeAbs) {
+		positionRef.z = -setpoint->position.z;
+		velocityRef.z = K_xi_z*(positionRef.z - posS_z);
+	}
 
 	// Velocity controller (Proportional)
 	indiOuter.linear_accel_ref.x = K_dxi_x*(velocityRef.x - velS_x);
@@ -257,28 +265,22 @@ void positionControllerINDI(const sensorData_t *sensors,
 	// Reference values, which are passed to the inner loop INDI (attitude controller)
 	refOuterINDI->x = indiOuter.attitude_c.phi;
 	refOuterINDI->y = indiOuter.attitude_c.theta;
-	// if arm is set to a nonzero value, controller increments
-	if (arm) {
-		refOuterINDI->z = indiOuter.T_incremented;
-	}
-	else {
-		refOuterINDI->z = 0;
-	} 
+	refOuterINDI->z = indiOuter.T_incremented;
 
 }
 
 
 PARAM_GROUP_START(posCtrlIndi)
 
-PARAM_ADD(PARAM_FLOAT, pos_set_x, &pos_set_x)
-PARAM_ADD(PARAM_FLOAT, pos_set_y, &pos_set_y)
-PARAM_ADD(PARAM_FLOAT, pos_set_z, &pos_set_z)
-
-PARAM_ADD(PARAM_FLOAT, arm, &arm)
-
+// Position controller gain
 PARAM_ADD(PARAM_FLOAT, K_xi_x, &K_xi_x)
 PARAM_ADD(PARAM_FLOAT, K_xi_y, &K_xi_y)
 PARAM_ADD(PARAM_FLOAT, K_xi_z, &K_xi_z)
+
+// Velocity Controller gain
+PARAM_ADD(PARAM_FLOAT, K_dxi_x, &K_dxi_x)
+PARAM_ADD(PARAM_FLOAT, K_dxi_y, &K_dxi_y)
+PARAM_ADD(PARAM_FLOAT, K_dxi_z, &K_dxi_z)
 
 PARAM_GROUP_STOP(posCtrlIndi)
 
@@ -290,11 +292,6 @@ LOG_GROUP_START(posCtrlIndi)
 LOG_ADD(LOG_FLOAT, gyr_p, &gyr_p)
 LOG_ADD(LOG_FLOAT, gyr_q, &gyr_q)
 LOG_ADD(LOG_FLOAT, gyr_r, &gyr_r)
-
-// Position
-LOG_ADD(LOG_FLOAT, posS_x, &posS_x)
-LOG_ADD(LOG_FLOAT, posS_y, &posS_y)
-LOG_ADD(LOG_FLOAT, posS_z, &posS_z)
 
 LOG_ADD(LOG_FLOAT, posRef_x, &positionRef.x)
 LOG_ADD(LOG_FLOAT, posRef_y, &positionRef.y)
