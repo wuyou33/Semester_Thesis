@@ -52,7 +52,6 @@
 
 #include "log.h"
 #include "param.h"
-#include "static_mem.h"
 
 #if 0
 #define MEM_DEBUG(fmt, ...) DEBUG_PRINT("D/log " fmt, ## __VA_ARGS__)
@@ -150,10 +149,7 @@ static const OwSerialNum eepromSerialNum =
 static const uint8_t noData[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static CRTPPacket packet;
 
-STATIC_MEM_TASK_ALLOC(memTask, MEM_TASK_STACKSIZE);
-
-void memInit(void)
-{
+void memInit(void) {
   if(isInit) {
     return;
   }
@@ -165,7 +161,8 @@ void memInit(void)
   }
 
   //Start the mem task
-  STATIC_MEM_TASK_CREATE(memTask, memTask, MEM_TASK_NAME, NULL, MEM_TASK_PRI);
+  xTaskCreate(memTask, MEM_TASK_NAME,
+              MEM_TASK_STACKSIZE, NULL, MEM_TASK_PRI, NULL);
 }
 
 bool memTest(void) {

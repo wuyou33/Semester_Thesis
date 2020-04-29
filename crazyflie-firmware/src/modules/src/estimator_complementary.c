@@ -36,7 +36,6 @@
 #include "position_estimator.h"
 #include "sensors.h"
 #include "stabilizer_types.h"
-#include "static_mem.h"
 
 #define ATTITUDE_UPDATE_RATE RATE_250_HZ
 #define ATTITUDE_UPDATE_DT 1.0/ATTITUDE_UPDATE_RATE
@@ -47,14 +46,12 @@
 static bool latestTofMeasurement(tofMeasurement_t* tofMeasurement);
 
 // Measurements of TOF from laser sensor
-#define TOF_QUEUE_LENGTH (1)
 static xQueueHandle tofDataQueue;
-STATIC_MEM_QUEUE_ALLOC(tofDataQueue, TOF_QUEUE_LENGTH, sizeof(tofMeasurement_t));
-
+#define TOF_QUEUE_LENGTH (1)
 
 void estimatorComplementaryInit(void)
 {
-  tofDataQueue = STATIC_MEM_QUEUE_CREATE(tofDataQueue);
+  tofDataQueue = xQueueCreate(TOF_QUEUE_LENGTH, sizeof(tofMeasurement_t));
 
   sensfusion6Init();
 }
@@ -130,3 +127,4 @@ bool estimatorComplementaryEnqueueTOF(const tofMeasurement_t *tof)
   // A distance (distance) [m] to the ground along the z_B axis.
   return overwriteMeasurement(tofDataQueue, (void *)tof);
 }
+

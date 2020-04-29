@@ -50,10 +50,10 @@ such as: take-off, landing, polynomial trajectories.
 // Crazyswarm includes
 #include "crtp.h"
 #include "crtp_commander_high_level.h"
+#include "debug.h"
 #include "planner.h"
 #include "log.h"
 #include "param.h"
-#include "static_mem.h"
 
 // Local types
 enum TrajectoryLocation_e {
@@ -89,30 +89,24 @@ static bool isInit = false;
 static struct planner planner;
 static uint8_t group_mask;
 static struct vec pos; // last known setpoint (position [m])
-static struct vec vel; // last known setpoint (velocity [m/s])
 static float yaw; // last known setpoint yaw (yaw [rad])
 static struct piecewise_traj trajectory;
 static struct piecewise_traj_compressed  compressed_trajectory;
 
 // makes sure that we don't evaluate the trajectory while it is being changed
 static xSemaphoreHandle lockTraj;
-static StaticSemaphore_t lockTrajBuffer;
-
-STATIC_MEM_TASK_ALLOC(crtpCommanderHighLevelTask, CMD_HIGH_LEVEL_TASK_STACKSIZE);
 
 // CRTP Packet definitions
 
 // trajectory command (first byte of crtp packet)
 enum TrajectoryCommand_e {
   COMMAND_SET_GROUP_MASK          = 0,
-  COMMAND_TAKEOFF                 = 1, // Deprecated, use COMMAND_TAKEOFF_2
-  COMMAND_LAND                    = 2, // Deprecated, use COMMAND_LAND_2
+  COMMAND_TAKEOFF                 = 1,
+  COMMAND_LAND                    = 2,
   COMMAND_STOP                    = 3,
   COMMAND_GO_TO                   = 4,
   COMMAND_START_TRAJECTORY        = 5,
   COMMAND_DEFINE_TRAJECTORY       = 6,
-  COMMAND_TAKEOFF_2               = 7,
-  COMMAND_LAND_2                  = 8,
 };
 
 struct data_set_group_mask {
@@ -120,36 +114,16 @@ struct data_set_group_mask {
 } __attribute__((packed));
 
 // vertical takeoff from current x-y position to given height
-// Deprecated
 struct data_takeoff {
   uint8_t groupMask;        // mask for which CFs this should apply to
   float height;             // m (absolute)
   float duration;           // s (time it should take until target height is reached)
 } __attribute__((packed));
 
-// vertical takeoff from current x-y position to given height
-struct data_takeoff_2 {
-  uint8_t groupMask;        // mask for which CFs this should apply to
-  float height;             // m (absolute)
-  float yaw;                // rad
-  bool useCurrentYaw;       // If true, use the current yaw (ignore the yaw parameter)
-  float duration;           // s (time it should take until target height is reached)
-} __attribute__((packed));
-
 // vertical land from current x-y position to given height
-// Deprecated
 struct data_land {
   uint8_t groupMask;        // mask for which CFs this should apply to
   float height;             // m (absolute)
-  float duration;           // s (time it should take until target height is reached)
-} __attribute__((packed));
-
-// vertical land from current x-y position to given height
-struct data_land_2 {
-  uint8_t groupMask;        // mask for which CFs this should apply to
-  float height;             // m (absolute)
-  float yaw;                // rad
-  bool useCurrentYaw;       // If true, use the current yaw (ignore the yaw parameter)
   float duration;           // s (time it should take until target height is reached)
 } __attribute__((packed));
 
@@ -165,7 +139,7 @@ struct data_go_to {
   float x; // m
   float y; // m
   float z; // m
-  float yaw; // rad
+  float yaw; // deg
   float duration; // sec
 } __attribute__((packed));
 
@@ -190,8 +164,6 @@ static void crtpCommanderHighLevelTask(void * prm);
 static int set_group_mask(const struct data_set_group_mask* data);
 static int takeoff(const struct data_takeoff* data);
 static int land(const struct data_land* data);
-static int takeoff2(const struct data_takeoff_2* data);
-static int land2(const struct data_land_2* data);
 static int stop(const struct data_stop* data);
 static int go_to(const struct data_go_to* data);
 static int start_trajectory(const struct data_start_trajectory* data);
@@ -216,12 +188,12 @@ void crtpCommanderHighLevelInit(void)
   plan_init(&planner);
 
   //Start the trajectory task
-  STATIC_MEM_TASK_CREATE(crtpCommanderHighLevelTask, crtpCommanderHighLevelTask, CMD_HIGH_LEVEL_TASK_NAME, NULL, CMD_HIGH_LEVEL_TASK_PRI);
+  xTaskCreate(crtpCommanderHighLevelTask, CMD_HIGH_LEVEL_TASK_NAME,
+              CMD_HIGH_LEVEL_TASK_STACKSIZE, NULL, CMD_HIGH_LEVEL_TASK_PRI, NULL);
 
-  lockTraj = xSemaphoreCreateMutexStatic(&lockTrajBuffer);
+  lockTraj = xSemaphoreCreateMutex();
 
   pos = vzero();
-  vel = vzero();
   yaw = 0;
 
   isInit = true;
@@ -229,23 +201,12 @@ void crtpCommanderHighLevelInit(void)
 
 void crtpCommanderHighLevelStop()
 {
-  xSemaphoreTake(lockTraj, portMAX_DELAY);
   plan_stop(&planner);
-  xSemaphoreGive(lockTraj);
 }
 
 bool crtpCommanderHighLevelIsStopped()
 {
   return plan_is_stopped(&planner);
-}
-
-void crtpCommanderHighLevelTellState(const state_t *state)
-{
-  xSemaphoreTake(lockTraj, portMAX_DELAY);
-  pos = state2vec(state->position);
-  vel = state2vec(state->velocity);
-  yaw = radians(state->attitude.yaw);
-  xSemaphoreGive(lockTraj);
 }
 
 void crtpCommanderHighLevelGetSetpoint(setpoint_t* setpoint, const state_t *state)
@@ -262,7 +223,6 @@ void crtpCommanderHighLevelGetSetpoint(setpoint_t* setpoint, const state_t *stat
   // if we are on the ground, update the last setpoint with the current state estimate
   if (plan_is_stopped(&planner)) {
     pos = state2vec(state->position);
-    vel = state2vec(state->velocity);
     yaw = radians(state->attitude.yaw);
   }
 
@@ -290,7 +250,6 @@ void crtpCommanderHighLevelGetSetpoint(setpoint_t* setpoint, const state_t *stat
 
     // store the last setpoint
     pos = ev.pos;
-    vel = ev.vel;
     yaw = ev.yaw;
   }
 }
@@ -314,12 +273,6 @@ void crtpCommanderHighLevelTask(void * prm)
         break;
       case COMMAND_LAND:
         ret = land((const struct data_land*)&p.data[1]);
-        break;
-      case COMMAND_TAKEOFF_2:
-        ret = takeoff2((const struct data_takeoff_2*)&p.data[1]);
-        break;
-      case COMMAND_LAND_2:
-        ret = land2((const struct data_land_2*)&p.data[1]);
         break;
       case COMMAND_STOP:
         ret = stop((const struct data_stop*)&p.data[1]);
@@ -358,25 +311,7 @@ int takeoff(const struct data_takeoff* data)
   if (isInGroup(data->groupMask)) {
     xSemaphoreTake(lockTraj, portMAX_DELAY);
     float t = usecTimestamp() / 1e6;
-    result = plan_takeoff(&planner, pos, yaw, data->height, 0.0f, data->duration, t);
-    xSemaphoreGive(lockTraj);
-  }
-  return result;
-}
-
-int takeoff2(const struct data_takeoff_2* data)
-{
-  int result = 0;
-  if (isInGroup(data->groupMask)) {
-    xSemaphoreTake(lockTraj, portMAX_DELAY);
-    float t = usecTimestamp() / 1e6;
-
-    float hover_yaw = data->yaw;
-    if (data->useCurrentYaw) {
-      hover_yaw = yaw;
-    }
-
-    result = plan_takeoff(&planner, pos, yaw, data->height, hover_yaw, data->duration, t);
+    result = plan_takeoff(&planner, pos, yaw, data->height, data->duration, t);
     xSemaphoreGive(lockTraj);
   }
   return result;
@@ -388,25 +323,7 @@ int land(const struct data_land* data)
   if (isInGroup(data->groupMask)) {
     xSemaphoreTake(lockTraj, portMAX_DELAY);
     float t = usecTimestamp() / 1e6;
-    result = plan_land(&planner, pos, yaw, data->height, 0.0f, data->duration, t);
-    xSemaphoreGive(lockTraj);
-  }
-  return result;
-}
-
-int land2(const struct data_land_2* data)
-{
-  int result = 0;
-  if (isInGroup(data->groupMask)) {
-    xSemaphoreTake(lockTraj, portMAX_DELAY);
-    float t = usecTimestamp() / 1e6;
-
-    float hover_yaw = data->yaw;
-    if (data->useCurrentYaw) {
-      hover_yaw = yaw;
-    }
-
-    result = plan_land(&planner, pos, yaw, data->height, hover_yaw, data->duration, t);
+    result = plan_land(&planner, pos, yaw, data->height, data->duration, t);
     xSemaphoreGive(lockTraj);
   }
   return result;
@@ -425,26 +342,12 @@ int stop(const struct data_stop* data)
 
 int go_to(const struct data_go_to* data)
 {
-  static struct traj_eval ev = {
-    // pos, vel, yaw will be filled before using
-    .acc = {0.0f, 0.0f, 0.0f},
-    .omega = {0.0f, 0.0f, 0.0f},
-  };
-
   int result = 0;
   if (isInGroup(data->groupMask)) {
     struct vec hover_pos = mkvec(data->x, data->y, data->z);
     xSemaphoreTake(lockTraj, portMAX_DELAY);
     float t = usecTimestamp() / 1e6;
-    if (plan_is_stopped(&planner)) {
-      ev.pos = pos;
-      ev.vel = vel;
-      ev.yaw = yaw;
-      result = plan_go_to_from(&planner, &ev, data->relative, hover_pos, data->yaw, data->duration, t);
-    }
-    else {
-      result = plan_go_to(&planner, data->relative, hover_pos, data->yaw, data->duration, t);
-    }
+    result = plan_go_to(&planner, data->relative, hover_pos, data->yaw, data->duration, t);
     xSemaphoreGive(lockTraj);
   }
   return result;

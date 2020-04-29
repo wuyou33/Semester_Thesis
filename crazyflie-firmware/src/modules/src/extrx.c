@@ -41,7 +41,6 @@
 #define DEBUG_MODULE  "EXTRX"
 #include "debug.h"
 #include "log.h"
-#include "static_mem.h"
 
 #define ENABLE_CPPM
 #define ENABLE_EXTRX_LOG
@@ -69,8 +68,6 @@ static void extRxTask(void *param);
 static void extRxDecodeCppm(void);
 static void extRxDecodeChannels(void);
 
-STATIC_MEM_TASK_ALLOC(extRxTask, EXTRX_TASK_STACKSIZE);
-
 void extRxInit(void)
 {
 
@@ -86,7 +83,9 @@ void extRxInit(void)
   uart1Init();
 #endif
 
-  STATIC_MEM_TASK_CREATE(extRxTask, extRxTask, EXTRX_TASK_NAME, NULL, EXTRX_TASK_PRI);
+
+  xTaskCreate(extRxTask, EXTRX_TASK_NAME,
+              EXTRX_TASK_STACKSIZE, NULL, EXTRX_TASK_PRI, NULL);
 }
 
 static void extRxTask(void *param)

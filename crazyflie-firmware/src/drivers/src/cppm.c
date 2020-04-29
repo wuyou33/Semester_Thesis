@@ -34,7 +34,6 @@
 #include "cppm.h"
 #include "nvicconf.h"
 #include "commander.h"
-#include "static_mem.h"
 
 #define DEBUG_MODULE  "CPPM"
 #include "debug.h"
@@ -58,7 +57,6 @@
 #define CPPM_MAX_PPM_USEC            1900
 
 static xQueueHandle captureQueue;
-STATIC_MEM_QUEUE_ALLOC(captureQueue, 64, sizeof(uint16_t));
 static uint16_t prevCapureVal;
 static bool captureFlag;
 static bool isAvailible;
@@ -97,7 +95,7 @@ void cppmInit(void)
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
 
-  captureQueue = STATIC_MEM_QUEUE_CREATE(captureQueue);
+  captureQueue = xQueueCreate(64, sizeof(uint16_t));
 
   TIM_ITConfig(CPPM_TIMER, TIM_IT_Update | TIM_IT_CC1, ENABLE);
   TIM_Cmd(CPPM_TIMER, ENABLE);

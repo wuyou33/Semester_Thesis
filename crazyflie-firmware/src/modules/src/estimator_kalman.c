@@ -67,7 +67,6 @@
 #include "task.h"
 #include "semphr.h"
 #include "sensors.h"
-#include "static_mem.h"
 
 #include "system.h"
 #include "log.h"
@@ -96,7 +95,7 @@
 
 // Distance-to-point measurements
 static xQueueHandle distDataQueue;
-STATIC_MEM_QUEUE_ALLOC(distDataQueue, 10, sizeof(distanceMeasurement_t));
+#define DIST_QUEUE_LENGTH (10)
 
 static inline bool stateEstimatorHasDistanceMeasurement(distanceMeasurement_t *dist) {
   return (pdTRUE == xQueueReceive(distDataQueue, dist, 0));
@@ -104,7 +103,7 @@ static inline bool stateEstimatorHasDistanceMeasurement(distanceMeasurement_t *d
 
 // Direct measurements of Crazyflie position
 static xQueueHandle posDataQueue;
-STATIC_MEM_QUEUE_ALLOC(posDataQueue, 10, sizeof(positionMeasurement_t));
+#define POS_QUEUE_LENGTH (10)
 
 static inline bool stateEstimatorHasPositionMeasurement(positionMeasurement_t *pos) {
   return (pdTRUE == xQueueReceive(posDataQueue, pos, 0));
@@ -112,7 +111,7 @@ static inline bool stateEstimatorHasPositionMeasurement(positionMeasurement_t *p
 
 // Direct measurements of Crazyflie pose
 static xQueueHandle poseDataQueue;
-STATIC_MEM_QUEUE_ALLOC(poseDataQueue, 10, sizeof(poseMeasurement_t));
+#define POSE_QUEUE_LENGTH (10)
 
 static inline bool stateEstimatorHasPoseMeasurement(poseMeasurement_t *pose) {
   return (pdTRUE == xQueueReceive(poseDataQueue, pose, 0));
@@ -120,15 +119,16 @@ static inline bool stateEstimatorHasPoseMeasurement(poseMeasurement_t *pose) {
 
 // Measurements of a UWB Tx/Rx
 static xQueueHandle tdoaDataQueue;
-STATIC_MEM_QUEUE_ALLOC(tdoaDataQueue, 10, sizeof(tdoaMeasurement_t));
+#define UWB_QUEUE_LENGTH (10)
 
 static inline bool stateEstimatorHasTDOAPacket(tdoaMeasurement_t *uwb) {
   return (pdTRUE == xQueueReceive(tdoaDataQueue, uwb, 0));
 }
 
+
 // Measurements of flow (dnx, dny)
 static xQueueHandle flowDataQueue;
-STATIC_MEM_QUEUE_ALLOC(flowDataQueue, 10, sizeof(flowMeasurement_t));
+#define FLOW_QUEUE_LENGTH (10)
 
 static inline bool stateEstimatorHasFlowPacket(flowMeasurement_t *flow) {
   return (pdTRUE == xQueueReceive(flowDataQueue, flow, 0));
@@ -136,7 +136,7 @@ static inline bool stateEstimatorHasFlowPacket(flowMeasurement_t *flow) {
 
 // Measurements of TOF from laser sensor
 static xQueueHandle tofDataQueue;
-STATIC_MEM_QUEUE_ALLOC(tofDataQueue, 10, sizeof(tofMeasurement_t));
+#define TOF_QUEUE_LENGTH (10)
 
 static inline bool stateEstimatorHasTOFPacket(tofMeasurement_t *tof) {
   return (pdTRUE == xQueueReceive(tofDataQueue, tof, 0));
@@ -144,15 +144,14 @@ static inline bool stateEstimatorHasTOFPacket(tofMeasurement_t *tof) {
 
 // Absolute height measurement along the room Z
 static xQueueHandle heightDataQueue;
-STATIC_MEM_QUEUE_ALLOC(heightDataQueue, 10, sizeof(heightMeasurement_t));
+#define HEIGHT_QUEUE_LENGTH (10)
 
 static inline bool stateEstimatorHasHeightPacket(heightMeasurement_t *height) {
   return (pdTRUE == xQueueReceive(heightDataQueue, height, 0));
 }
 
-
 static xQueueHandle yawErrorDataQueue;
-STATIC_MEM_QUEUE_ALLOC(yawErrorDataQueue, 10, sizeof(yawErrorMeasurement_t));
+#define YAW_ERROR_QUEUE_LENGTH (10)
 
 static inline bool stateEstimatorHasYawErrorPacket(yawErrorMeasurement_t *error)
 {
@@ -160,7 +159,7 @@ static inline bool stateEstimatorHasYawErrorPacket(yawErrorMeasurement_t *error)
 }
 
 static xQueueHandle sweepAnglesDataQueue;
-STATIC_MEM_QUEUE_ALLOC(sweepAnglesDataQueue, 10, sizeof(sweepAngleMeasurement_t));
+#define SWEEP_ANGLES_QUEUE_LENGTH (10)
 
 static inline bool stateEstimatorHasSweepAnglesPacket(sweepAngleMeasurement_t *angles)
 {
@@ -173,7 +172,6 @@ static SemaphoreHandle_t runTaskSemaphore;
 // Mutex to protect data that is shared between the task and
 // functions called by the stabilizer loop
 static SemaphoreHandle_t dataMutex;
-static StaticSemaphore_t dataMutexBuffer;
 
 
 /**
@@ -270,27 +268,26 @@ static void kalmanTask(void* parameters);
 static bool predictStateForward(uint32_t osTick, float dt);
 static bool updateQueuedMeasurments(const Axis3f *gyro, const uint32_t tick);
 
-STATIC_MEM_TASK_ALLOC(kalmanTask, 3 * configMINIMAL_STACK_SIZE);
 
 // --------------------------------------------------
 
 // Called one time during system startup
 void estimatorKalmanTaskInit() {
-  distDataQueue = STATIC_MEM_QUEUE_CREATE(distDataQueue);
-  posDataQueue = STATIC_MEM_QUEUE_CREATE(posDataQueue);
-  poseDataQueue = STATIC_MEM_QUEUE_CREATE(poseDataQueue);
-  tdoaDataQueue = STATIC_MEM_QUEUE_CREATE(tdoaDataQueue);
-  flowDataQueue = STATIC_MEM_QUEUE_CREATE(flowDataQueue);
-  tofDataQueue = STATIC_MEM_QUEUE_CREATE(tofDataQueue);
-  heightDataQueue = STATIC_MEM_QUEUE_CREATE(heightDataQueue);
-  yawErrorDataQueue = STATIC_MEM_QUEUE_CREATE(yawErrorDataQueue);
-  sweepAnglesDataQueue = STATIC_MEM_QUEUE_CREATE(sweepAnglesDataQueue);
+  distDataQueue = xQueueCreate(DIST_QUEUE_LENGTH, sizeof(distanceMeasurement_t));
+  posDataQueue = xQueueCreate(POS_QUEUE_LENGTH, sizeof(positionMeasurement_t));
+  poseDataQueue = xQueueCreate(POSE_QUEUE_LENGTH, sizeof(poseMeasurement_t));
+  tdoaDataQueue = xQueueCreate(UWB_QUEUE_LENGTH, sizeof(tdoaMeasurement_t));
+  flowDataQueue = xQueueCreate(FLOW_QUEUE_LENGTH, sizeof(flowMeasurement_t));
+  tofDataQueue = xQueueCreate(TOF_QUEUE_LENGTH, sizeof(tofMeasurement_t));
+  heightDataQueue = xQueueCreate(HEIGHT_QUEUE_LENGTH, sizeof(heightMeasurement_t));
+  yawErrorDataQueue = xQueueCreate(YAW_ERROR_QUEUE_LENGTH, sizeof(yawErrorMeasurement_t));
+  sweepAnglesDataQueue = xQueueCreate(SWEEP_ANGLES_QUEUE_LENGTH, sizeof(sweepAngleMeasurement_t));
 
   vSemaphoreCreateBinary(runTaskSemaphore);
 
-  dataMutex = xSemaphoreCreateMutexStatic(&dataMutexBuffer);
+  dataMutex = xSemaphoreCreateMutex();
 
-  STATIC_MEM_TASK_CREATE(kalmanTask, kalmanTask, KALMAN_TASK_NAME, NULL, KALMAN_TASK_PRI);
+  xTaskCreate(kalmanTask, KALMAN_TASK_NAME, 3 * configMINIMAL_STACK_SIZE, NULL, KALMAN_TASK_PRI, NULL);
 
   isInit = true;
 }

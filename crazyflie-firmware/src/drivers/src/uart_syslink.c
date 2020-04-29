@@ -42,7 +42,6 @@
 #include "nvicconf.h"
 #include "config.h"
 #include "queuemonitor.h"
-#include "static_mem.h"
 
 
 #define UARTSLK_DATA_TIMEOUT_MS 1000
@@ -52,11 +51,8 @@
 static bool isInit = false;
 
 static xSemaphoreHandle waitUntilSendDone;
-static StaticSemaphore_t waitUntilSendDoneBuffer;
 static xSemaphoreHandle uartBusy;
-static StaticSemaphore_t uartBusyBuffer;
 static xQueueHandle syslinkPacketDelivery;
-STATIC_MEM_QUEUE_ALLOC(syslinkPacketDelivery, 8, sizeof(SyslinkPacket));
 
 static uint8_t dmaBuffer[64];
 static uint8_t *outDataIsr;
@@ -116,11 +112,11 @@ void uartslkDmaInit(void)
 void uartslkInit(void)
 {
   // initialize the FreeRTOS structures first, to prevent null pointers in interrupts
-  waitUntilSendDone = xSemaphoreCreateBinaryStatic(&waitUntilSendDoneBuffer); // initialized as blocking
-  uartBusy = xSemaphoreCreateBinaryStatic(&uartBusyBuffer); // initialized as blocking
+  waitUntilSendDone = xSemaphoreCreateBinary(); // initialized as blocking
+  uartBusy = xSemaphoreCreateBinary(); // initialized as blocking
   xSemaphoreGive(uartBusy); // but we give it because the uart isn't busy at initialization
 
-  syslinkPacketDelivery = STATIC_MEM_QUEUE_CREATE(syslinkPacketDelivery);
+  syslinkPacketDelivery = xQueueCreate(8, sizeof(SyslinkPacket));
   DEBUG_QUEUE_MONITOR_REGISTER(syslinkPacketDelivery);
 
   USART_InitTypeDef USART_InitStructure;
@@ -239,7 +235,7 @@ void uartslkSendDataIsrBlocking(uint32_t size, uint8_t* data)
 int uartslkPutchar(int ch)
 {
     uartslkSendData(1, (uint8_t *)&ch);
-
+    
     return (unsigned char)ch;
 }
 

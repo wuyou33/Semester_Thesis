@@ -9,9 +9,6 @@
 % pdflatex Paper_EV
 % pdflatex Paper_EV
 %
-% TODO:
-% - Change date on the title page
-% - Change date on the statutory declaration page
 %
 %#################################################################################
 %#################################################################################
@@ -165,6 +162,9 @@
 \renewcommand*\entryname{Acronym}
 \makeglossaries
 
+% Package for adding table of contents and references to the generated pdf document
+\usepackage{hyperref}
+\hypersetup{pdftex, colorlinks=true, allcolors=black}
 
 %#################################################################################%#################################################################################%#################################################################################
 
@@ -183,19 +183,21 @@
 % For some reason fisrt chapter has a different vert. spacing from the top, so we add additional 0.8cm, starred command makes sure it will not be suppressed at the beginning or at the end of the page
 \vspace*{-0.8cm}
 \section*{Statutory Declaration}
-I, Evghenii Volodscoi, declare on oath towards the Institute of Flight System Dynamics of Technische Universität München, that I have prepared the present Semester Thesis independently and with the aid of nothing but the resources listed in the bibliography.
+I, Evghenii Volodscoi, declare on oath towards the Institute of Flight System Dynamics of Technische Universit\"at M\"unchen, that I have prepared the present Semester Thesis independently and with the aid of nothing but the resources listed in the bibliography.
 \\
 \\
 This thesis has neither as-is nor similarly been submitted to any other university.
 \bigskip
 \\
 \\
-Garching, April 25, 2020
+Garching, April 22, 2020
 \\
 \\
 \\
 \\
 Evghenii Volodscoi
+
+\includegraphics[scale=0.35]{figs/signatur.jpg}\par
 
 % Manually add Chapter names to the header (per default not included by Latex)
 \thispagestyle{fancy_beginning}
@@ -208,7 +210,7 @@ Evghenii Volodscoi
 \section*{Kurzfassung} \label{sec:kurzfassung}
 % Start cursive block
 \begin{itshape}
-Inkrementelle Nichtlineare Dynamische Inversion (INDI) is ein vielversprechender Reglertyp, welcher h\"aufig f\"ur die Regelung von nichtlinearen Flugsystemen unterschiedlicher Art eingesetzt wird. Ein Vorteil der INDI ist, dass dieser Reglertyp kein detalliertes Modell der geregelten Strecke ben\"otigt. Au\ss{}erdem, wirkt INDI sehr effektiv gegen St\"orungen. Diese Semesterarbeit befasst sich mit der Auslegung eines INDI-Reglers f\"ur die Lage- und Positionsregelung eines Nano-Quadrotors. Die Arbeit beginnt mit der Herleitung des Regelalgorithmus. Der hergeleitete Regelgesetz wird dann erst in Simulink entwickelt und anschlie\ss{}end auf der Quadrotor-Hardware implementiert. Dazu werden solche Implementierungsaspekte wie Ermittlung der Eingangsmatrix, Messung und Berechnung der Aktuatorzeitkonstante sowie Ermittlung des Schub-Mapping-Parameters besprochen. Abschlie\ss{}end, wird der implementierte Regler auf die F\"ahigkeit St\"orungen zu bek\"ampfen getestet. Der finale Regler ist \"uber das offizielle Open-Source-Firmware des Crazyflie-Quadrotors verf\"ugbar. 
+Inkrementelle Nichtlineare Dynamische Inversion (INDI) is ein vielversprechender Reglertyp, welcher h\"aufig f\"ur die Regelung von nichtlinearen Flugsystemen unterschiedlicher Art eingesetzt wird. Ein Vorteil der INDI ist, dass kein detalliertes Modell der geregelten Strecke ben\"otigt wird. Au\ss{}erdem, wirkt INDI sehr effektiv gegen St\"orungen. Diese Semesterarbeit befasst sich mit der Auslegung eines INDI-Reglers f\"ur die Lage- und Positionsregelung eines Nano-Quadrotors. Die Arbeit beginnt mit der Herleitung des Regelalgorithmus. Das hergeleitete Regelgesetz wird dann erst in Simulink entwickelt und anschlie\ss{}end auf der Quadrotor-Hardware implementiert. Dazu werden solche Implementierungsaspekte wie die Ermittlung der Eingangsmatrix, Messung und Berechnung der Aktuatorzeitkonstante sowie Ermittlung des Schub-Mapping-Parameters besprochen. Abschlie\ss{}end, wird der implementierte Regler auf die F\"ahigkeit St\"orungen zu unterdr\"ucken getestet. Der finale Regler ist \"uber das offizielle Open-Source-Firmware des Crazyflie-Quadrotors verf\"ugbar. 
 \end{itshape}
 
 
@@ -1307,7 +1309,7 @@ The fitting is then done by minimizing the squared error between measured $a_{me
 	E(T) = \sum_{t}^{} (a(T) - a_{measured}(T))^2
 	\label{eq:obj_function}
 \end{equation}
-$T$ is then computed using the least squares approach such that Equation \ref{eq:obj_function} is minimal. Note that in Equation \ref{eq:obj_function} $a(T)$ is a function of the time constant $T$, since it is an optimization parameter. Figure \ref{fig:actuator_dynamics_est} shows the obtained result of the optimization. Here, the red curve was fitted to the measured data (blue line). In the figure the signal contains $n=155$ samples recorded with a frequency of $200~\si{\Hz}$. The estimated value for the time constant is $T = 0.061658 \ s$.
+$T$ is then computed using the least squares approach such that Equation \ref{eq:obj_function} is minimal. Note that in Equation \ref{eq:obj_function} $a(T)$ is a function of the time constant $T$, since it is an optimization parameter. Figure \ref{fig:actuator_dynamics_est} shows the obtained result of the optimization. Here, the red curve was fitted to the measured data (blue line). In the figure the signal contains $n=155$ samples recorded with a frequency of $200~\si{\Hz}$. The estimated value for the time constant is $T = 0.061658~\si{\s}$.
 	
 A simpler alternative to estimate the time constant would be reading off the time point at which the response reaches approx. $63.2 \%$ of its final value. Using this approach, the value of the time constant is approximately $0.0675~\si{\second}$, which is very close to the value estimated through solving the optimization problem.
 

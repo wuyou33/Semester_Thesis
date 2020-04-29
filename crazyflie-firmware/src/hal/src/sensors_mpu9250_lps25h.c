@@ -49,7 +49,6 @@
 #include "ledseq.h"
 #include "sound.h"
 #include "filter.h"
-#include "static_mem.h"
 
 /**
  * Enable 250Hz digital LPF mode. However does not work with
@@ -105,18 +104,11 @@ typedef struct
 } BiasObj;
 
 static xQueueHandle accelerometerDataQueue;
-STATIC_MEM_QUEUE_ALLOC(accelerometerDataQueue, 1, sizeof(Axis3f));
 static xQueueHandle gyroDataQueue;
-STATIC_MEM_QUEUE_ALLOC(gyroDataQueue, 1, sizeof(Axis3f));
 static xQueueHandle magnetometerDataQueue;
-STATIC_MEM_QUEUE_ALLOC(magnetometerDataQueue, 1, sizeof(Axis3f));
 static xQueueHandle barometerDataQueue;
-STATIC_MEM_QUEUE_ALLOC(barometerDataQueue, 1, sizeof(baro_t));
-
 static xSemaphoreHandle sensorsDataReady;
-static StaticSemaphore_t sensorsDataReadyBuffer;
 static xSemaphoreHandle dataReady;
-static StaticSemaphore_t dataReadyBuffer;
 
 static bool isInit = false;
 static sensorData_t sensorData;
@@ -173,8 +165,6 @@ static void sensorsCalculateBiasMean(BiasObj* bias, Axis3i32* meanOut);
 static void sensorsAddBiasValue(BiasObj* bias, int16_t x, int16_t y, int16_t z);
 static bool sensorsFindBiasValue(BiasObj* bias);
 static void sensorsAccAlignToGravity(Axis3f* in, Axis3f* out);
-
-STATIC_MEM_TASK_ALLOC(sensorsTask, SENSORS_TASK_STACKSIZE);
 
 bool sensorsMpu9250Lps25hReadGyro(Axis3f *gyro)
 {
@@ -486,12 +476,12 @@ static void sensorsSetupSlaveRead(void)
 
 static void sensorsTaskInit(void)
 {
-  accelerometerDataQueue = STATIC_MEM_QUEUE_CREATE(accelerometerDataQueue);
-  gyroDataQueue = STATIC_MEM_QUEUE_CREATE(gyroDataQueue);
-  magnetometerDataQueue = STATIC_MEM_QUEUE_CREATE(magnetometerDataQueue);
-  barometerDataQueue = STATIC_MEM_QUEUE_CREATE(barometerDataQueue);
+  accelerometerDataQueue = xQueueCreate(1, sizeof(Axis3f));
+  gyroDataQueue = xQueueCreate(1, sizeof(Axis3f));
+  magnetometerDataQueue = xQueueCreate(1, sizeof(Axis3f));
+  barometerDataQueue = xQueueCreate(1, sizeof(baro_t));
 
-  STATIC_MEM_TASK_CREATE(sensorsTask, sensorsTask, SENSORS_TASK_NAME, NULL, SENSORS_TASK_PRI);
+  xTaskCreate(sensorsTask, SENSORS_TASK_NAME, SENSORS_TASK_STACKSIZE, NULL, SENSORS_TASK_PRI, NULL);
 }
 
 static void sensorsInterruptInit(void)
@@ -499,8 +489,8 @@ static void sensorsInterruptInit(void)
   GPIO_InitTypeDef GPIO_InitStructure;
   EXTI_InitTypeDef EXTI_InitStructure;
 
-  sensorsDataReady = xSemaphoreCreateBinaryStatic(&sensorsDataReadyBuffer);
-  dataReady = xSemaphoreCreateBinaryStatic(&dataReadyBuffer);
+  sensorsDataReady = xSemaphoreCreateBinary();
+  dataReady = xSemaphoreCreateBinary();
 
   // FSYNC "shall not be floating, must be set high or low by the MCU"
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14;

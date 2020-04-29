@@ -79,8 +79,7 @@ struct IndiOuterVariables {
 };
 
 void positionControllerINDIInit(void);
-void positionControllerINDI(const sensorData_t *sensors,
-                            setpoint_t *setpoint,
+void positionControllerINDI(const sensorData_t *sensors, 
                             const state_t *state, 
                             vector_t *refOuterINDI);
 

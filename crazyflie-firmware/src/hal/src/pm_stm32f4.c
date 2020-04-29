@@ -1,6 +1,6 @@
 /**
- *    ||          ____  _ __
- * +------+      / __ )(_) /_______________ _____  ___
+ *    ||          ____  _ __                           
+ * +------+      / __ )(_) /_______________ _____  ___ 
  * | 0xBC |     / __  / / __/ ___/ ___/ __ `/_  / / _ \
  * +------+    / /_/ / / /_/ /__/ /  / /_/ / / /_/  __/
  *  ||  ||    /_____/_/\__/\___/_/   \__,_/ /___/\___/
@@ -30,6 +30,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include "semphr.h"
 
 #include "config.h"
 #include "system.h"
@@ -40,7 +41,6 @@
 #include "commander.h"
 #include "sound.h"
 #include "deck.h"
-#include "static_mem.h"
 
 typedef struct _PmSyslinkInfo
 {
@@ -95,16 +95,14 @@ const static float bat671723HS25C[10] =
   4.10  // 90%
 };
 
-STATIC_MEM_TASK_ALLOC(pmTask, PM_TASK_STACKSIZE);
-
 void pmInit(void)
 {
-  if(isInit) {
+  if(isInit)
     return;
-  }
-
-  STATIC_MEM_TASK_CREATE(pmTask, pmTask, PM_TASK_NAME, NULL, PM_TASK_PRI);
-
+  
+  xTaskCreate(pmTask, PM_TASK_NAME,
+              PM_TASK_STACKSIZE, NULL, PM_TASK_PRI, NULL);
+  
   isInit = true;
 
   pmSyslinkInfo.vBat = 3.7f;
@@ -396,3 +394,4 @@ LOG_ADD(LOG_FLOAT, chargeCurrent, &pmSyslinkInfo.chargeCurrent)
 LOG_ADD(LOG_INT8, state, &pmState)
 LOG_ADD(LOG_UINT8, batteryLevel, &batteryLevel)
 LOG_GROUP_STOP(pm)
+

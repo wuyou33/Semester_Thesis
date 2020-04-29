@@ -1,6 +1,6 @@
 /**
- *    ||          ____  _ __
- * +------+      / __ )(_) /_______________ _____  ___
+ *    ||          ____  _ __                           
+ * +------+      / __ )(_) /_______________ _____  ___ 
  * | 0xBC |     / __  / / __/ ___/ ___/ __ `/_  / / _ \
  * +------+    / /_/ / / /_/ /__/ /  / /_/ / / /_/  __/
  *  ||  ||    /_____/_/\__/\___/_/   \__,_/ /___/\___/
@@ -46,7 +46,6 @@
 #include "usb_dcd.h"
 
 #include "crtp.h"
-#include "static_mem.h"
 
 
 __ALIGN_BEGIN USB_OTG_CORE_HANDLE    USB_OTG_dev __ALIGN_END ;
@@ -54,11 +53,8 @@ __ALIGN_BEGIN USB_OTG_CORE_HANDLE    USB_OTG_dev __ALIGN_END ;
 static bool isInit = false;
 static bool doingTransfer = false;
 
-// This should probably be reduced to a CRTP packet size
 static xQueueHandle usbDataRx;
-STATIC_MEM_QUEUE_ALLOC(usbDataRx, 5, sizeof(USBPacket)); /* Buffer USB packets (max 64 bytes) */
 static xQueueHandle usbDataTx;
-STATIC_MEM_QUEUE_ALLOC(usbDataTx, 1, sizeof(USBPacket)); /* Buffer USB packets (max 64 bytes) */
 
 /* Endpoints */
 #define IN_EP                       0x81  /* EP1 for data IN */
@@ -156,7 +152,7 @@ static void resetUSB(void) {
     while (xQueueReceiveFromISR(usbDataTx, &outPacket, &xTaskWokenByReceive) == pdTRUE)
       ;
   }
-
+  
   USB_OTG_FlushTxFifo(&USB_OTG_dev, IN_EP);
 }
 
@@ -380,9 +376,10 @@ void usbInit(void)
             &cf_usb_cb,
             &USR_cb);
 
-  usbDataRx = STATIC_MEM_QUEUE_CREATE(usbDataRx);
+  // This should probably be reduced to a CRTP packet size
+  usbDataRx = xQueueCreate(5, sizeof(USBPacket)); /* Buffer USB packets (max 64 bytes) */
   DEBUG_QUEUE_MONITOR_REGISTER(usbDataRx);
-  usbDataTx = STATIC_MEM_QUEUE_CREATE(usbDataTx);
+  usbDataTx = xQueueCreate(1, sizeof(USBPacket)); /* Buffer USB packets (max 64 bytes) */
   DEBUG_QUEUE_MONITOR_REGISTER(usbDataTx);
 
   isInit = true;

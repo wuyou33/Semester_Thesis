@@ -1,0 +1,3 @@
+The C-code of the INDI position controller implemented in the framework of this semester thesis was merged with the official firmware of the Crazyflie Quadrotor. The corresponding pull request can be found under the following link: 
+
+https://github.com/bitcraze/crazyflie-firmware/pull/568

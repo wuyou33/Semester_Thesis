@@ -1,0 +1,1544 @@
+% This is one possible realization of the official FSD Microsoft Word template. The title page has to be filled in in Microsoft Word environment and saved as a PDF file. Note, that in the header and footer the name of the author and the thesis topic have to be provided. 
+%
+% Compile Template in following order:
+%
+% pdflatex Paper_EV
+% makeindex Paper_EV.nlo -s nomencl.ist -o Paper_EV.nls (Table of Symbols)
+% makeindex Paper_EV.acn -s Paper_EV.ist -t Paper_EV.alg -o Paper_EV.acr (Table of Acronyms)
+% makeindex Paper_EV.glo -s Paper_EV.ist -t Paper_EV.glg -o Paper_EV.gls
+% pdflatex Paper_EV
+% pdflatex Paper_EV
+%
+%
+%#################################################################################
+%#################################################################################
+%#################################################################################
+
+% Preamble
+\documentclass[11pt, a4paper, twoside]{report}
+
+% Define page layout
+\usepackage[
+ left=2.5cm,
+ right=2.5cm,
+ top=2.5cm,
+ bottom=3cm]
+{geometry}
+
+% Package for defining the default font size
+% We use Helvetica as an alternative to Arial
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+%alternatively one can use Arial package and compile with XeLaTEX
+%\usepackage{fontspec}
+%\setmainfont{Arial}
+
+% For inserting images, figures
+\usepackage{tikz}
+
+% For citation of URLs
+\usepackage{url}
+
+% For writing angle symbol °
+\usepackage{siunitx}
+
+% Define subsection depth
+\setcounter{secnumdepth}{3}
+
+% For SI units
+\usepackage{siunitx}
+
+% Set line spacing to 1.15pt
+\renewcommand{\baselinestretch}{1.15}
+
+% Set spacing between paragraphs to be 10pt
+\setlength{\parskip}{10pt}
+
+% Set paragraph intendation (here 0pt, no intendation)
+\setlength{\parindent}{0pt}
+
+% Package for estimating the last page
+\usepackage{pageslts}
+
+% Package for bold symbols and letters
+\usepackage{bm}
+
+% Package for equations and math. symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Package and settings for adding header/footer
+\usepackage{fancyhdr}
+
+% Set style for pages with arabic numbering 
+% This block prints only the chapter number and the chapter name, not the word "Chapter"
+%\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\ \thechapter. \ #1}}{}}
+% Clear current page style 
+\fancyhf{}
+% Head (11 pt font size and 12 pt line spacing)
+\fancyhf[HRE,HLO]{\includegraphics[width=2.5cm]{figs/fsd}}
+\fancyhf[HRO,HLE]{\fontsize{11}{12}\selectfont \leftmark}
+% Foot (11 pt font size and 12 pt line spacing)
+\fancyhf[FRE,FLO]{\fontsize{11}{12}\selectfont Design, Implementation \& Evaluation of an INDI Controller for a Nano-Quadrotor\\\vspace*{0.1cm}--- ---}
+\fancyhf[FLE,FRO]{\fontsize{11}{12}\selectfont Page \thepage \thinspace / \lastpageref{pagesLTS.arabic}}
+% Line settings
+\renewcommand{\headrulewidth}{0.1pt}	%upper line
+\renewcommand{\footrulewidth}{0.1pt}	%lower line
+
+% Set style for pages with roman numbering 
+\fancypagestyle{fancy_beginning}{%
+%\pagestyle{fancy}
+% Clear current page style 
+\fancyhf{}%
+% Head
+\fancyhf[HRE,HLO]{\includegraphics[width=2.5cm]{figs/fsd}}%
+\fancyhf[HRO,HLE]{\fontsize{11}{12}\selectfont \leftmark}%
+% Foot
+\fancyhf[FRE,FLO]{\fontsize{11}{12}\selectfont Design, Implementation \& Evaluation of an INDI Controller for a Nano-Quadrotor\\\vspace*{0.1cm}--- ---}%
+\fancyhf[FLE,FRO]{\fontsize{11}{12}\selectfont Page \thepage}%
+% Line settings
+\renewcommand{\headrulewidth}{0.1pt}%	%upper line
+\renewcommand{\footrulewidth}{0.1pt}%	%lower line
+}
+
+% Package for inserting titel page
+\usepackage{pdfpages}
+
+% Package for changing distance between sections
+\usepackage{titlesec} 
+
+% Package for setting up the caption options of figures
+\usepackage{subcaption}
+
+% Package prevents placing floats before a section (for not mooving figures)
+\usepackage{float}
+
+% TODO
+% Package for using acronyms 
+%\usepackage[printonlyused]{acronym}
+%\renewcommand\acsfont{\textnormal}	% Set non-bold font of the acronym units
+
+% This patch removes the insertion of \addvspace to both the LoF and the LoT; the cause of the additional gap between entries on a per-chapter basis
+\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
+\makeatletter
+% \patchcmd{<cmd>}{<search>}{<replace>}{<succes>}{<failure>}
+\patchcmd{\@chapter}{\addtocontents{lof}{\protect\addvspace{10\p@}}}{}{}{}% LoF
+\patchcmd{\@chapter}{\addtocontents{lot}{\protect\addvspace{10\p@}}}{}{}{}% LoT
+\makeatother
+
+% Set chapter font size and spacing
+\newcommand{\chapfnt}{\fontsize{14}{19}}
+\titleformat{\chapter}
+{\normalfont\chapfnt\bfseries}{\thechapter}{1em}{\chapfnt} 	% set font size
+\titlespacing{\chapter}{0cm}{-7mm}{0cm}					% set spacing
+
+% Set section font size (13pt) and spacing
+\newcommand{\secfnt}{\fontsize{13}{19}}
+\titleformat{\section}
+{\normalfont\secfnt\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0cm}{0.3cm}{0cm}					% set spacing
+
+% Package for edditing TOC, LOF and LOT
+\usepackage[titles]{tocloft}
+
+% Package for setting itemization/description parameters like indentation of items
+\usepackage{enumitem}
+
+% Package for acronyms
+\usepackage[acronym, automake, nopostdot, nogroupskip]{glossaries}
+\setlength{\LTleft}{-0.15cm}			% left justified
+\renewcommand*{\arraystretch}{1.4}		% vertical distance between entries, default is 1
+% List
+\newacronym{EOM}{EOM}{Equations of Motion}
+\newacronym{IMU}{IMU}{Inertial Measurement Unit}
+\newacronym{INDI}{INDI}{Incremental Nonlinear Dynamic Inversion}
+\newacronym{IR}{IR}{Infrared}
+\newacronym{MAV}{MAV}{Micro Air Vehicle}
+\newacronym{MCU}{MCU}{Microcontroller}
+\newacronym{NED}{NED}{North East Down}
+\newacronym{NDI}{NDI}{Nonlinear Dynamic Inversion}
+\newacronym{ToF}{ToF}{Time-of-Flight}
+% Make gls
+\renewcommand*\entryname{Acronym}
+\makeglossaries
+
+% Package for adding table of contents and references to the generated pdf document
+\usepackage{hyperref}
+\hypersetup{pdftex, colorlinks=true, allcolors=black}
+
+%#################################################################################%#################################################################################%#################################################################################
+
+\begin{document}
+
+% Activate roman page numbering
+\pagenumbering{roman}
+
+% Insert title page
+\includepdf[pages={1}]{figs/Title_page.pdf}
+
+%Insert empty page after title page
+\newpage\null\thispagestyle{empty}\newpage
+
+
+% For some reason fisrt chapter has a different vert. spacing from the top, so we add additional 0.8cm, starred command makes sure it will not be suppressed at the beginning or at the end of the page
+\vspace*{-0.8cm}
+\section*{Statutory Declaration}
+I, --- ---, declare on oath towards the Institute of Flight System Dynamics of Technische Universit\"at M\"unchen, that I have prepared the present Semester Thesis independently and with the aid of nothing but the resources listed in the bibliography.
+\\
+\\
+This thesis has neither as-is nor similarly been submitted to any other university.
+\bigskip
+\\
+\\
+Garching, April 22, 2020
+\\
+\\
+\\
+\\
+--- ---
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Statutory Declaration}
+
+%Insert empty page after statutory declaration section
+\newpage\null\thispagestyle{empty}\newpage
+
+\section*{Kurzfassung} \label{sec:kurzfassung}
+% Start cursive block
+\begin{itshape}
+Inkrementelle Nichtlineare Dynamische Inversion (INDI) is ein vielversprechender Reglertyp, welcher h\"aufig f\"ur die Regelung von nichtlinearen Flugsystemen unterschiedlicher Art eingesetzt wird. Ein Vorteil der INDI ist, dass kein detalliertes Modell der geregelten Strecke ben\"otigt wird. Au\ss{}erdem, wirkt INDI sehr effektiv gegen St\"orungen. Diese Semesterarbeit befasst sich mit der Auslegung eines INDI-Reglers f\"ur die Lage- und Positionsregelung eines Nano-Quadrotors. Die Arbeit beginnt mit der Herleitung des Regelalgorithmus. Das hergeleitete Regelgesetz wird dann erst in Simulink entwickelt und anschlie\ss{}end auf der Quadrotor-Hardware implementiert. Dazu werden solche Implementierungsaspekte wie die Ermittlung der Eingangsmatrix, Messung und Berechnung der Aktuatorzeitkonstante sowie Ermittlung des Schub-Mapping-Parameters besprochen. Abschlie\ss{}end, wird der implementierte Regler auf die F\"ahigkeit St\"orungen zu unterdr\"ucken getestet. Der finale Regler ist \"uber das offizielle Open-Source-Firmware des Crazyflie-Quadrotors verf\"ugbar. 
+\end{itshape}
+
+
+% Add Abstract chapter to the same page as Kurzfassung
+{\let\clearpage\relax\section*{Abstract}}
+% Start cursive block
+\begin{itshape}
+Incremental Nonlinear Dynamic Inversion (INDI) is a promising control technique, widely used for control of different types of aircraft systems. Besides providing high-performance nonlinear control, this controller type does not require a detailed model of the controlled aircraft and is effective against disturbances. This semester thesis describes the development of an INDI controller to control the attitude and the position of a nano-quadrotor. It begins with the derivation of the control algorithm. The controller is then firstly developed in the Simulink environment and afterwards implemented on the embedded hardware of the quadrotor.  Subsequently, the implementation aspects of the INDI controller such as estimation of the control effectiveness, measurement of the actuator time constant and estimation of the thrust mapping parameter are discussed. Finally, the implemented controller is tested on the ability to cope with disturbance. The final version of the implemented control algorithm is available via official open source firmware of the Crazyflie quadrotor.
+\end{itshape}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Abstract}
+
+%Insert empty page after abstract page
+\newpage\null\thispagestyle{empty}\newpage
+
+
+
+% Add Table of Contents 
+\setlength{\cftbeforechapskip}{0.2cm}			% space before chapters
+\renewcommand\cftchapafterpnum{\vskip-0.4cm}	% space after chapters
+\renewcommand\cftsecafterpnum{\vskip-0.4cm}		% space after sections
+\renewcommand\cftsubsecafterpnum{\vskip-0.4cm}	% space after subsections	
+\renewcommand{\cftchapfont}{\normalfont}		% set normal font, not bold
+%\titleformat{\section}{\fontsize{14}{19}}	 	% ?
+ 
+\renewcommand*\contentsname{Table of Contents}  % Change the defaulf name "Contents" to "Table of Contents"  
+\tableofcontents								% Generate Table of Contents
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Contents}
+
+%Insert empty page after table of contents
+\newpage\null\thispagestyle{empty}\newpage
+
+% Add List of Figures  
+\renewcommand{\cftfigfont}{Figure }				% Add "Figure" to the LOF
+\renewcommand\cftfigaftersnum{:} 				% Put ":" after the figure num 
+\setlength{\cftfigindent}{0pt}					% Remove left indent 
+\setlength\cftbeforefigskip{-0.2cm}				% Space between figures 
+\addtocontents{lof}{\vspace*{10pt}}			    % Set distance between LOF title and list
+\listoffigures
+%\setlength{\cftbeforeloftitleskip}{0cm}		% ? 
+%\setlength\cftafterloftitleskip{-2cm}
+
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{List of Figures}
+
+%Insert empty page after table the list of figures
+\newpage\null\thispagestyle{empty}\newpage
+
+%% Add List of Tables
+%\renewcommand{\cfttabfont}{Table }				% Add "Figure" to the LOF
+%\renewcommand\cfttabaftersnum{:} 				% Put ":" after the figure num 
+%\setlength{\cfttabindent}{0pt}					% Remove left indent
+%\setlength\cftbeforetabskip{-0.2cm}				% Space between tables
+%\addtocontents{lot}{\vspace*{10pt}}			    % Set distance between LOT %title and list
+%\listoftables{}
+
+%% Manually add Chapter names to the header (per default not included by Latex)
+%\thispagestyle{fancy_beginning}
+%\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+%\chaptermark{List of Tables}
+
+%%Insert empty page after the list of tables 
+%\newpage\null\thispagestyle{empty}\newpage
+
+% Print table of acronyms
+\printglossary[type=\acronymtype, title={Table of Acronyms}, nonumberlist, style=longheader]
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Acronyms}
+
+%Insert empty page after table of acronyms
+\newpage\null\thispagestyle{empty}\newpage
+
+% Manually add Chapter names to the header (per default not included by Latex) 
+\protect\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Symbols}
+
+\chapter*{Table of Symbols} \label{sec:table_of_symbols}
+
+\textbf{Latin Letters}
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+    \textbf{Symbol} & \textbf{Unit} & \textbf{Description} \\ [1.2ex] 
+    $A(s),~A(z)$ & -- & Transfer function of the actuator dynamics \\ 
+    $A'(s),~A'(z)$ & -- & Transfer function of the actuator dynamics model \\
+    $a(t)$ & -- & Function of the first order lag element in time domain \\
+    $b$ & $m$ & Lever arm of the rotors to the C.G. along the body $y$-axis \\
+    $d$ & $m/s^2$ & Disturbance \\
+    $d_0, d_1, d_2$ & -- & Denominator coefficients of the discrete second order filter \\
+    $E(t)$ & -- & Objective function \\
+    $\bm{F}$ & $N$ & Force vector \\
+    $\bm{F}_A$ & $N$ & Aerodynamic force vector \\
+    $\bm{F}_G$ & $N$ & Gravitational force vector \\
+    $\bm{F}_P$ & $N$ & Propulsive force vector \\
+    $\bm{f}(\bm{x})$ & -- & Nonlinear vector field \\
+    $\bm{G}$ & -- & Control effectiveness matrix of the outer loop \\
+    $\bm{G}_1$ & -- & Control effectiveness matrix of the inner loop \\
+    $\bm{G}_2$ & -- & Control effectiveness matrix of the inner loop \\
+    $\bm{G}_{inner}$ & -- & Dynamics matrix of the inner loop \\
+    $\bm{G}_{outer}$ & -- & Dynamics matrix of the outer loop \\
+    $\bm{G}(x)$ & -- & Input matrix \\
+    $g$ & $m/s^2$ & Gravitational acceleration \\
+    $H(s),~H(z)$ & -- & Transfer function of the second order filter \\
+    $\bm{h}(\bm{x})$ & -- & Nonlinear vector field \\
+    $\bm{I}$ & $Nm^2$ & Inertia tensor of the quadrotor \\
+    $\bm{I_{rzz}}$ & $Nm^2$ & $zz$-element of the inertia tensor of the rotor \\
+    $i$ & -- & Relative degree of the dynamic system \\
+    $K$ & -- & Compensation gain \\
+    $K_{cmd}$ & -- & Thrust mapping parameter \\
+    $K_{\eta}$ & -- & Gain of the inner loop \\ %[0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  %\captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_latin_1}
+\end{table}
+
+% Manually add Chapter names to the header (per default not included by Latex) 
+\protect\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Symbols}
+
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+    $K_{\omega}$ & -- & Gain of the inner loop \\
+    $K_{\xi}$ & -- & Gain of the outer loop \\
+    $K_{\dot{v}}$ & -- & Gain of the outer loop \\
+    $k$ & $kg/s$ & Drag coefficient \\ 
+    $k$ & -- & Gain of the actuator dynamics \\ 
+    $k_F$ & $\frac{N}{rad/s}$ & Force constant of the rotors \\
+    $k_M$ & $\frac{Nm}{rad/s}$ & Moment constant of the rotors \\
+    $L$ & -- & Lie derivative operator \\
+    $l$ & $m$ & Lever arm of the rotors to the C.G. along the body $y$-axis \\
+    $\bm{M}$ & $Nm$ & Moment vector \\
+    $\bm{M}_A$ & $Nm$ & Aerodynamic Moment vector \\
+    $\bm{M}_c$ & $Nm$ & Control moment vector \\
+    $\bm{M}_G$ & $Nm$ & Gravitational Moment vector \\
+    $\bm{M}_{gyro}$ & $Nm$ & Moment vector due to the gyroscopic effects of the rotor \\
+    $\bm{M}_{OB}$ & -- & Transformation matrix from the body-fixed into NED frame \\
+    $\bm{M}_P$ & $Nm$ & Propulsion moment vector \\
+    $m$ & $kg$ & Mass of the quadrotor \\
+    $m_{cf}$ & $kg$ & Mass of the Crazyflie quadrotor \\
+    $m_r$ & $kg$ & Additional mass (disturbance \\
+    $n$ & -- & Number of samples \\
+    $n_0, n_1, n_2$ & -- & Numerator coefficients of the discrete second order filter \\
+    $P$ & -- & Parameter \\
+    $p$ & $rad/s$ & Roll rate \\ 
+	$q$ & $rad/s$ & Pitch rate \\
+    $r$ & $rad/s$ & Yaw rate \\
+	$s$ & -- & Laplace variable \\
+    $T$ & $N$ & Thrust \\
+	$T$ & $s$ & Time constant of the actuator dynamics \\
+    $T_{cmd}$ & -- & Thrust in motor units \\
+	$T_s$ & $s$ & Sample time of the controller \\
+    $\tilde{T}$ & $N$ & Thrust increment \\ %[0.5ex]
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_latin_2}
+\end{table}
+
+% Manually add Chapter names to the header (per default not included by Latex) 
+\protect\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Symbols}
+
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+	$t$ & $s$ & Time \\    
+    $u$ & -- & Input vector \\
+    $\bm{u}_c$ & -- & Control vector \\
+    $u$ & $m/s$ & $x$-component of the velocity vector \\
+    $V$ & $m/s$ & Component of the velocity vector \\ 
+    $v$ & $m/s$ & $y$-component of the velocity vector \\
+    $ \bm{v}$ & $m/s$ & Velocity vector \\
+    $W$ & $N$ & Weight of the quadrotor \\
+    $w$ & $m/s$ & $z$-component of the velocity vector \\
+    $\bm{x}$ & -- & State vector \\
+    $x$ & $m$ & Position coordinate in $x$-direction \\
+    $\bm{y}$ & -- & Output vector \\
+    $y$ & $m$ & Position coordinate in $y$-direction \\
+    $\bm{z} $ & -- & Transformed state vector \\
+    $z$ & -- & z-Transformation variable \\
+    $z$ & $m$ & Position coordinate in $z$-direction %[0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_latin_3}
+\end{table}
+
+% Manually add Chapter names to the header (per default not included by Latex) 
+\protect\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Symbols}
+
+\textbf{Greek Letters}
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+    \textbf{Symbol} & \textbf{Unit} & \textbf{Description} \\ [1.2ex] 
+    $\alpha$ & -- & Parameter of the discrete first order lag element \\ 
+    $\zeta$ & -- & Relative damping coefficient of the second order filter \\
+    $\bm{\eta}$ & $rad$ & Attitude vector \\
+    $\Theta$ & $rad$ & Pitch angle \\
+    $\tilde{\Theta}$ & $rad$ & Pitch angle increment \\
+    $\Theta_c$ & $rad$ & Control pitch angle \\
+    $\bm{\nu}$ & -- & Virtual control input vector \\
+    $\bm{\nu}_{\bm{\dot{v}}}$ & $m/s^2$ & Virtual control input vector of the outer loop \\
+    $\bm{\nu}_{\bm{\dot{\omega}}}$ & $rad/s^2$ & Virtual control input vector of the inner loop \\
+    $\bm{\xi}$ & $m$ & Position vector \\
+    $\Phi$ & $rad$ & Roll/Bank angle \\ %[0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_greek_1}
+\end{table}
+
+
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{1.5cm} p{10cm}} 
+    $\tilde{\Phi}$ & $rad$ & Roll angle increment \\
+    $\Phi_c$ & $rad$ & Control roll angle \\
+	$\bm{\phi}(\bm{x})$ & -- & State transformation function %[0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_greek_2}
+\end{table}
+
+\textbf{Indices}
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{10cm}} 
+    \textbf{Symbol} & \textbf{Description} \\ [1.2ex] 
+    $0$ & Initial point in time \\ 
+    $a$ & Passed through the actuator dynamics \\ 
+    $B$ & Body-fixed coordinate frame \\ 
+    $D$ & Down \\
+    $E$ & East \\ 
+    $f$ & Filtered \\ 
+    $G$ & Center of gravity \\ 
+    $G$ & Gravitational \\
+    $K$ & Kinematic coordinate frame \\
+    $N$ & North \\
+    $O$ & North-East-Down coordinate frame \\
+    $R$ & Reference point \\
+    $x$ & $x$-component of a variable \\
+	$y$ & $y$-component of a variable \\
+	$z$ & $z$-component of a variable %[0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_indices}
+\end{table}
+
+\textbf{Other Symbols}
+% Add table ([...ex] adds some extra vertical spacing after corresponding row)
+\begin{table}[H]
+  %\centering
+  \begin{tabular}{p{2.5cm} p{10cm}} 
+    \textbf{Symbol} & \textbf{Description} \\ [1.2ex] 
+    $L$ & Lie derivative operator \\ 
+	$\nabla$ & Nabla-Operator \\ %[0.5ex]  
+  \end{tabular}
+  %\caption[Sample table 1]{Sample table 1}  
+  \captionsetup{font=bf, belowskip=-0.5cm}
+  \label{table:tab_other_symbols}
+\end{table}
+
+% Manually add Chapter names to the header (per default not included by Latex) 
+\protect\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{Table of Symbols}
+
+%Insert empty page after table of symbols
+\newpage
+
+% Beginning of the core text 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Activate arabic page numbering from here on
+\pagenumbering{arabic}
+
+% Delete the word "Chapter" leaving only the number of the chapter
+\titleformat{\chapter}
+{\normalfont\chapfnt\bfseries}{\thechapter}{1em}{\chapfnt} 	% set font size
+\titlespacing*{\chapter}{0cm}{-7mm}{0cm}					% set spacing
+
+% Set subsection font size (11pt) and spacing
+\newcommand{\ssecfnt}{\fontsize{11}{14}}
+\titleformat{\subsection}
+{\normalfont\ssecfnt\bfseries}{\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0cm}{-0cm}{0cm}					% set spacing
+
+% Activate default fancy design (chapter number, chapter)
+\pagestyle{fancy} 
+\renewcommand{\chaptermark}[1]{\markboth{\ \thechapter \ #1}{}}
+
+% Change separator in the figure and table captures from "." to "-"
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+\renewcommand{\thetable}{\thechapter-\arabic{table}}
+
+
+
+\chapter{Introduction} \label{cha:introduction}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Introduction}
+
+\section{Motivation} \label{sec:motivation}
+
+The popularity of Micro Air Vehicles (MAVs) in research and industry has grown over the past years. The large interest in \acrshort{MAV}s can be explained with their potential of performing a wide range of civilian and military tasks, reaching from the investigation of hazardous regions up to agriculture mapping \cite{Ward}. One of the most popular representatives of \acrshort{MAV}s are quadrotors, belonging to the rotary-wing \acrshort{MAV}s. Their dynamic behaviour is usually of a nonlinear character. Thus, to control such an aircraft, robust control strategies have to be applied. One such strategy is called \acrfull{INDI}, which is the incremental form of the nonlinearity cancelling technique \acrfull{NDI}. The \acrshort{INDI} technique makes it possible to control an aircraft without fully modelling its dynamics. Instead, \acrshort{INDI} uses a primitive aircraft model, which eases the development and implementation of the control algorithm. In addition, \acrshort{INDI} has good properties of coping with unmodelled gust and disturbances. 
+
+\section{Contribution of the Thesis} \label{sec:contribution_ofthe_thesis}
+
+The main goal of this thesis was to implement an \acrshort{INDI} controller to control the linear acceleration of a nano-quadrotor. Furthermore, to have the ability to control the quadrotors position, the \acrshort{INDI} loop had to be augmented with a velocity as well as a position controller. For the role of the research quadrotor, a small quadrotor named Crazyflie 2.1 was employed. Besides the derivation of the control algorithm itself, this thesis covers the process of estimation of the control effectiveness terms, as well as the estimation of other parameters such as actuator dynamics time constant and thrust mapping parameter, which are necessary for proper functioning of the controller. Additionally to the hardware implementation of the control algorithm, this work describes the development of the controller as well as the quadrotor model in Simulink. Finally, it discusses the capability of the successfully implemented \acrshort{INDI} controller to cope with disturbances. The hardware version of the control algorithm was then made available to general public via official open source firmware.
+
+%- Implementation in Simulink for testing (both loops)\\
+%- Implementation on HW (outer loop)  \\
+
+\section{Structure of the Thesis} \label{sec:structure_ofthe_thesis} 
+
+This semester thesis is organized into five chapters. The introductory chapter is followed by the second chapter, containing the theoretical background. Here, after introducing dynamic equations of motion of an aircraft (\ref{sec:eqs_motion}), \acrshort{NDI} (\ref{sec:ndi}) and \acrshort{INDI} (\ref{sec:indi}) control algorithms are discussed. The \acrshort{INDI} technique is then used to derive the attitude (\ref{subsec: indi_inner}) and position (\ref{subsec: indi_outer}) controllers for the Crazyflie quadrotor. Chapter three focuses on the implementation aspects of the \acrshort{INDI} algorithm derived in the previous chapter. It starts with a short description of the quadrotor hardware (\ref{sec:research_quadrotor}). In the second part (\ref{sec:simulink_model}) of the third chapter, simplified model of the Crazyflie quadrotor as well as the attitude and position controllers are developed in the Simulink environment. The third section (\ref{sec:implementation_on_hardware}) of the same chapter covers aspects that are relevant for the hardware implementation of the \acrshort{INDI} control algorithm, such as the estimation of the control effectiveness terms and thrust mapping parameter. After the controller was implemented, it was tested and validated. The test results are summarized in the fourth chapter. The final chapter contains a short conclusion of the performed work.
+
+
+\chapter{Theoretical Background} \label{cha:theoretical_background}
+
+The aim of this chapter is to provide the theoretical background which serves as a basis for some of the methods which are presented and applied in the course of this thesis. At the beginning, in section \ref{sec:eqs_motion} general \acrfull{EOM} of an aircraft are presented. These are later used to derive the control algorithm and build the Simulink model of the Crazyflie quadrotor. Sections \ref{sec:ndi} and \ref{sec:indi} describe the \acrfull{NDI} and \acrfull{INDI} methods in general. Later in this chapter (subsections \ref{subsec: indi_inner} and \ref{subsec: indi_outer}) these methods are used to derive the inner and the outer loop of the \acrshort{INDI} flight controller for the Crazyflie quadrotor.
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Theoretical Background}
+
+\section{Dynamic Equations of Motion of an Aircraft} \label{sec:eqs_motion}
+
+The dynamic equations which describe the general motion of an aircraft are usually coupled first order implicit nonlinear differential equations. However, considering a quadrotor control problem, a lot of plausible assumptions (e.g. neglecting the Coriolis and centrifugal acceleration due to the earth rotation) can be made to obtain more simplified versions of those equations. This section presents simplified general \acrshort{EOM} and describes the assumptions which were considered to derive them.
+
+For the derivation of the equations of motion the aircraft system will be assumed to be a rigid body. Such a rigid body system can be described uniquely by 12 states. Note that by taking in account additional effects, such as propulsion system dynamics, multi-body dynamics etc., the number of required state variables will increase. 
+
+Additionally to the rigid body assumption, it is also assumed that the earth is flat and non-rotating and the reference point of the sum of all external forces acting on the body corresponds to the center of gravity of the body. Thus, the linear momentum equation is written as
+\begin{equation}
+	\begin{split}
+		\sum (\bm{F}^G)_B = m \cdot \Big[ (\bm{\dot{v}}^G)_{B} + (\bm{\omega}^{OB})\times(\bm{v}^R)_{B} \Big]
+		\label{eq:lin_momentum}
+	\end{split}
+\end{equation}
+where $\sum(\bm{F}^G)_B \in \mathbb{R}^{3 \times 1}$ is the sum of the external forces acting on the system and applied to the center of gravity $G$, $m$ the mass of the body, $(\bm{\dot{v}}^G)_{B} \in \mathbb{R}^{3 \times 1}$ the linear acceleration of the point $G$, $(\bm{v}^R)_{B} \in \mathbb{R}^{3 \times 1}$ the velocity of any reference point $R$, $(\bm{\omega}^{OB}) \in \mathbb{R}^{3 \times 1}$ the angular velocity of the body-fixed frame ($B$) with respect to the \acrfull{NED} ($O$) coordinate frame. Subscript $B$ denotes that all variables are specified in the body-fixed coordinate frame.
+
+The rotational motion of a body is described with the angular momentum equation. To derive it, additionally to the assumptions made above it is also considered that the mass and the mass distribution are quasistationary, meaning $\frac{d}{dt}m=0$ and $\frac{d}{dt}(\bm{I})_B=0$ with $(\bm{I})_B$ being the inertia tensor of the body defined in the body-fixed frame. Thus, the angular momentum is
+\begin{equation}
+	\begin{split}
+		\sum (\bm{M}^G)_B = (\bm{I}^G)_B \cdot (\bm{\dot{\omega}}^{OB}) + (\bm{\omega}^{OB}) \times \Big[(\bm{I}^G)_B \cdot (\bm{\omega}^{OB})\Big]
+		\label{eq:ang_momentum}
+	\end{split}
+\end{equation}
+where $\sum (\bm{M}^G)_B \in \mathbb{R}^{3 \times 1}$ is the sum of the external moments acting on the system around the center of gravity $G$.
+
+The remaining two equations, that are necessary to fully describe the motion of a rigid body in space are the attitude differential equation and the position differential equation. The attitude differential equation describes the relationship between angular rates $p, q, r$ and derivatives of the Euler angles $\dot{\Phi}, \dot{\Theta}, \dot{\Psi}$ leading to
+\begin{equation}
+	\begin{bmatrix}
+		\dot{\Phi}\\
+		\dot{\Theta}\\
+		\dot{\Psi}
+	\end{bmatrix} =
+	\begin{bmatrix}
+    	1 & \sin\Phi\tan\Theta & \cos\Phi\tan\Theta \\
+    	0 & \cos\Phi & -\sin\Phi \\
+    	0 & \frac{\sin\Phi}{\cos\Theta} & \frac{\cos\Phi}{\cos\Theta}
+    \end{bmatrix}_B
+    \begin{bmatrix}
+		p\\
+		q\\
+		r
+	\end{bmatrix}_B
+	\label{eq:attitude_diff_eq}
+\end{equation}
+where the angular rates are related to the derivatives of the Euler angles through the \textit{strapdown matrix}.
+
+There are different options to represent the position differential equation. Here, for completeness only, it is written as a simple relationship between the change of the position coordinates in the local \acrshort{NED} frame and the velocity coordinates of the same frame
+\begin{equation}
+	\begin{bmatrix}
+		\dot{x}\\
+		\dot{y}\\
+		\dot{z}
+	\end{bmatrix}_O =
+	\begin{bmatrix}
+		V_N\\
+		V_E\\
+		V_D
+	\end{bmatrix}_O
+	\label{eq:position_diff_eq}
+\end{equation}
+
+The Equations (\ref{eq:lin_momentum})-(\ref{eq:position_diff_eq}) presented above can be used to represent a motion of a general aircraft in a three-dimensional space. Note that terms $\sum(\bm{F}^G)_B$ and $\sum (\bm{M}^G)_B$ contain all external forces and moments acting on the rigid body. Considering a general aircraft system, these could be the aerodynamic forces and moments caused by the air flow, propulsion forces and moments, forces caused by the gravitation etc.. The detailed modelling of external forces and moments is presented in sections \ref{subsec: indi_inner}, \ref{subsec: indi_outer} and \ref{sec:simulink_model}.
+
+\section{Nonlinear Dynamic Inversion} \label{sec:ndi}
+
+In this subsection, the \acrlong{NDI} method is explained. The \acrshort{NDI} approach is based on feedback linearization and is also called \textit{Input-Output Linearization}. Often, such type of controllers is involved in tracking control tasks, where the objective is to track some desired trajectory \cite{Slotine}. To derive it, consider the following nonlinear system
+\begin{subequations}
+	\begin{align}
+		&\bm{\dot{x}} = \bm{f}(\bm{x}) + \bm{G}(\bm{x})\bm{u} \label{eq:nonlin_sys1} \\
+		&\bm{y} = \bm{h}(\bm{x}) \label{eq:nonlin_sys2}
+	\end{align}
+	\label{eq:nonlin_sys}
+\end{subequations}
+\hspace{-5pt}where $\bm{x} \in \mathbb{R}^{n \times 1}$ is the state vector, $\bm{u} \in \mathbb{R}^{m \times 1}$ the input vector, $\bm{y} \in \mathbb{R}^{m \times 1}$ the output vector, $\bm{f}(\bm{x}) \in \mathbb{R}^{n \times 1}$ and $\bm{h}(\bm{x}) \in \mathbb{R}^{m \times 1}$ nonlinear vector fields and $\bm{G} \in \mathbb{R}^{m \times n}$ an input matrix. Note that the system presented in Equations (\ref{eq:nonlin_sys}) is affine in the input, which is not allways fulfilled. Using a state transformation $\bm{z} = \bm{\phi}(\bm{x})$, the affine system from Equation \ref{eq:nonlin_sys1} can be transformed into a \textit{normal} (\textit{canonical}) representation. 
+
+The core idea behind the input-output linearization method is to find a direct relationship between the desired system output and the control input. After the relationship is found it is inverted to generate the control law. To derive this relationship the output $\bm{y}$ is differentiated until the input $\bm{u}$ appears
+\begin{equation}
+	\begin{split}
+		\bm{\dot{y}} &=  \frac{\partial\bm{y}}{\partial t} = \frac{\partial\bm{h}(\bm{x})}{\partial x} \frac{\partial\bm{x}}{\partial t} = \frac{\partial\bm{h}(\bm{x})}{\partial x} \dot{\bm{x}} = \nabla\bm{h}(\bm{x}) [\bm{f}(\bm{x}) + \bm{G}(\bm{x})\bm{u}] \\
+		&= \nabla\bm{h}(\bm{x}) \bm{f}(\bm{x}) + \nabla\bm{h}(\bm{x}) \bm{G}(\bm{x})\bm{u} = L_{\bm{f}} \bm{h}(\bm{x}) + L_{\bm{G}} \bm{h}(\bm{x}) \bm{u} 
+		\label{eq:dy}
+	\end{split}
+\end{equation}
+
+In Equation (\ref{eq:dy}) $L_{\bm{f}} \bm{h}(\bm{x})$ is called Lie derivative of $\bm{h}(\bm{x})$ with respect to $\bm{f}(\bm{x})$. The Lie derivative is defined as $L_{\bm{f}} \bm{h}(\bm{x}) = \nabla\bm{h}(\bm{x}) \bm{f}(\bm{x})$ with $\nabla$ being the Nabla operator. Thus, it represents a directional derivative of $\bm{h}(\bm{x})$ along the direction of the vector field $\bm{f}(\bm{x})$. If the term $L_{\bm{G}} \bm{h}(\bm{x})$ is nonzero, the relationship between input and output is
+\begin{equation}
+	\begin{split}
+		\bm{\dot{y}} = L_{\bm{f}} \bm{h}(\bm{x}) + L_{\bm{G}} \bm{h}(\bm{x}) \bm{u} 
+		\label{eq:dy_u_rel}
+	\end{split}
+\end{equation}
+
+Now Equation (\ref{eq:dy_u_rel}) can be used to formulate the control law by solving it for $\bm{u}$ and substituting $\bm{\dot{y}}$ with $\bm{\nu}$
+\begin{equation}
+	\begin{split}
+		\bm{u} = (L_{\bm{G}}\bm{h}(\bm{x}))^{-1} (\bm{\nu} - L_{\bm{f}}\bm{h}(\bm{x}))
+		\label{eq:u_control_law}
+	\end{split}
+\end{equation}
+The variable $\bm{\nu}$ is called a \textit{virtual control input} and represents the desired output of the system. 
+
+In the example provided above the input-output relationsip was found after the first differentiation of the output $\bm{y}$. But if after the first differentiation the term $L_{\bm{G}}\bm{h}(\bm{x})$ is zero, output $\bm{y}$ has to be differentiated until the Lie derivative with respect to $\bm{G}$ is nonzero. The $i$-th derivative of the output is then
+\begin{equation}
+	\begin{split}
+		\frac{\partial^i\bm{y}}{\partial t} = \frac{\partial^i\bm{h}(\bm{x})}{\partial t} = L_{\bm{f}}^i \bm{h}(\bm{x}) + L_{\bm{G}} L_{\bm{f}}^{i-1} \bm{h}(\bm{x}) \bm{u}
+		\label{eq:dy_i}
+	\end{split}
+\end{equation}
+with $i$ being the \textit{relative degree} of the system. Using Equation (\ref{eq:dy_i}) to formulate the control law leads to the following expression for the control input $\bm{u}$
+\begin{equation}
+	\begin{split}
+		\bm{u} = L_{\bm{G}} L_{\bm{f}}^{i-1} \bm{h}(\bm{x})^{-1} (\bm{\nu} - L_{\bm{f}}^i\bm{h}(\bm{x})) 
+		\label{eq:u_control_law_i}
+	\end{split}
+\end{equation}
+Thus, Equation (\ref{eq:u_control_law_i}) applied to Equation (\ref{eq:dy_i}) yields the simple linear relation
+\begin{equation}
+	\begin{split}
+		\bm{y}^i = \bm{\nu}
+		\label{eq:lin_relation}
+	\end{split}
+\end{equation}
+The \acrshort{NDI} method was widely adopted for civil and military aircrafts and has numerous of extensions \cite{Horn}. Nevertheless, it has some drawbacks. The major one is that the control law derived using the \acrshort{NDI} approach is dependent on the full system dynamics model \cite{Sieberling}. The equations of motion of an aircraft usually have a complicated nonlinear character. Thus, describing complex physical phenomena often leads to the inconsistency between the real aircraft and its mathematical representation used in the model. As some of those inconsistencies are inevitable there is a need to build a control law which performance is less dependent on the uncertainties of the model. A method called \acrlong{INDI} can be used to achieve this, it is discussed in the next subsection.
+
+\section{Incremental Nonlinear Dynamic Inversion} \label{sec:indi}
+
+\acrshort{INDI} is an incremental form of \acrshort{NDI} for which the lack of the accurate system dynamics model does not critically affect the performance of the control algorithm \cite{Silva}. At first the general form of the \acrshort{INDI} is presented in \ref{subsec:indi_general}, then the inner and outer control loops for the Crazyflie quadrotor are derived in \ref{subsec: indi_inner} and \ref{subsec: indi_outer}.
+
+\subsection{General INDI} \label{subsec:indi_general}
+
+Assuming that the output variable corresponds to the state varible ($\bm{y}=\bm{h}(\bm{x})=\bm{x}$), the incremental form of the system can be obtained by taking a Taylor series expansion of the Equation \ref{eq:nonlin_sys1}
+\begin{equation}
+	\begin{split}
+		\bm{\dot{x}} &= \bm{f}(\bm{x}_0) + \bm{G}(\bm{x}_0)\bm{u}_0 \\
+		&+ \frac{\partial}{\partial \bm{x}} [\bm{f}(\bm{x}) + \bm{G}(\bm{x})\bm{u}] \bigg|_{\bm{x}=\bm{x}_0,\bm{u}=\bm{u}_0} (\bm{x}-\bm{x}_0) \\
+		&+ \frac{\partial}{\partial \bm{u}} [\bm{f}(\bm{x}) + \bm{G}(\bm{x})\bm{u}] \bigg|_{\bm{x}=\bm{x}_0,\bm{u}=\bm{u}_0} (\bm{u}-\bm{u}_0) 
+		\label{eq:nonlin_sys_taylor}
+	\end{split}
+\end{equation}
+The first term on the right side of the Equation \ref{eq:nonlin_sys_taylor} is $\bm{\dot{x}_0}$. Also, evaluating the differentiation of the third term leads to 
+\begin{equation}
+	\begin{split}
+		\bm{\dot{x}} &= \bm{\dot{x}}_0 \\ 
+		&+ \frac{\partial}{\partial \bm{x}} [\bm{f}(\bm{x}) + \bm{G}(\bm{x})\bm{u}] \bigg|_{\bm{x}=\bm{x}_0,\bm{u}=\bm{u}_0} (\bm{x}-\bm{x}_0) \\
+		&+ \bm{G}(\bm{x}_0) (\bm{u}-\bm{u}_0) 
+		\label{eq:nonlin_sys_taylor2}
+	\end{split}
+\end{equation}
+The second term of the Equation \ref{eq:nonlin_sys_taylor2} contains partial derivative with respect to the state vector. Considering very small time increments of the controller loop and applying the \textit{principle of time scale separation} the second term vanishes. This is a valid assumption if the dynamics of the actuators are fast compared with the dynamics of the system \cite{Silva}. Thus, Equation \ref{eq:nonlin_sys_taylor2} is further simplified to 
+\begin{equation}
+	\begin{split}
+		\bm{\dot{x}} = \bm{\dot{x}}_0 + \bm{G}(\bm{x}_0) (\bm{u}-\bm{u}_0) 
+		\label{eq:nonlin_sys_indi}
+	\end{split}
+\end{equation}
+By solving Equation \ref{eq:nonlin_sys_indi} for $\bm{u}$ and substituting $\bm{\dot{y}}$ with $\bm{\nu}$, the \acrshort{INDI} control law is obtained
+\begin{equation}
+	\begin{split}
+		\bm{u} = \bm{u}_0 + \bm{G}(\bm{x}_0)^{-1} (\bm{\nu} - \bm{\dot{x}}_0)
+		\label{eq:u_control_law_indi}
+	\end{split}
+\end{equation}
+where $\bm{\dot{x}}_0$ is a measurable value from the previous step, $\bm{u_0}$ the control input from the previous step, $\bm{\nu}$ the reference value and $\bm{G}(\bm{x}_0)$ the control effectiveness matrix. With $\bm{\Delta u}=\bm{u}-\bm{u}_0$ the control law from Equation \ref{eq:u_control_law_indi} represents an incremental version of Equation \ref{eq:u_control_law}. Instead of computing the complete control input command $\bm{u}$, this control law results in computing the increment of the control input $\bm{\Delta u}$ and adding it to the previous value $\bm{u}_0$. As it is less dependent on the model of the system dynamics, it is able to increase the robustness of the system \cite{Sieberling}.
+
+\subsection{Inner loop INDI for a Quadrotor} \label{subsec: indi_inner}
+
+In this subsection, using theory from \ref{subsec:indi_general} the inner loop \acrshort{INDI} controller is derived to control angular acceleration of the Crazyflie quadrotor. The derivation of the inner loop, as well as the outer loop controllers is based on the \acrshort{INDI} controller architecture introduced by Smeur et al. \cite{Smeur1}, \cite{Smeur2}. Equation \ref{eq:ang_momentum} from section \ref{sec:eqs_motion} serves as a basis for this derivation. The desired variable to be controlled by the inner loop \acrshort{INDI} is the angular acceleration of the quadrotor in the body-fixed coordinate frame. As in the case of a real quadrotor control problem the value of the thrust can be seen as an output of the dynamic system, it makes sense to incorporate thrust as a control variable into the control law as well. Thus, the angular momentum Equation \ref{eq:ang_momentum} is augmented with the total thrust $T$ of all four rotors \cite{Smeur2}. As only the body-fixed frame is used in the following control law derivation, the subscripts $B$ are not used in this subsection. Furthermore, all external forces and moments apply to the center of gravity of the quadrotor, thus the superscripts $G$ are omitted. 
+Solving Equation \ref{eq:ang_momentum} for the angular acceleration results in
+\begin{equation}
+	\begin{bmatrix}
+		\dot{\bm{\omega}}\\
+		T
+	\end{bmatrix} = 
+	\underbrace{
+	\begin{bmatrix}
+		-\bm{I}^{-1} \big(\bm{\omega} \times \bm{I} \bm{\omega} \big)\\
+		0
+	\end{bmatrix}}_\text{$\bm{F}(\bm{\omega})$} +
+	\underbrace{	
+	\begin{bmatrix}
+		\bm{I}^{-1} \big( \bm{M}_G + \bm{M}_{A} +  \bm{M}_{P} \big)\\
+		T
+	\end{bmatrix}}_\text{$\bm{G}(\bm{\omega}, \bm{\Omega}, \bm{\dot{\Omega}})$}
+	\label{eq:main_eom_indi_inner}
+\end{equation}
+where $\bm{\omega}$ and $\dot{\bm{\omega}}$ are angular velocity and acceleration of the body-fixed frame ($B$) with respect to the \acrshort{NED} ($O$) coordinate frame, $\bm{M}_G$ the gravitational moment, $\bm{M}_A$ the aerodynamic moment and $\bm{M}_P$ the propulsion moment. The vector $\bm{\Omega}$ contains angular velocities of all four rotors and serves as an input variable of the system. It is assumed that the gravitational force is applied to the center of gravity of the quadrotor and does not cause any moment around it. Due to the absence of the aerodynamic moment, this term is also omitted and can be seen as a disturbance \cite{Smeur1}. The remaining propulsion moment is written as $\bm{M}_P=\bm{M}_C-\bm{M}_{gyro}$ where $\bm{M}_C$ is the control moment generated by the rotors and $\bm{M}_{gyro}$ the moment containing the gyroscopic effect of the rotors. This two moments can be explicitly written as
+\begin{equation}
+	\bm{M}_C = 	
+	\begin{bmatrix}
+		-bk_F & bk_F & bk_F & -bk_F \\
+		lk_F & lk_F & -lk_F & -lk_F \\
+		k_M & -k_M & k_M & -k_M 
+	\end{bmatrix} \bm{\Omega}
+	\label{eq:m_c}
+\end{equation}
+\begin{equation}
+	\begin{split}
+	\bm{M}_{gyro} = 
+	\begin{bmatrix}
+		0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & 0 \\
+		I_{rzz} & -I_{rzz} & I_{rzz} & -I_{rzz}
+	\end{bmatrix} \bm{\dot{\Omega}}	+
+	\begin{bmatrix}
+		\bm{\omega}_y & 0 & 0 \\
+		0 & \bm{\omega}_x & 0 \\
+		0 & 0 & 0 
+	\end{bmatrix}	
+	\begin{bmatrix}
+		I_{rzz} & -I_{rzz} & I_{rzz} & -I_{rzz} \\
+		-I_{rzz} & I_{rzz} & -I_{rzz} & I_{rzz} \\
+		0 & 0 & 0 & 0 
+	\end{bmatrix} \bm{\Omega}
+	\label{eq:m_gyro}
+	\end{split}
+\end{equation}
+where $I_{rzz}$ is an element of the inertia matrix $I_{r}$ of the rotor, $l$ and $b$ lever arms as denoted in the Figure \ref{fig:frames_leverarms}, $k_F$ and $k_M$ force and moment constants of the rotors.
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.8\textwidth]{figs/frames.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Crazyflie 2.1 nano-quadrotor with indicated lever arms of the motors]{Image of the Crazyflie 2.1 quadrotor adopted from \cite{bitcraze} with indicated lever arms of the motors.}
+	\label{fig:frames_leverarms}
+\end{figure}
+As already explained in the previous subsection, to derive the incremental control law the Taylor series expansion is perfromed on Equation \ref{eq:main_eom_indi_inner}
+\begin{equation}
+	\begin{split}
+		\begin{bmatrix}
+			\bm{\dot{\omega}}\\
+			T
+		\end{bmatrix} &= \bm{F}(\bm{\omega}_0) + \bm{G}(\bm{\omega}_0, \bm{\Omega}_0, \bm{\dot{\Omega}}_0) \\
+		&+ \frac{\partial}{\partial \bm{\omega}} \big[\bm{F}(\bm{\omega}) + \bm{G}(\bm{\omega}_0, \bm{\Omega}_0, \bm{\dot{\Omega}}_0) \big] \bigg| _{\bm{\omega}=\bm{\omega}_0} (\bm{\omega}-\bm{\omega}_0) \\
+		&+ \frac{\partial}{\partial \bm{\Omega}} \big[\bm{G}(\bm{\omega}_0, \bm{\Omega}, \bm{\dot{\Omega}}_0) \big] \bigg| _{\bm{\Omega}=\bm{\Omega}_0} (\bm{\Omega}-\bm{\Omega}_0) \\
+		&+ \frac{\partial}{\partial \bm{\dot{\Omega}}} \big[\bm{G}(\bm{\omega}_0, \bm{\Omega}_0, \bm{\dot{\Omega}}) \big] \bigg| _{\bm{\dot{\Omega}}=\bm{\dot{\Omega}}_0} (\bm{\dot{\Omega}}-\bm{\dot{\Omega}}_0)
+		\label{eq:main_eom_indi_inner_taylor}
+	\end{split}
+\end{equation}
+By applying differentiation and rewriting some of the terms, the following equation is obtained:
+\begin{equation}
+	\begin{bmatrix}
+		\bm{\dot{\omega}}\\
+		T
+	\end{bmatrix} = 
+	\begin{bmatrix}
+		\bm{\dot{\omega}}_0\\
+		T_0
+	\end{bmatrix} + \bm{G}_1(\bm{\Omega} - \bm{\Omega}_0) + T_s \bm{G}_2(\bm{\dot{\Omega}} - \bm{\dot{\Omega}}_0)
+	\label{eq:main_eom_indi_inner_lin}
+\end{equation}
+The first term of the Equation \ref{eq:main_eom_indi_inner_lin} is the angular acceleration based on the current angular rates $\bm{\omega}_0$ and inputs $\bm{\Omega}_0$. $T_0$ is the current thrust value. The last term on the right side of the Equation \ref{eq:main_eom_indi_inner_lin} is scaled with the sample time $T_s$ which is introduced only to simplify further mathematical transformations. The expressions of the control moment $\bm{M}_C$ and the gyroscopic moment of the rotors $\bm{M}_{gyro}$ have been summarized to control effectiveness matrices $\bm{G}_1$ and $\bm{G}_2$ which are defined as
+\begin{equation}
+	\bm{G}_1 (\bm{\omega}) =
+	\begin{bmatrix}
+		\bm{I}^{-1}\begin{bmatrix}
+			-bk_F & bk_F & bk_F & -bk_F \\
+			lk_F & lk_F & -lk_F & -lk_F \\
+			k_M & -k_M & k_M & -k_M 
+		\end{bmatrix} - 	
+		\bm{I}^{-1}\begin{bmatrix}
+			\omega_y & 0 & 0 \\
+			0 & \omega_x & 0 \\
+			0 & 0 & 0 
+		\end{bmatrix}	
+		\begin{bmatrix}
+			I_{rzz} & -I_{rzz} & I_{rzz} & -I_{rzz} \\
+			-I_{rzz} & I_{rzz} & -I_{rzz} & I_{rzz} \\
+			0 & 0 & 0 & 0 
+		\end{bmatrix}\\
+			k_F \cdot \bm{1}_{1\times4}
+	\end{bmatrix}
+	\label{eq:G1}
+\end{equation}
+\begin{equation}
+	\bm{G}_2 = 
+	\begin{bmatrix}
+		-\bm{I}^{-1} T_s^{-1}\begin{bmatrix}
+			0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 \\
+			I_{rzz} & -I_{rzz} & I_{rzz} & -I_{rzz}
+		\end{bmatrix} \\
+		\bm{0}_{1\times4}
+	\end{bmatrix}
+	\label{eq:G2}
+\end{equation}
+with the terms $\bm{1}_{1\times4}$ and $\bm{0}_{1\times4}$ being $1\times4$ vectors of ones and zeros, respectively.
+
+To prepare the linearized dynamic Equation \ref{eq:main_eom_indi_inner_lin} for discrete implementation on a computing system, the discrete approximation ($z$ domain) of the derivative is used: $\bm{\dot{\Omega}} = (\bm{\Omega} - \bm{\Omega}z^{-1})T_s^{-1}$. Furthermore, angular acceleration $\bm{\dot{\omega}}_0$ which is obtained from the differentiated gyroscope measurements is usually noisy. Using a second order filtering can help to reduce measurement nose. At the same time such a filter introduces time delay, which has to be considered in the derivation, as it is important to have a unique delay for all variables which are used in the Taylor expansion \cite{Smeur1}. Thus, the same second order filter $H(z)$ is applied to all variables with a subscript $0$. By applying the filtering (subscript $f$) and the finite differences method to the Equation \ref{eq:main_eom_indi_inner_lin}, its discrete version results in
+\begin{equation}
+	\begin{bmatrix}
+		\bm{\dot{\omega}}\\
+		T
+	\end{bmatrix} = 
+	\begin{bmatrix}
+		\bm{\dot{\omega}}_f\\
+		T_f
+	\end{bmatrix} + (\bm{G}_1+\bm{G}_2)(\bm{\Omega} - \bm{\Omega}_f) - \bm{G}_2z^{-1}(\bm{\Omega} - \bm{\Omega}_f)
+	\label{eq:main_eom_indi_inner_lin_final}
+\end{equation}
+By solving Equation \ref{eq:main_eom_indi_inner_lin_final} for $\bm{\Omega}$ and substituting $\bm{\dot{\omega}}$ with the virtual control input $\bm{\nu}_{\bm{\dot{\omega}}}$, the control law of the inner loop is obtained
+\begin{equation}
+	\begin{split}
+		\bm{\Omega}_c = \bm{\Omega}_f + (\bm{G}_1+\bm{G}_2)^{-1} \Bigg(
+		\begin{bmatrix}
+			\bm{\nu}_{\bm{\dot{\omega}}} - \bm{\dot{\omega}}_f\\
+			\tilde{T}
+		\end{bmatrix} + \bm{G}_2z^{-1}(\bm{\Omega} - \bm{\Omega}_f) \Bigg)
+		\label{eq:indi_inner_control_law}	
+	\end{split}
+\end{equation}
+where $\bm{\Omega}_c$ is a vector of commanded rotational rates for every rotor and  $\tilde{T} = T - T_f$ and $\tilde{\bm{\Omega}} = \bm{\Omega}_c - \bm{\Omega}_f$ being thrust and propeller rates increments respectively, provided by the inner loop \acrshort{INDI}. The block diagram of the inner loop \acrshort{INDI} controller is presented in Figure \ref{fig:indi_inner_croped}.
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=1\textwidth]{figs/indi_inner_croped.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Block diagram of the inner loop \acrshort{INDI} controller]{Block diagram of the inner loop \acrshort{INDI} controller. $A(z)$ is the actuator dynamics (see \ref{subsec:actuator_dynamics}) and $H(z)$ is the second-order filter (see \ref{subsec:filtering}).}
+	\label{fig:indi_inner_croped}
+\end{figure}
+The inner \acrshort{INDI} controller which controls the angular acceleration is then augmented with two simple controllers which control the angular velocity $\bm{\omega}$ and the attitude $\bm{\eta}$ of the quadrotor (see Figure \ref{fig:pid_inner_croped}). Each of them consists of a single gain. Thus, the reference values of the \acrshort{INDI} part of the inner loop are provided by these two controllers. \begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.7\textwidth]{figs/pid_inner_croped.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Attitude controller as an augmentation of the inner loop \acrshort{INDI} controller]{Attitude controller as an augmentation of the inner loop \acrshort{INDI} controller.}
+	\label{fig:pid_inner_croped}
+\end{figure}
+
+\subsection{Outer loop INDI for a Quadrotor} \label{subsec: indi_outer}
+
+In this subsection the derivation of the outer loop \acrshort{INDI} controller is introduced. The outer loop \acrshort{INDI} controls translational acceleration of the quadrotor. Linear momentum Equation \ref{eq:lin_momentum} serves as a basis for this derivation. For the simplicity of the further transformations the derivation is performed in the \acrshort{NED} frame (subscript $O$). Thus, the Equation \ref{eq:lin_momentum} becomes
+\begin{equation}
+	\begin{split}
+		\sum (\bm{F}^G)_O = m \cdot (\bm{\dot{v}}^G)_{O}
+		\label{eq:lin_momentum_indi_outer}
+	\end{split}
+\end{equation}
+As it is assumed that all forces apply to the center of gravity of the quadrotor, the superscript $G$ is omitted in the future. Thus, solving Equation \ref{eq:lin_momentum_indi_outer} for $\bm{\dot{v}}$ and assuming that the sum of all forces acting on the quadrotor consists only of gravitational, propulsive and aerodynamic forces, the following equation is obtained
+\begin{equation}
+	\begin{split}
+		\bm{\dot{v}} = m^{-1} ((\bm{F}_G)_O + (\bm{F}_P)_O+ (\bm{F}_A)_O)
+		\label{eq:lin_momentum_indi_outer_simple}
+	\end{split}
+\end{equation}
+The aerodynamic force $(\bm{F}_A)_O$ is modelled as an unknown function of the velocity $\bm{v}$ and wind vector $\bm{\chi}$. For the gravitational force $(\bm{F}_G)_O$ the simplest one-dimensional gravity model is assumed.
+\begin{equation}
+	\begin{split}
+		(\bm{F}_A)_O = \bm{f}(\bm{v}, \bm{\chi})
+		\label{eq:Fa}
+	\end{split}
+\end{equation}
+\begin{equation}
+	\begin{split}
+		(\bm{F}_G)_O = m 
+		\begin{bmatrix}
+			0\\
+			0\\
+			g
+		\end{bmatrix}_O
+		\label{eq:Fg}
+	\end{split}
+\end{equation}
+The propulsive force $(\bm{F}_P)_O$ (produced by the rotors) has only one nonzero component if defined in the body-fixed frame. To transform it from the body-fixed to the \acrshort{NED} frame the rotation matrix $\bm{M}_{OB}$ is used. Here, the transformation from the $B$-frame to the $O$-frame is defined by the following rotation sequence: $\Phi$, $\Theta$, $\Psi$. Depending on the  rotation sequence, a different orientation coordinate causes gimbal lock. The introduced rotation sequence is suitable for horizontally oriented aircrafts as the gimbal lock is caused for $\Theta = \pm\ang{90}$. This results in the following expression for the propulsive force 
+\begin{equation}
+	\begin{split}
+		(\bm{F}_P)_O &= \bm{M}_{OB}
+		\begin{bmatrix}
+			0\\
+			0\\
+			-T
+		\end{bmatrix}_B \\ 
+		&= 
+		\begin{bmatrix}
+			c\Theta c\Psi & c\Psi s\Theta s\Phi - s\Psi c\Phi & c\Psi s\Theta c\Phi + s\Psi s\Phi\\
+			c\Theta s\Psi & s\Psi s\Theta s\Phi + c\Psi c\Phi & s\Psi s\Theta c\Phi - c\Psi s\Phi\\
+			-s\Theta & c\Theta s\Phi & c\Theta c\Phi
+		\end{bmatrix}
+		\begin{bmatrix}
+			0\\
+			0\\
+			-T
+		\end{bmatrix}_B \\
+		&= 
+		\begin{bmatrix}
+			(c\Psi s\Theta c\Phi + s\Psi s\Phi)(-T) \\
+			(s\Psi s\Theta c\Phi - c\Psi s\Phi)(-T) \\
+			(c\Theta c\Phi)(-T)
+		\end{bmatrix}_O
+		\label{eq:Fp}
+	\end{split}
+\end{equation}
+where $cx$ and $sx$ denote $\cos(x)$ and $\sin(x)$ respectively.
+
+To obtain the incremental form of the linear momentum equation, the same strategy as in the case of the inner loop derivation is applied: the Equation \ref{eq:lin_momentum_indi_outer_simple} is linearized using Taylor series expansion and neglecting higher order terms
+\begin{equation}
+	\begin{split}
+		\bm{\dot{v}} &= m^{-1} [\bm{F}_G + \bm{F}_P(\Phi_0, \Theta_0, \Psi_0, T_0)+ \bm{F}_A(\bm{v}_0, \bm{\chi}_0)]  \\		
+		&+ m^{-1} \frac{\partial}{\partial \bm{v}} \big[ \bm{F}_A(\bm{v}, \bm{\chi}_0) \big] \bigg| _{\bm{v}=\bm{v}_0} (\bm{v}-\bm{v}_0) \\
+		&+ m^{-1} \frac{\partial}{\partial \bm{\chi}} \big[ \bm{F}_A(\bm{v}_0, \bm{\chi}) \big] \bigg| _{\bm{\chi}=\bm{\chi}_0} (\bm{\chi}-\bm{\chi}_0) \\
+		&+ m^{-1} \frac{\partial}{\partial \Phi} \big[ \bm{F}_P(\Phi, \Theta_0, \Psi_0, T_0) \big] \bigg| _{\Phi=\Phi_0} (\Phi-\Phi_0) \\
+		&+ m^{-1} \frac{\partial}{\partial \Theta} \big[ \bm{F}_P(\Phi_0, \Theta, \Psi_0, T_0) \big] \bigg| _{\Theta=\Theta_0} (\Theta-\Theta_0) \\
+		&+ m^{-1} \frac{\partial}{\partial \Psi} \big[ \bm{F}_P(\Phi_0, \Theta_0, \Psi, T_0) \big] \bigg| _{\Psi=\Psi_0} (\Psi-\Psi_0) \\
+		&+ m^{-1} \frac{\partial}{\partial T} \big[ \bm{F}_P(\Phi_0, \Theta_0, \Psi_0, T) \big] \bigg| _{T=T_0} (T-T_0) \\
+		\label{eq:main_eom_indi_outer_taylor}
+	\end{split}
+\end{equation}
+The first term on the right side of the Equation \ref{eq:main_eom_indi_outer_taylor} is the acceleration at the previous time step $\bm{\dot{v}}_0$. It can be obtained from the onboard accelerometer and then tranformed to the \acrshort{NED} frame. The next two terms represent partial derivatives of the aerodynamic forces. Due to the absence of an accurate model of the aerodynamic effects, these terms are omitted and considered as disturbances. It is assumed that the change of the yaw angle $\Psi$ is small and can be neglected as well. By applying considered assumptions Equation \ref{eq:main_eom_indi_outer_taylor} is written as 
+\begin{equation}
+	\begin{split}
+		\bm{\dot{v}} = \bm{\dot{v}}_0 +  m^{-1} \bm{G}(\Phi_0, \Theta_0, \Psi_0, T_0) (\bm{u} - \bm{u}_0)
+		\label{eq:lin_momentum_indi_outer_lin}
+	\end{split}
+\end{equation}
+where
+\begin{equation}
+	\begin{split}
+		\bm{G}(\Phi_0, \Theta_0, \Psi_0, T_0) = 
+		\begin{bmatrix}
+			(-c\Psi_0 s\Theta_0 s\Phi_0 + s\Psi_0 c\Phi_0)T_0  &%
+			c\Psi_0 c\Theta_0 c\Phi_0 T_0 &%
+			c\Psi_0 s\Theta_0 c\Phi_0 + s\Psi_0 s\Phi_0 \\			
+			(-s\Psi_0 s\Theta_0 s\Phi_0 - c\Psi_0 c\Phi_0)T_0 &%
+			s\Psi_0 c\Theta_0 c\Phi_0 T_0 &% 
+			s\Psi_0 s\Theta_0 c\Phi_0 - c\Psi_0 s\Phi_0\\
+			-c\Theta_0 s\Phi_0T_0 &%
+			-s\Theta_0 c\Phi_0T_0 &%
+			c\Theta_0 c\Phi_0
+		\end{bmatrix}
+		\label{eq:G}
+	\end{split}
+\end{equation}
+and
+\begin{equation}
+	\begin{split}
+		\bm{u} = 
+		\begin{bmatrix}
+			\Phi\\
+			\Theta\\
+			T
+		\end{bmatrix}
+		\label{eq:u_outer}
+	\end{split}
+\end{equation}
+$\bm{G}(\Phi_0, \Theta_0, \Psi_0, T_0)$ is the control effectiveness matrix which is computed based on the attitude and thrust values from the previous step. $\bm{u}$ is a vector of control variables which are passed to the inner loop.
+
+The linear acceleration $\bm{\dot{v}}_0$ which is obtained from accelerometer measurements is usually noisy. By applying the same filter $H(z)$ as in the case of the inner loop derivation, the Equation \ref{eq:lin_momentum_indi_outer_lin} is given by:
+\begin{equation}
+	\begin{split}
+		\bm{\dot{v}} = \bm{\dot{v}}_f +  m^{-1} \bm{G}(\Phi_0, \Theta_0, \Psi_0, T_0) (\bm{u} - \bm{u}_f)
+		\label{eq:lin_momentum_indi_outer_lin_final}
+	\end{split}
+\end{equation}
+Solving Equation \ref{eq:lin_momentum_indi_outer_lin_final} for $\bm{u}$ and substituting $\bm{\dot{v}}$ with the virtual control variable $\bm{\nu}_{\bm{\dot{v}}}$, the control law of the outer loop is obtained
+\begin{equation}
+	\begin{split}
+		\bm{u_c} = \bm{u}_f +  m \bm{G}^{-1}(\Phi_0, \Theta_0, \Psi_0, T_0) (\bm{\nu}_{\bm{\dot{v}}} - \bm{\dot{v}}_f)
+		\label{eq:indi_outer_control_law}
+	\end{split}
+\end{equation}
+Figure \ref{fig:indi_outer_croped} shows the block diagram of the outer loop \acrshort{INDI}. In Figure \ref{fig:indi_outer_croped} $\tilde{\Phi}$ and $\tilde{\Theta}$ are increments of the roll and pitch angles which are added to the current roll and pitch angle values and then passed to the inner loop as reference values. The increments are defined as 
+\begin{subequations}
+	\begin{align}
+		\tilde{\Phi} &= \Phi_c - \Phi_f \label{eq:roll_increment} \\
+		\tilde{\Theta} &= \Theta_c - \Theta_f \label{eq:pitch_increment}
+	\end{align}
+	\label{eq:rool_pitch_increments}
+\end{subequations}
+
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=1\textwidth]{figs/indi_outer_croped.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Block diagram of the outer loop \acrshort{INDI} controller.]{Block diagram of the outer loop \acrshort{INDI} controller.}
+	\label{fig:indi_outer_croped}
+\end{figure}
+Using the same approach as with the inner loop, the outer loop which controls linear acceleration is augmented with two gains (see Figure \ref{fig:pid_outer_croped}). These gains represent two controllers which control linear velocity $\bm{v}$ and position $\xi$. 
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.8\textwidth]{figs/pid_outer_croped.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Position controller as an augmentation of the outer loop \acrshort{INDI} controller]{Position controller as an augmentation of the outer loop \acrshort{INDI} controller.}
+	\label{fig:pid_outer_croped}
+\end{figure}
+
+%Insert empty page after table of acronyms
+\newpage\null\thispagestyle{empty}\newpage
+
+\chapter{Implementation} \label{cha:implementation}
+
+This chapter describes different aspects of the practical realization of the control architecture introduced in the previous chapter. Section \ref{sec:research_quadrotor} gives an overview about the quadrotor system on which the \acrshort{INDI} outer loop controller was implemented and tested. In section \ref{sec:simulink_model} the simulation model of the Crazyflie quadrotor with implemented \acrshort{INDI} inner and outer loops is presented. Finally, in section \ref{sec:implementation_on_hardware} the process of the controller implementation on the hardware system is described. Here, additionally to the complete outer loop implementation, it is described how the already existing inner loop was modified to achieve a better performance. 
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Implementation}
+
+\section{Research Quadrotor} \label{sec:research_quadrotor}
+
+With its arm length of approx. $4~\si{\mm}$, the Crazyflie 2.1 quadrotor developed by Swedish company Bitcraze belongs to the \acrfull{MAV} class (see Figure \ref{fig:crazyflie_drone}) \cite{petricca}. Its total weight is approx. $27~\si{g}$  with a capability to increase it up to $42~\si{g}$, which makes it possible to extend the default hardware with a pair of additional extension decks of various functionality. As it is an open source project, the main firmware, development tools and other software packages are freely available. This is one of the reasons why this small quadrotor gained a lot of popularity in different academia fields, being used for tasks reaching from the classical control theory all the way down to the obstacle avoidance problems \cite{bitcraze-research}. 
+
+The Crazyflie's main application \acrfull{MCU} is STM32F405. It runs the firmware with frequency of $1000~\si{\Hz}$ and communicates with a large number of peripheral devices such as Bluetooth and long range radio, power management system \acrshort{MCU}, \acrfull{IMU} etc.. The \acrlong{IMU} consists of the 3-axis accelerometer, the 3-axis gyroscope and the high precision pressure sensor. 
+
+The quadrotor used in this project was extended with a flow deck sensor. The flow deck itself is equipped with two sensors: the optical flow sensor which measures the visual motion and the \acrfull{ToF} laser-ranging sensor which measures the range to the next object along the body-fixed z-axis of the quadrotor. By employing these sensors, the flow deck can provide estimates of the current position and linear velocity of the aircraft.
+
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.37\textwidth]{figs/crazyflie_drone.jpg}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Crazyflie 2.1 nano-quadrotor]{Crazyflie 2.1 nano-quadrotor \cite{bitcraze}.}
+	\label{fig:crazyflie_drone}
+\end{figure}
+
+\section{Simulink Model} \label{sec:simulink_model}
+
+Before implementing the outer loop of the \acrshort{INDI} controller derived in \ref{subsec: indi_outer} on the real Crazyflie quadrotor it was decided firstly to build a simulation model using the Matlab/Simulink software. Such a simulation has a number of advantages compared to the direct implementation on the hardware. The main one is, it allows one to conveniently test different model components (e.g. filtering algorithms, actuator dynamics models etc.) on their dedicated functions, facilitating the debugging process. It also can ease the process of parameter tuning of the controller. 
+
+In the framework of this thesis the Simulink model was also used to better understand the controller structure and its characteristics. Based on the simulation it was determined which of the control effectiveness terms have a greater influence on the system response and which ones can be neglected. Additionally, the simulation model provided a good overview of potential computational problems and mistakes which could lead to drastically growing values and unstable behaviour of the system. To solve some of them, saturation blocks have been used  in different places.
+
+\subsection{Quadrotor Dynamics} \label{subsec:quadrotor_dynamics}
+
+The core of the Crazyflie simulation is the model of the quadrotor dynamics. It is based on dynamic equations of motion presented in Chapter \ref{sec:eqs_motion}. Similarly to section \ref{subsec: indi_outer}, it was assumed that the sum of the forces in the linear momentum equation is composed of three components, namely gravitational, propulsive and aerodynamic. The expressions of the gravity and propulsive forces have not been changed, so the Equations \ref{eq:Fg} and \ref{eq:Fp} were adopted for the simulation model. The thrust of the quadrotor was modelled as a linear function of propeller rates $\bm{\Omega}$. Instead of using quadratic relationship between the thrust and propeller rates (which can be often found in the literature), the choice fell on the linear relationship to avoid mixing of linear relations with quadratic ones. This would make the control allocation problem more difficult, since the term which contains the effect of the propeller inertia $\bm{G_2}$ is linear. Thus, the thrust $T$ is given as: 
+\begin{equation}
+	\begin{split}
+		T = - k_F (\Omega_1 + \Omega_2 + \Omega_3 + \Omega_4)
+		\label{eq:thrust}
+	\end{split}
+\end{equation}
+where $k_F$ is the force constant of the rotors. In subsection \ref{subsec:thrust_mapping} it is shown how to estimate the thrust coefficient directly from the flight data. However, for the simulation model $k_F$ was approximated based on the assumption that the influence of the force constant of the rotors $k_F$ (considering the lever arm) on the total moment is greater than the one of the moment constant of the rotors $k_M$, and that the \textit{thrust to weight ratio} expression is $\frac{T}{W} \approx 2$ (as the real Crazyflie quadrotor is able to hover at half throttle).
+
+To account for aerodynamic effects such as drag the aerodynamic force was approximated with the following expression 
+\begin{equation}
+	\begin{split}
+		(\bm{F}_A)_B =  
+		\begin{bmatrix}
+			-k_x (u_K)_B\\
+			-k_y (v_K)_B\\
+			-k_z (w_K)_B
+		\end{bmatrix}
+		\label{eq:Fa_simulink}
+	\end{split}
+\end{equation}
+where $(u_K)_B$, $(v_K)_B$ and $(w_K)_B$ are kinematic velocities of the quadrotor along the axes $x_B$, $y_B$ and $z_B$ respectively, given in the body-fixed coordinate frame. $k_x$, $k_y$ and $k_z$ are experimentally estimated drag coefficients adopted from \cite{foerster}.
+
+The angular momentum equation used in the simulation model has the same form as defined in Equation \ref{eq:ang_momentum}. The numerical values of the inertia tensor $(\bm{I}^G)_B$ were estimated using the pendulum method in \cite{foerster}. The total external moment acting on the Crazyflie contains only the propulsive moment $\bm{M}_P$ as it is defined in \ref{subsec: indi_inner}. It consist of the control moment generated by the rotors $\bm{M}_C$  and moment containing the gyroscopic effect of the rotors $\bm{M}_{gyro}$ (see Equations \ref{eq:m_c} and \ref{eq:m_gyro}). The moment constant of the rotor was computed to fulfil the requirements on $k_F$ and $k_M$ which are described above. To obtain the numerical estimate of the propeller inertia matrix $I_{rzz}$, the propeller was approximated with a bar element. This has been shown (see \ref{subsec:simulation_results}) to be a valid assumption since the influence of the propeller inertia (due to its negligible weight) is very small.
+
+\subsection{Actuator Dynamics} \label{subsec:actuator_dynamics}
+
+The inner loop \acrshort{INDI} controller relies on the measurement of the rotor angular rates. If the actuator feedback is not available, it is possible to use its model instead. The model of the actuator dynamics was assumed to be a first order lag filter with the following transfer function defined in a continuous Laplace domain
+\begin{equation}
+	\begin{split}
+		A(s) = \frac{k}{1+Ts}
+		\label{eq:act_dynamics_c}
+	\end{split}
+\end{equation}
+where $k$ is the gain and $T$ the time constant. Section \ref{sec:implementation_on_hardware} shortly describes the process of using flight data to estimate the time constant $T$. In the Simulink model it was assumed that the actuator feedback is available, hovewer for the implementation on hardware it is necessary to have a discrete version of the transfer function in Equation \ref{eq:act_dynamics_c} (see subsection \ref{subsec:time_const_estimation} for details). Transforming it from continuous domain into discrete by applying \textit{Zero-Order Hold method} results in
+\begin{equation}
+	\begin{split}
+		A(z) = \frac{k\alpha}{z+(\alpha-1)}
+		\label{eq:act_dynamics_d}
+	\end{split}
+\end{equation}
+with $\alpha = 1-e^{\frac{-T_s}{T}}$ and sample time $T_s$. The default frequency with which the Crazyflie controller updates its state is $500~\si{\Hz}$. Thus, sampling time $T_s$ was set to the reciprocal value of the default frequency. 
+
+\subsection{Filtering} \label{subsec:filtering}
+
+As it was shown in Chapter \ref{cha:theoretical_background} (see Figures \ref{fig:indi_inner_croped} and \ref{fig:indi_outer_croped}), the inner and outer loops employ several second order filters. The main task of two of them is to reduce  noise in the measurements of the angular and linear acceleration. Other filters are applied to remaining feedback quantities. By using the same parameters for every filter, this technique accounts for the time delay which is introduced by the filters and ensures that all quantities that were fed back are from the same point in time. The general transfer function of a second order filter in continuous domain is defined by the following formula
+\begin{equation}
+	\begin{split}
+		H(s) = \frac{\omega_n^2}{s^2+2\zeta\omega_ns+\omega_n^2}
+		\label{eq:filter_c}
+	\end{split}
+\end{equation}
+with the relative damping coefficient $\zeta$ and the eigenfrequency $\omega_n$. To implement transfer function from Equation \ref{eq:filter_c} on a digital computer it must be transformed to the discrete domain. To perform this transformation \textit{bilinear transformation} (also called \textit{Tustin-Transformation}) was used. Using the bilinear transformation (with frequency warping technique), the mapping relation between $s$ and $z$ results in
+\begin{equation}
+	\begin{split}
+		s \ \widehat{=} \ \frac{\omega_n}{\tan(\omega_n\frac{T_s}{2})} \frac{1-z^{-1}}{1+z^{-1}}
+		\label{eq:filter_c}
+	\end{split}
+\end{equation}
+Thus, the discrete version of the Equation \ref{eq:filter_c} is:
+\begin{equation}
+	\begin{split}
+		H(z) = \frac{n_0 + n_1z^{-1} + n_2z^{-2}}{d_0 + d_1z^{-1} + d_2z^{-2}}
+		\label{eq:filter_d}
+	\end{split}
+\end{equation}
+where 
+\begin{subequations}
+	\begin{align}
+		n_0 &= 1 \\
+		n_1 &= 2\\
+		n_2 &= 1 \\
+		d_0 &= \frac{1}{\tan^2(\omega_n\frac{T_s}{2})} + \frac{2\zeta}{\tan(\omega_n\frac{T_s}{2})} + 1 \\
+		d_1 &= -\frac{2}{\tan^2(\omega_n\frac{T_s}{2})} + \frac{4\zeta}{\tan(\omega_n\frac{T_s}{2})} \\
+		d_2 &= \frac{1}{\tan^2(\omega_n\frac{T_s}{2})} - \frac{2\zeta}{\tan(\omega_n\frac{T_s}{2})} + 1
+	\end{align}
+	\label{eq:filter_parameters}
+\end{subequations}
+
+\subsection{Simulation Results} \label{subsec:simulation_results}
+
+This subsection shortly presents simulation results of the closed loop \acrshort{INDI} controller (consisting of the inner and outer loops). Both control loops were implemented (as depicted in Figures \ref{fig:indi_inner_croped} and \ref{fig:indi_outer_croped}) in discrete domain, the model of the Cryzyflie dynamics was implemented in continuous domain. This is usually done, because a real physical system such as a quadrotor operates in continuous time, however a control algorithm representing a cyber component always runs on a digital system with a discrete sampling rate. 
+
+The input of the overall system is a position vector. Thus, the closed loop model was tested by applying a sequence of position steps of different intervals. Figure \ref{fig:sim_outer_all} shows three plots containing responses of the outer loop controllers for the $x$-component of the position, linear velocity and linear acceleration states. % of the position $x$, the linear velocity $\dot{x}$ and the linear acceleration $\ddot{x}$. It should be noted that the gains of the position and velocity controllers can be tunsimulation_resultsed, to achieve a faster response, however that is beyond the scope of this project as the main focus was the control.
+
+The input of the inner loop is the attitude, which is computed and provided by the outer loop. Figure \ref{fig:sim_inner_all} shows the response of inner loop (for the same position step sequence as above) which controls the attitude, the angular velocity and the angular acceleration of the quadrotor. 
+
+As mentioned in the beginning of this chapter, a simulation can be used to determine terms of the model which have a greater influence on the overall controller performance. Matrix $\bm{G}_2$ of the control effectiveness term in Equation \ref{eq:indi_inner_control_law} contains only the term of the inertia tensor of the propeller $I_{rzz}$. Since $I_{rzz}$ is small, it was expected that $\bm{G}_2$ will not have a big impact on the model response. Figure \ref{fig:g2_comp} confirms this expectation, by plotting the step response of the Crazyflie model with and without considering  the gyroscopic effects of the quadrotor propellers. 
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.81\textwidth]{figs/sim_outer_all.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Response of the outer loop simulation model to a step input.]{Response of the outer loop simulation model to a step input. Blue lines represent reference values, red lines denote measured values.}
+	\label{fig:sim_outer_all}
+\end{figure}
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.81\textwidth]{figs/sim_inner_all.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Response of the inner loop simulation model to the input provided by the outer loop]{Response of the inner loop simulation model to the input provided by the outer loop. Blue lines represent reference values, red lines denote measured values.}
+	\label{fig:sim_inner_all}
+\end{figure}It can be seen that both responses are almost the same. In the next section, (see \ref{subsec:parameter_estimation_inner}) through the estimation of the control effectiveness terms using the flight data, this observation will be practically confirmed. In practice, considering only important terms, can reduce the implementation effort of a particular control algorithm.
+
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.7\textwidth]{figs/g2.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Responses of the closed loop system with and without gyroscopic effects.]{Responses of the closed loop system using simulation of the Crazyflie dynamics with and without considering the gyroscopic effects of the propellers.}
+	\label{fig:g2_comp}
+\end{figure}
+
+\section{Implementation on the Hardware} \label{sec:implementation_on_hardware}
+
+This section describes some important aspects of the controller implementation on the Crazyflie hardware. As it was mentioned at the beginning of this chapter, the inner loop \acrshort{INDI} controller was already implemented on the provided hardware. Thus, this section is mainly dedicated to the implementation of the outer loop.
+
+\subsection{Parameter Estimation of the Inner Loop} \label{subsec:parameter_estimation_inner}
+
+To ensure proper functioning of the inner loop, some of the mistakes in the already existing implementation were corrected. Additionally, the control effectiveness parameters $\bm{G_1}$ and $\bm{G_2}$ were reestimated with a new flight data. For the matrix $\bm{G_1}$ it was assumed that it does not change over the operational domain and can be considered as static. 
+
+To estimate model parameters of a quadrotor two strategies can be applied: estimation through measurements of each parameter that is part of the control effectiveness terms and estimation with flight data. Using the first strategy, requires additional measuring equipment to achieve accurate results. By contrast, having access only to \acrshort{IMU} data and pursuing the second approach, can reduce the amount of effort and also lead to plausible results \cite{hamel}. To collect the flight data (gyroscope measurements $\bm{\omega}$ and actuator inputs $\bm{\Omega}$), the only requirement is that the quadrotor has a functioning controller (e.g. PID controller) to perform flights. After the first estimates of the control effectiveness parameters are obtained, further flight can be performed with the \acrshort{INDI} controller.  
+
+Equation \ref{eq:main_eom_indi_inner_lin_final} serves as a basis for the  parameter estimation. Since the existing implementation of the inner loop does not include the increment term of the thrust, Equation  \ref{eq:main_eom_indi_inner_lin_final} reduces to 
+\begin{equation}
+	\bm{\dot{\omega}}_f = 
+	\begin{bmatrix}
+		\bm{G}_1 & \bm{G}_2
+	\end{bmatrix} 
+	\begin{bmatrix}
+		\bm{\Omega}_{f,a}\\
+		\bm{\dot{\Omega}}_{f,a}
+	\end{bmatrix} 	
+	\label{eq:inner_indi_estimation}
+\end{equation}
+Note that the terms $\bm{\Omega}_{f,a}$ and $\bm{\dot{\Omega}}_{f,a}$ are passed through the actuator dynamics $A(s)$ (subscript ``a''). Furthermore, the Equation \ref{eq:inner_indi_estimation} is differentiated to amplify high frequencies of the signal for a better parameter estimation performance. Differentiation works like a high-pass filter, passing through only fast changing portion of the signal (e.g. fast and sharp maneuvers). It also eliminates bias of the signal. Considering these changes, Equation \ref{eq:inner_indi_estimation} results in
+\begin{equation}
+	\bm{\ddot{\omega}}_f = 
+	\begin{bmatrix}
+		\bm{G}_1 & \bm{G}_2
+	\end{bmatrix} 
+	\begin{bmatrix}
+		\bm{\dot{\Omega}}_{f,a}\\
+		\bm{\ddot{\Omega}}_{f,a}
+	\end{bmatrix} 	
+	\label{eq:inner_indi_estimation_diff}
+\end{equation}
+When the log data is available, the \textit{least squares} approach can be applied to find solution of the Equation \ref{eq:inner_indi_estimation_diff}.
+
+To confirm the observation that $\bm{G_2}$ term has a very small influence on the overall control effectiveness, made in \ref{subsec:simulation_results}, contributions of both terms ($\bm{G_1}$ and $\bm{G_2}$) were compared. Figure \ref{fig:g2_comparison} shows the contribution of the estimated $\bm{G_1}$ and $\bm{G_2}$ terms to the yaw component of the differentiated angular acceleration. Clearly, the contribution of $\Delta\ddot{\Omega}_z \cdot \bm{G_2}$ is noticeably smaller than the one of $\Delta\dot{\Omega}_z \cdot \bm{G_1}$.
+
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.83\textwidth]{figs/g_contribution.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Contribution of control effectiveness terms to the angular acceleration]{Contribution of the estimated $\bm{G_1}$ and $\bm{G_2}$ terms to the yaw component of the angular acceleration. $\omega_z$ and $\Omega_z$ were obtained from the flight data.}
+	\label{fig:g2_comparison}
+\end{figure}
+
+\subsection{Estimation of the Actuator Dynamics Time Constant} \label{subsec:time_const_estimation}
+
+The \acrshort{INDI} controller derived in Chapter \ref{cha:theoretical_background} controls the Crazyflie quadrotor by adding increments of the propeller rates to the current propeller rates. Unfortunately, the hardware of the quadrotor does not support the measurement of the propeller rates. Thus, to be able to feedback the propeller rates they are passed through the actuator dynamics model. The feedback of the propeller rates is then obtained as shown in Figure \ref{fig:actuator}. Here, $A(z)$ is the real and unknown actuator dynamics and $A'(z)$ is the model of the actuator dynamics approximated with a first order lag element (as shown in \ref{subsec:actuator_dynamics}).
+
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.7\textwidth]{figs/actuator_croped.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Estimation of the actuator state in case of the missing actuator feedback]{Estimation of the actuator state in case of the missing actuator feedback.}
+	\label{fig:actuator}
+\end{figure}
+
+If the transfer function of the actuator $A'(z)$ is assumed to be of the first order, the only unknown parameter is the time constant $T$ (as it is assumed that the commanded propeller rates are not amplified by the actuator, the gain $k$ is simply $1$). To estimate the time constant $T$, propeller rates were measured for different step inputs. Finally, the general form of the first order lag element was fitted to the measured data. 
+
+To perform the measurements a tachometer setup was used. The working principle of the setup is as follows: an \acrfull{IR} transmitter emits light which is continuously detected by an \acrshort{IR} receiver. The propeller of the quadrotor is then placed in such a way that when it rotates, every pass of its blades prevents the infrared light passing from the emitter to the receiver. This triggers an interrupt on the microcontroller which counts the passes of the propeller.
+
+The transfer function of the first order lag element (Equation \ref{eq:act_dynamics_c}) in time domain has the following form 
+\begin{equation}
+	a(t) = 	k (1 - e^{\frac{-t}{T}})
+	\label{eq:act_dynamics_time}
+\end{equation}
+The fitting is then done by minimizing the squared error between measured $a_{measured}$ and predicted $a$ data. For multiple measurements in discrete time steps the objective function $E(T)$ is defined as 
+\begin{equation}
+	E(T) = \sum_{t}^{} (a(T) - a_{measured}(T))^2
+	\label{eq:obj_function}
+\end{equation}
+$T$ is then computed using the least squares approach such that Equation \ref{eq:obj_function} is minimal. Note that in Equation \ref{eq:obj_function} $a(T)$ is a function of the time constant $T$, since it is an optimization parameter. Figure \ref{fig:actuator_dynamics_est} shows the obtained result of the optimization. Here, the red curve was fitted to the measured data (blue line). In the figure the signal contains $n=155$ samples recorded with a frequency of $200~\si{\Hz}$. The estimated value for the time constant is $T = 0.061658~\si{\s}$.
+	
+A simpler alternative to estimate the time constant would be reading off the time point at which the response reaches approx. $63.2 \%$ of its final value. Using this approach, the value of the time constant is approximately $0.0675~\si{\second}$, which is very close to the value estimated through solving the optimization problem.
+
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.8\textwidth]{figs/actuator_dynamic_est.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Fitting first order lag element to propeller rates measurement]{The blue line represents propeller rates obtained from a measurement. The red line is the fitted curve to the measured data. }
+	\label{fig:actuator_dynamics_est}
+\end{figure}
+
+\subsection{Estimation of the Thrust Mapping} \label{subsec:thrust_mapping}
+
+The thrust increments provided by the outer loop \acrshort{INDI} are values in  Newton. Later, in the inner loop \acrshort{INDI}, commanded thrust values are computed by adding thrust increments to the current thrust values, the result is then passed to the motor mixing algorithm. Depending on the commanded roll, pitch and yaw values, the motor mixing algorithm computes values for each rotor and sends these commands to each motor. Unfortunately, the values which are sent to the motors are not in the same units as the thrust. These values are defined in a specific range (e.g motors of the Crazyflie accept integer numbers from $0$ to $60000$). Mapping a thrust value in physical units to a motor command value is called \textit{thrust mapping} \cite{faessler}.
+
+It was assumed that the relation between the physical thrust value $T$ and the thrust value represented in motor units $T_{cmd}$ is linear. Thus, this relation can be defined as
+\begin{equation}
+	T = T_{cmd} K_{cmd}
+	\label{eq:thrust_mapping}
+\end{equation}
+with $K_{cmd}$ being the \textit{thrust mapping parameter}. This parameter can be estimated similarly to the control effectiveness parameters from the previous section, by using the flight data of a vertical flight. Next several paragraphs describe this approach in detail.  
+
+The third component of the Equation \ref{eq:indi_outer_control_law} serves as a basis for the estimation of the mapping parameter $K_{cmd}$. If a vertical flight is assumed, the angle states $\Phi$ and $\Theta$ have to be zero, which leads to the vanishing of the terms with $x$- and $y$-component of the linear acceleration $\bm{\dot{v}}$. Furthermore, instead of the thrust $T_0$ in the $G$ matrix, the specific thrust $\frac{T_0}{m}$ is used. This transformation will simplify the expression for the thrust increment $\tilde{T}$, by eliminating the mass $m$ from it. With the above assumptions Equation \ref{eq:indi_outer_control_law}  simplifies to 
+\begin{equation}
+	\tilde{T} = \dot{v}_{err,z}
+	\label{eq:t_tilde_est}
+\end{equation}
+where $\dot{v}_{err,z}$ is the $z$-component of the linear acceleration error $\dot{v}_{err}$.
+
+Replacing thrust with a thrust increment in Equation \ref{eq:thrust_mapping} and inserting it into Equation \ref{eq:t_tilde_est}, results in
+\begin{equation}
+	\tilde{T}_{cmd} = \dot{v}_{err,z} K_{cmd}^{-1}
+	\label{eq:t_tilde_est_cmd}
+\end{equation}
+
+By making use of the finite difference approximation, Equation \ref{eq:t_tilde_est_cmd} can be rewritten as
+\begin{equation}
+	\dot{T}_{cmd} = \ddot{v}_{z} K_{cmd}^{-1}
+	\label{eq:t_tilde_est_cmd_diff}
+\end{equation}
+where $T_{cmd}$ is the commanded thrust, and $\dot{v}_{z}$ the linear acceleration along the $z$-axis. Both values can be obtained from the flight data. Similarly to subsection \ref{subsec:parameter_estimation_inner}, differentiating will amplify the high-frequency portion of the signal and contribute to the elimination of the bias. Equation \ref{eq:t_tilde_est_cmd_diff} can also be obtained by differentiating Equation \ref{eq:lin_momentum_indi_outer_simple} and applying the same assumptions to it which were used earlier in this subsection. Note that to obtain realistic trend of the commanded thrust values, just before the differentiation, these values have to be passed through the actuator dynamics model $A'(s)$. Equation \ref{eq:t_tilde_est_cmd_diff} then has the following form 
+\begin{equation}
+	\dot{T}_{cmd, a} = \ddot{v}_{z} K_{cmd}^{-1}
+	\label{eq:t_tilde_est_cmd_diff_actuator}
+\end{equation}
+–––where $T_{cmd, a}$ is the thrust value filtered with the actuator dynamics model. Additionally, $\dot{T}_{cmd, a}$ was filtered with a second order filter to remove the noise for better estimation results. The least squares approach is then applied to obtain $K_{cmd}$.
+
+Figure \ref{fig:thrust_mapping} shows the results of the thrust mapping parameter estimation. The first subplot contains the trends of the quantities from Equation \ref{eq:t_tilde_est_cmd_diff_actuator}. The second subplot shows that the trend of the mapped commanded thrust $T_{cmd, a} \cdot K_{cmd}$ matches the course of the linear acceleration $\dot{v}_{z}$ for the estimated parameter $K_{cmd}$.
+ 
+\begin{figure}[h]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=1\textwidth]{figs/thrust_mapping.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Estimation of the thrust mapping parameter]{Fist subplot: mapped derivative of the commanded thrust $\dot{T}_{cmd, a}$. Second subplot: mapped commanded thrust $\dot{T}_{cmd, a}$. Values were obtained from the flight data.}
+	\label{fig:thrust_mapping}
+\end{figure}
+
+%First subplot shows the matching between the derivative of the linear acceleration $\ddot{v}_{z}$ and the mapped derivative of the commanded thrust $\dot{T}_{cmd, a}$. Second subplot shows the matching between the linear acceleration $\dot{v}_{z}$ and the mapped commanded thrust $\dot{T}_{cmd, a}$. Mapping was achieved through the estimation of the mapping parameter $K_{cmd}$. $T_{cmd, a}$ and $\dot{v}_{z}$ are values obtained from the flight data.
+
+%- Actuator Dynamics (Estimation of the time constant), plot response with estimated constant\\
+%- Thrust dynamics estimation (control allocation)\\
+%- Estimation of the control effectiveness parameters G1, G2 for inner INDI (describe performed flight to log data), plot the curve with contribution of G1, G2 to the fitting\\
+%- PD gain tuning for inner INDI (using pd\_inner\_cs(), show plots with different D-gains (e.g 25, 10 and 3) to see different damping behaviour), Before explaining gain tuning present all relevant transfer functions of the closed and open loops\\
+%- Outer loop (show new diagram of the controller)
+
+\subsection{Implementation of the Outer Loop on the Crazyflie's Hardware} \label{subsec:outer_hardware_implementation}
+
+This subsection provides several notes regarding the implementation of the outer loop on the real quadrotor. As the already existing implementation of the inner loop on the quadrotor was not including thrust increments as control inputs, the interface between the outer and the inner loops had to be adjusted. Thus, at the place, where thrust increments $\tilde{T}$ are passed to the inner loop, a complete thrust value $T_c$ (``c'' stands for ``commanded'') has to be provided.
+
+To obtain $T_c$, current thrust value $T_0$ is filtered with a second order filter $H(z)$ and passed through the model of the actuator dynamics $A'(z)$. To ensure a unique time delay in both loops, the filtering parameters ($\omega_n=8~\si{\radian/\second}$, $\zeta=0.707$) were adopted from the inner loop implementation. The result is then added to the thrust increment $\tilde{T}$, provided by the outer loop \acrshort{INDI}. This computation is graphically shown in Figure \ref{fig:outer_loop_hw}. The part of the outer loop which is different from the one used in the Simulink model (see Figure \ref{fig:indi_outer_croped}) is presented in blue color. 
+
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=1\textwidth]{figs/indi_outer_mod_croped.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Block diagram of the outer loop with adjustments]{Block diagram of the outer loop from \ref{subsec: indi_outer} with adjustments (blue) to account for the inner loop implementation with no thrust increment as input.}
+	\label{fig:outer_loop_hw}
+\end{figure}
+
+An additional aspect of the hardware implementation, which is worth to mention is the computation of the inverse of the $\bm{G}(\Phi_0, \Theta_0, \Psi_0, T_0)$ matrix. As the $\bm{G}(\Phi_0, \Theta_0, \Psi_0, T_0)$ is a square matrix, its inverse can be computed with a regular formula for the inverse of a $3 \times 3$ matrix. However, to account for possible numerical errors and vanishing of matrix terms with very small values, the inverse was implemented as a pseudoinverse (\textit{Moore-Penrose Inverse}).
+
+\chapter{Results} \label{cha:results}
+
+This chapter describes the performance of the implemented outer loop. In section \ref{sec:disturbance_rejection} the disturbance rejection is experimentally analyzed. Section \ref{sec:pos_controller_response} presents the general response of the position controller for different step inputs.
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Results}
+
+\section{Disturbance Rejection} \label{sec:disturbance_rejection}
+
+In \cite{Smeur1} was shown, that the transfer function of the inner loop \acrshort{INDI} can be simplified to the actuator dynamics $A(s)$. This section aims to show that the transfer function of the outer loop \acrshort{INDI} of a purely vertical motion in $z_O$-direction does not depend from the quadrotor dynamics terms as well and can be described solely with the actuator dynamics $A(s)$ and filtering $H(s)$ terms. To account for a general case, a disturbance rejection term $d$ was added to the examined transfer function, which made it possible to demonstrate the disturbance rejection ability of the \acrshort{INDI} in the same experiment.
+
+Figure \ref{fig:experiment_block_diag} shows the block diagram of the combined \acrshort{INDI} in $z_O$-direction. The assumptions applied to derive the block diagram are described below.
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=1\textwidth]{figs/experiment_croped.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Block diagram of the combined \acrshort{INDI}]{Block diagram of the combined \acrshort{INDI}.}
+	\label{fig:experiment_block_diag}
+\end{figure}
+
+Here, $\bm{G}_{inner}$ and $\bm{G}_{outer}$ represent the quadrotor dynamics terms of the inner and outer loop respectively. If no roll and pitch motion ($\Phi=0$, $\Theta=0$) is assumed, the outer loop dynamics is simply $\bm{G}_{outer} = 1$. The term $d$ represents disturbance (here due to an additional weight $m_r g$). Thus, the disturbance is $d=\frac{m_r g}{m_{cf}}$. By introducing additional mass $m_r$ to the quadrotor system, the estimated terms of $\bm{G}_{inner}$ change and slightly deviate from those derived in \ref{subsec:parameter_estimation_inner}. Thus, to account for this change, the gain $K = \frac{m_{cf}}{m_{cf} + m_r}$ is introduced, where $m_{cf}=40~\si{g}$ is the mass of the Crazyflie quadrotor without the additional mass.  
+
+The transfer function of the inner loop from the block diagram in Figure \ref{fig:experiment_block_diag} is defined as: 
+\begin{equation}
+	\frac{u}{\tilde{u}} = \frac{A(z)}{1-z^{-1}A(z)H(z)}
+	\label{eq:inner_tf}
+\end{equation}
+
+Using Equation \ref{eq:inner_tf} to compute the transfer function of the outer loop and applying assumptions mentioned above, the vertical acceleration $\dot{v}_{z}$ is then given by: 
+\begin{equation}
+	\begin{split}
+	\dot{v}_{z} &= \frac{1-z^{-1}A(z)H(z)}{1+(K-1)z^{-1}A(z)H(z)}d + \frac{KA(z)}{1+(K-1)z^{-1}A(z)H(z)} \dot{v}_{z,ref} \\
+	&= P^{-1}[1-z^{-1}A(z)H(z)]d + P^{-1}KA(z)\dot{v}_{z,ref}
+	\label{eq:experiment_tf}
+	\end{split}
+\end{equation}
+with $P = 1+(K-1)z^{-1}A(z)H(z)$.
+
+The goal of the experiment was to compare the vertical acceleration of the quadrotor $\dot{v}_{z,measured}$, measured by the accelerometer during the test flight, with the analytically computed term $\dot{v}_{z}$ from Equation \ref{eq:experiment_tf}, given the disturbance $d$ and the reference acceleration $\dot{v}_{z,ref}$. Therefore, the same reference value $\dot{v}_{z,ref}$ was provided to the \acrshort{INDI} controller implemented on the real Crazyflie as well as to the analytical transfer function from Equation \ref{eq:experiment_tf}. Ten experiments were performed (see Figure \ref{fig:mean_std}), in which the quadrotor was disturbed twice during its flight with the additional mass $m_r=5\si{\g}$. The disturbance weight $m_rg$ was applied in the form of a step function, by placing it on the top of the Crazyflie above its center of gravity. After aprox. $10~\si{\s}$ after placing the mass, it was removed from the quadrotor. The controller was running at $500~\si{\Hz}$.
+
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.9\textwidth]{figs/mean_std.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Measured acceleration from ten experiments]{Mean $\mu$ and standard deviation $\sigma$ from ten experiments is shown for the measured acceleration $\dot{v}_{z,measured}$.}
+	\label{fig:mean_std}
+\end{figure}
+
+Figure \ref{fig:experiment_plot} shows the result of this experiment for one of the performed repetitions.
+
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.9\textwidth]{figs/disturbance_rej.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Response of the vertical acceleration of the outer loop \acrshort{INDI}]{Response of the vertical acceleration of the outer loop \acrshort{INDI} in an experimental flight with disturbance}
+	\label{fig:experiment_plot}
+\end{figure}
+
+In the figure above two cases can be distinguished: the moment in which the additional weight is applied and the moment when the weight is removed. The moment when the disturbance $d$ occurs is characterized by the large difference (yellow spike in positive direction) between the measured acceleration and the reference acceleration. Similarly, the moment when the weight is removed is characterized by the large spike in the negative direction. In both cases, after approx. half a second the measured acceleration $\dot{v}_{z,measured}$ tracks the analytically computed acceleration $\dot{v}_{z}$ from Equation \ref{eq:experiment_tf}. This result confirms the hypothesis made at the beginning of this section, the outer loop behaviour with no roll and pitch motion indeed corresponds to the analytically derived transfer function in \ref{eq:experiment_tf}. It can be described solely with the actuator dynamics $A(s)$ and filtering $H(s)$ terms. The performed experiment also demonstrates that the \acrshort{INDI} controller is quite effective in dealing with disturbances.  
+
+\section{Position Controller Response} \label{sec:pos_controller_response}
+
+As on the top level the control of the Crazyflie quadrotor (with the implemented outer loop) works by providing the reference position to the position controller, this section briefly shows the response of the position controller for different step inputs. The position and velocity controllers which augment the outer loop \acrshort{INDI} consist solely of proportional gains, which were manually tuned to achieve stable responses. 
+
+Figure \ref{fig:results_responses} contains two subplots with responses of the position and velocity controllers respectively. In the first subplot the response to position steps in $x$-direction of different length is depicted. Second subplot shows the corresponding response of the velocity controller.
+
+\begin{figure}[H]
+	\centering 
+	\begin{tikzpicture}
+		\node[inner sep=0pt] (crazyflie_drone) at (0,0) {
+		\includegraphics[width=0.9\textwidth]{figs/results_responses.pdf}};
+	\end{tikzpicture}
+	% Figure description is centered aligned
+	\captionsetup{justification=centering, singlelinecheck=off, font=bf, belowskip=-0.5cm}
+	\caption[Responses of the position and velocity controllers obtained from a test flight]{Responses of the position controller (first subplot) and the velocity controller (second subplot) obtained from a test flight.}
+	\label{fig:results_responses}
+\end{figure}
+
+An interesting aspect is that the dynamics in $x$- and $y-$direction is expected to be different compared to the one in $z-$direction. This is due to the fact, that in the first case, the attitude controller serves as an ``actuator'', however in the second case, the propellers are actuators. Both actuator types have different dynamics. 
+
+
+%- To make the controller work a minimal knowledge of the system dynymics is need. Nevertherless G1, G2 still have to estimated accuratly because this 2 parameters do have inpact on the controller performance. \\
+
+
+\chapter{Discussion} \label{cha:discussion}
+
+In this semester thesis, the \acrfull{INDI} control algorithm was discussed on the example of the Crazyflie quadrotor. In the first part, a simplified model of the Crazyflie quadrotor was developed in the Simulink environment. Both, the inner loop (attitude controller) and the outer loop (position controller) were then derived and subsequently simulated on this simplified model. In the second part, the outer loop was implemented on the embedded hardware of the Crazyflie. To implement the algorithm, different parameters such as: actuator dynamics time constant, control effectiveness terms, etc. were estimated using the flight data from test flights. Finally, the implemented outer loop was successfully tested on the ability to cope with disturbances. Working control algorithm was then made available to general public via official open source firmware of the Crazyflie quadrotor.
+
+The \acrshort{INDI} approach has shown itself to be straightforward in the implementation, since most parameters (e.g. control effectiveness, thrust mapping) can be estimated from the flight data using the onboard sensors and do not require complex methods based on experimental measurements. 
+
+Another advantage of \acrshort{INDI} is the ability to reject disturbances. Unmodelled dynamics and disturbances are measured with the angular (inner loop) and linear (outer loop) acceleration. This means that in comparison to the \acrfull{NDI} method, there is no need for complex modelling for \acrshort{INDI}. As an example, the most part of the outer loop dynamics was modelled knowing just the thrust model and the relations between different coordinate frames. In the previous chapter it was experimentally shown, that even this knowledge can be unnecessary in some flight modes and the outer loop behaviour can be described only by the actuator and filtering dynamics, as it was shown for the case of the purely vertical motion.
+
+These characteristics make \acrshort{INDI} a flexible and promising control algorithm for Micro Air Vehicles (MAV). 
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy}
+\chaptermark{Discussion}
+
+
+
+\newpage
+
+% Activate and reset roman page numbering
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% Add references
+\renewcommand\bibname{References}		% Rename Bibliography to References
+\bibliographystyle{unsrt}
+\bibliography{Lit/Literature}
+
+% Manually add Chapter names to the header (per default not included by Latex)
+\thispagestyle{fancy_beginning}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\chaptermark{References}
+
+%\chapter*{Appendix} \label{sec:appendix}
+%% Add Appendix chapter manually to the Table of Contents because Latex doesn't automatically include nonnumerated (...*) chapters/sections to the TOC
+%\addcontentsline{toc}{chapter}{Appendix}
+
+%% Manually add Chapter names to the header (per default not included by Latex)
+%\thispagestyle{fancy_beginning}
+%\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+%\chaptermark{Appendix}
+
+% End of the document
+\end{document}
+

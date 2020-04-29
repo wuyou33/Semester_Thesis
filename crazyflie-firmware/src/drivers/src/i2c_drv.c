@@ -180,19 +180,11 @@ static const I2cDef deckBusDef =
   .gpioAF             = GPIO_AF_I2C1,
   .dmaPerif           = RCC_AHB1Periph_DMA1,
   .dmaChannel         = DMA_Channel_1,
-#ifdef USDDECK_USE_ALT_PINS_AND_SPI
-  .dmaRxStream        = DMA1_Stream5,
-  .dmaRxIRQ           = DMA1_Stream5_IRQn,
-  .dmaRxTCFlag        = DMA_FLAG_TCIF5,
-  .dmaRxTEFlag        = DMA_FLAG_TEIF5,
-#else
   .dmaRxStream        = DMA1_Stream0,
   .dmaRxIRQ           = DMA1_Stream0_IRQn,
   .dmaRxTCFlag        = DMA_FLAG_TCIF0,
   .dmaRxTEFlag        = DMA_FLAG_TEIF0,
-#endif
 };
-
 
 I2cDrv deckBus =
 {
@@ -328,8 +320,8 @@ static void i2cdrvInitBus(I2cDrv* i2c)
 
   i2cdrvDmaSetupBus(i2c);
 
-  i2c->isBusFreeSemaphore = xSemaphoreCreateBinaryStatic(&i2c->isBusFreeSemaphoreBuffer);
-  i2c->isBusFreeMutex = xSemaphoreCreateMutexStatic(&i2c->isBusFreeMutexBuffer);
+  i2c->isBusFreeSemaphore = xSemaphoreCreateBinary();
+  i2c->isBusFreeMutex = xSemaphoreCreateMutex();
 }
 
 static void i2cdrvdevUnlockBus(GPIO_TypeDef* portSCL, GPIO_TypeDef* portSDA, uint16_t pinSCL, uint16_t pinSDA)
@@ -649,11 +641,7 @@ void __attribute__((used)) I2C1_EV_IRQHandler(void)
   i2cdrvEventIsrHandler(&deckBus);
 }
 
-#ifdef USDDECK_USE_ALT_PINS_AND_SPI
-void __attribute__((used)) DMA1_Stream5_IRQHandler(void)
-#else
 void __attribute__((used)) DMA1_Stream0_IRQHandler(void)
-#endif
 {
   i2cdrvDmaIsrHandler(&deckBus);
 }
@@ -672,3 +660,4 @@ void __attribute__((used)) DMA1_Stream2_IRQHandler(void)
 {
   i2cdrvDmaIsrHandler(&sensorsBus);
 }
+

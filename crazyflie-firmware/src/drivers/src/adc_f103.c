@@ -38,7 +38,6 @@
 #include "pm.h"
 #include "nvicconf.h"
 #include "imu.h"
-#include "static_mem.h"
 
 // PORT A
 #define GPIO_VBAT        GPIO_Pin_3
@@ -53,9 +52,7 @@
 static bool isInit;
 volatile AdcGroup adcValues[ADC_MEAN_SIZE * 2];
 
-static xQueueHandle adcQueue;
-STATIC_MEM_QUEUE_ALLOC(adcQueue, 1, AdcGroup);
-STATIC_MEM_TASK_ALLOC(adcTask, ADC_TASK_STACKSIZE);
+xQueueHandle      adcQueue;
 
 static void adcDmaInit(void)
 {
@@ -205,9 +202,10 @@ void adcInit(void)
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
 
-  adcQueue = STATIC_MEM_QUEUE_CREATE(adcQueue);
+  adcQueue = xQueueCreate(1, sizeof(AdcGroup*));
 
-  STATIC_MEM_TASK_CREATE(adcTask, adcTask, ADC_TASK_NAME, NULL, ADC_TASK_NAME);
+  xTaskCreate(adcTask, ADC_TASK_NAME,
+              ADC_TASK_STACKSIZE, NULL, ADC_TASK_PRI, NULL);
 
   isInit = true;
 }

@@ -50,7 +50,6 @@
 #include "usddeck.h"
 #include "quatcompress.h"
 #include "statsCnt.h"
-#include "static_mem.h"
 
 static bool isInit;
 static bool emergencyStop = false;
@@ -126,7 +125,6 @@ static float accVarZ[NBR_OF_MOTORS];
 static uint8_t motorPass = 0;
 static uint16_t motorTestCount = 0;
 
-STATIC_MEM_TASK_ALLOC(stabilizerTask, STABILIZER_TASK_STACKSIZE);
 
 static void stabilizerTask(void* param);
 static void testProps(sensorData_t *sensors);
@@ -186,13 +184,14 @@ void stabilizerInit(StateEstimatorType estimator)
 
   sensorsInit();
   stateEstimatorInit(estimator);
-  controllerInit(ControllerTypeAny);
+  controllerInit(ControllerTypeINDI);
   powerDistributionInit();
   sitAwInit();
   estimatorType = getStateEstimator();
   controllerType = getControllerType();
 
-  STATIC_MEM_TASK_CREATE(stabilizerTask, stabilizerTask, STABILIZER_TASK_NAME, NULL, STABILIZER_TASK_PRI);
+  xTaskCreate(stabilizerTask, STABILIZER_TASK_NAME,
+              STABILIZER_TASK_STACKSIZE, NULL, STABILIZER_TASK_PRI, NULL);
 
   isInit = true;
 }

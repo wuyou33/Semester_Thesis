@@ -1,6 +1,6 @@
 /**
- *    ||          ____  _ __
- * +------+      / __ )(_) /_______________ _____  ___
+ *    ||          ____  _ __                           
+ * +------+      / __ )(_) /_______________ _____  ___ 
  * | 0xBC |     / __  / / __/ ___/ ___/ __ `/_  / / _ \
  * +------+    / /_/ / / /_/ /__/ /  / /_/ / / /_/  __/
  *  ||  ||    /_____/_/\__/\___/_/   \__,_/ /___/\___/
@@ -36,7 +36,6 @@
 
 static xSemaphoreHandle waitForReply;
 static xSemaphoreHandle lockCmdBuf;
-static StaticSemaphore_t lockCmdBufBuffer;
 static OwCommand owCmdBuf;
 static bool owDataIsValid;
 
@@ -55,7 +54,7 @@ void owInit()
 {
   syslinkInit();
   vSemaphoreCreateBinary(waitForReply);
-  lockCmdBuf = xSemaphoreCreateMutexStatic(&lockCmdBufBuffer);
+  lockCmdBuf = xSemaphoreCreateMutex();
 
   // Put reply semaphore in right state.
   xSemaphoreTake(waitForReply, portMAX_DELAY);
@@ -318,3 +317,4 @@ bool owWrite(uint8_t selectMem, uint16_t address, uint8_t length, uint8_t *data)
 
   return status;
 }
+
