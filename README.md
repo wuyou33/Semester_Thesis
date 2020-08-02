@@ -1,8 +1,8 @@
-# Bachelor's Thesis: Design, Implementation and Evaluation of an Incremental Nonlinear Dynamic Inversion Controller for a Nano-Quadrotor
+# Semester Thesis: Design, Implementation and Evaluation of an Incremental Nonlinear Dynamic Inversion Controller for a Nano-Quadrotor
 
 Autor: Evghenii Volodscoi
 
-<img src="figs/indi_outer_mod_croped" width=270>
+<img src="figs/indi_outer_mod_croped.pdf" width=270>
 
 ## Abstract 
 Incremental Nonlinear Dynamic Inversion (INDI) is a promising control technique, widely used
