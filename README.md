@@ -2,7 +2,7 @@
 
 Autor: Evghenii Volodscoi
 
-<div style="text-align:center"><img src="figs/indi_outer_mod_croped.jpg" width=500>
+<div style="img-align:center"><img src="figs/indi_outer_mod_croped.jpg" width=500>
 
 ## Abstract 
 Incremental Nonlinear Dynamic Inversion (INDI) is a promising control technique, widely used
