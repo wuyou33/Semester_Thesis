@@ -1,4 +1,4 @@
-# Bachelor's Thesis: Design, Implementation and Evaluation of an Incremental Nonlinear Dynamic Inversion Controller for a Nano-Quadrotor
+# Semester Thesis: Design, Implementation and Evaluation of an Incremental Nonlinear Dynamic Inversion Controller for a Nano-Quadrotor
 
 Autor: Evghenii Volodscoi
 
