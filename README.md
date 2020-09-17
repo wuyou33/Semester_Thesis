@@ -3,7 +3,7 @@
 Autor: Evghenii Volodscoi
 
 <p align="center">
-	<img src="figs/indi_outer_mod_croped.jpg" width=700>
+	<img src="figs/indi_outer_mod_croped.jpg" width=500>
 </p>
 
 ## Abstract 
