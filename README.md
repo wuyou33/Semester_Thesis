@@ -3,7 +3,7 @@
 Autor: Evghenii Volodscoi
 
 <p align="center">
-	<img src="figs/indi_outer_mod_croped.jpg" width=500>
+	<img src="figs/indi_outer_mod_croped.jpg" width=700>
 </p>
 
 ## Abstract 
@@ -23,3 +23,19 @@ source firmware of the Crazyflie quadrotor.
 The C-code of the INDI position controller implemented in the framework of this semester thesis was merged with the official firmware of the Crazyflie Quadrotor. The corresponding pull request with detailed description of the final software structure can be found under the following link: 
 
 https://github.com/bitcraze/crazyflie-firmware/pull/568
+
+## Structure of the Project 
+
+Relevant folders and files: 
+* ```code/```
+    * ```actuator_dynamics/``` : Matlab scripts for estimating model of the quadcopter actuator dynamics 
+    * ```binaries/```: binary files (with different controller configurations) generated for flashing onto the quadcopter hardware 
+    * ```cf_logger/```: Python scripts for estimating quadcopter parameters adopted from Ewoud Smeur and Bitcraze
+    * ```experiments/```: Matlab scripts for analysis of the data obtained from experiments
+    * ```param_est/``` Matlab scripts for estimating quadcopter parameters such as: thrust coefficient and control effectiveness matrices
+    * ```Simulink/```: Simulink model of the Crazyflie quadrotor with Simulink models of the inner and outer loop INDI controllers
+    * ```transfer_functions/``` Matlab functions for stability analysis of the analytically derived transfer functions 
+    * ```freq_warping.m```: Matlab script for computing Butterworth filter parameters with frequency warping
+* ```crazyflie-firmware/```: official fork of the Crazyflie quadcopter firmware modified in the course of the semester thesis 
+* ```figs/```: figures for README file
+* ```Paper_EV.pdf```: contains final text of the semester thesis
