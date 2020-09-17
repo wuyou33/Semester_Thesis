@@ -20,6 +20,6 @@ are discussed. Finally, the implemented controller is tested on the ability to c
 The final version of the implemented control algorithm is available via official open
 source firmware of the Crazyflie quadrotor.
 
-The C-code of the INDI position controller implemented in the framework of this semester thesis was merged with the official firmware of the Crazyflie Quadrotor. The corresponding pull request can be found under the following link: 
+The C-code of the INDI position controller implemented in the framework of this semester thesis was merged with the official firmware of the Crazyflie Quadrotor. The corresponding pull request with detailed description of the final software structure can be found under the following link: 
 
 https://github.com/bitcraze/crazyflie-firmware/pull/568
