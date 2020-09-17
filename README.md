@@ -26,7 +26,6 @@ https://github.com/bitcraze/crazyflie-firmware/pull/568
 
 ## Structure of the Project 
 
-Relevant folders and files: 
 * ```code/```
     * ```actuator_dynamics/``` : Matlab scripts for estimating model of the quadcopter actuator dynamics 
     * ```binaries/```: binary files (with different controller configurations) generated for flashing onto the quadcopter hardware 
